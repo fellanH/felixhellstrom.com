@@ -53,7 +53,7 @@ export function SiteLayout() {
       </a>
 
       <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-sm">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6">
+        <div className="px-[5%]">
           <div className="flex h-14 items-center justify-between">
             <Link
               to="/"
