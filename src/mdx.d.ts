@@ -1,0 +1,10 @@
+declare module "*.mdx" {
+  import type { ComponentType } from "react";
+  const MDXComponent: ComponentType;
+  export default MDXComponent;
+}
+
+declare module "*.css" {
+  const stylesheet: Record<string, string>;
+  export default stylesheet;
+}

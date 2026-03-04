@@ -1,0 +1,46 @@
+## The Problem
+
+Every time you start a new AI session, the agent starts from scratch. No memory of what you built last week, the decisions you made, the patterns that work for your codebase.
+
+I was running into this constantly. I'd spend 20 minutes at the start of each Claude Code session re-explaining context that I'd already explained a dozen times. Project structure, conventions, decisions, open questions — all of it had to be re-loaded manually, every single time.
+
+The usual workaround is CLAUDE.md files. You dump your context there and the agent reads it on startup. It works, but it doesn't scale. The files get bloated. You forget to update them. You end up with stale context that actively misleads the agent.
+
+## What I Wanted
+
+I wanted a memory layer that:
+
+- **Persists across sessions** — the agent should remember what I told it last week
+- **Is local-first** — my context stays on my machine, not in some cloud service
+- **Works with MCP** — so it integrates natively with Claude Code, Cursor, and any other MCP-compatible client
+- **Has structure** — not just a bag of text, but entries with lifecycle tiers, tags, and conflict detection
+
+## How context-vault Works
+
+context-vault is an MCP server that sits between your AI clients and a local SQLite database. You store context entries — decisions, patterns, project briefs, anything — and the agent retrieves them semantically when they're relevant.
+
+The core concepts:
+
+**Lifecycle tiers** — entries can be `session` (current work), `project` (stable patterns), or `durable` (long-term knowledge). This prevents the memory from growing forever with stale data.
+
+**Semantic retrieval** — instead of loading everything into context, the agent queries for what's relevant. This keeps prompts lean.
+
+**Conflict detection** — if you store a new decision that contradicts an existing one, the system flags it. No more stale context silently misleading the agent.
+
+## Building It
+
+I built the first version in a few days. The core MCP server is TypeScript, SQLite via better-sqlite3, and a simple vector search implementation for semantic retrieval.
+
+The trickiest part was the conflict detection. I ended up using embedding similarity plus a set of domain-specific heuristics — if two entries share the same tags and similar content, flag them for review.
+
+The second trickiest part was the MCP protocol itself. The spec is solid but the ergonomics around tool definitions and error handling took some iteration to get right.
+
+## What's Next
+
+context-vault is live and I'm using it daily. The next things on the roadmap:
+
+- Better semantic search (currently using a lightweight embedding model, exploring alternatives)
+- A web UI for browsing and editing the vault
+- Integrations with more MCP clients as they mature
+
+If you're hitting the same wall I was — having to re-explain context to your AI tools every session — give it a try. The install is a single npm command.
