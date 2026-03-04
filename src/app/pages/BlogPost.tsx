@@ -6,39 +6,40 @@ import { PageHead } from "../components/PageHead";
 import { components } from "../components/MDXComponents";
 import { Badge } from "@/components/ui/badge";
 import { posts } from "../content/posts";
+import { NotFoundPage } from "./NotFound";
 
-function PostContent({ slug }: { slug: string }) {
-  const MDXContent = lazy(() => import(`../content/posts/${slug}.mdx`));
-
-  return (
-    <Suspense
-      fallback={<div className="text-muted-foreground">Loading...</div>}
-    >
-      <MDXProvider components={components}>
-        <div className="prose">
-          <MDXContent />
-        </div>
-      </MDXProvider>
-    </Suspense>
-  );
-}
+const mdxModules: Record<
+  string,
+  React.LazyExoticComponent<React.ComponentType>
+> = {
+  "eleven-prs-while-i-slept": lazy(
+    () => import("../content/posts/eleven-prs-while-i-slept.mdx"),
+  ),
+  "building-ai-memory-layer": lazy(
+    () => import("../content/posts/building-ai-memory-layer.mdx"),
+  ),
+  "building-self-improving-agent-os": lazy(
+    () => import("../content/posts/building-self-improving-agent-os.mdx"),
+  ),
+  "using-git-with-ai-agents": lazy(
+    () => import("../content/posts/using-git-with-ai-agents.mdx"),
+  ),
+  "webflow-advice-for-beginners": lazy(
+    () => import("../content/posts/webflow-advice-for-beginners.mdx"),
+  ),
+};
 
 export function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>();
   const post = posts.find((p) => p.slug === slug);
 
   if (!post || !slug) {
-    return (
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 py-16">
-        <p className="text-muted-foreground">Post not found.</p>
-        <Link
-          to="/blog"
-          className="mt-4 inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
-        >
-          <ArrowLeft className="size-3.5" /> Back to blog
-        </Link>
-      </div>
-    );
+    return <NotFoundPage />;
+  }
+
+  const MDXContent = mdxModules[slug];
+  if (!MDXContent) {
+    return <NotFoundPage />;
   }
 
   return (
@@ -47,6 +48,8 @@ export function BlogPostPage() {
         title={post.title}
         description={post.description}
         url={`/blog/${post.slug}`}
+        type="article"
+        publishedTime={post.date}
       />
       <div className="mx-auto max-w-3xl px-4 sm:px-6 py-16">
         <Link
@@ -59,7 +62,10 @@ export function BlogPostPage() {
         <header className="mb-10">
           <div className="flex items-center gap-3 mb-4">
             <Badge variant="secondary">{post.category}</Badge>
-            <time className="text-sm text-muted-foreground">
+            <time
+              className="text-sm text-muted-foreground"
+              dateTime={post.date}
+            >
               {new Date(post.date).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",
@@ -75,7 +81,23 @@ export function BlogPostPage() {
           </p>
         </header>
 
-        <PostContent slug={slug} />
+        <Suspense
+          fallback={
+            <div
+              className="text-muted-foreground"
+              role="status"
+              aria-live="polite"
+            >
+              Loading...
+            </div>
+          }
+        >
+          <MDXProvider components={components}>
+            <div className="prose">
+              <MDXContent />
+            </div>
+          </MDXProvider>
+        </Suspense>
       </div>
     </>
   );

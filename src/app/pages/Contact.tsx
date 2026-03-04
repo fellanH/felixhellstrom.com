@@ -22,9 +22,9 @@ const contactLinks = [
   },
   {
     label: "Email",
-    value: "felix@klarhimmel.com",
-    href: "mailto:felix@klarhimmel.com",
-    description: "For detailed project discussions.",
+    value: "fehellstrom@gmail.com",
+    href: "mailto:fehellstrom@gmail.com",
+    description: "For project discussions and opportunities.",
   },
 ];
 
@@ -33,15 +33,15 @@ export function ContactPage() {
     <>
       <PageHead
         title="Contact"
-        description="Get in touch with Felix Hellström — open to Webflow projects, AI integrations, and interesting collaborations."
+        description="Get in touch with Felix Hellström. Open to Webflow projects, AI integrations, and interesting collaborations."
         url="/contact"
       />
       <div className="mx-auto max-w-3xl px-4 sm:px-6 py-16">
         <h1 className="text-3xl font-semibold mb-4">Contact</h1>
         <p className="text-muted-foreground mb-10 leading-relaxed max-w-lg">
-          I'm open to collaborations, Webflow projects, and interesting
-          problems. If you're working on something that involves AI tooling or
-          need Webflow work done well, reach out.
+          Open to interesting problems. AI tooling, web platforms, and product
+          work. If you're building something and need someone who ships, reach
+          out.
         </p>
 
         <div className="space-y-4">

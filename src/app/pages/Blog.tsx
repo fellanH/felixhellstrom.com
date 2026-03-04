@@ -40,11 +40,16 @@ export function BlogPage() {
         <h1 className="text-3xl font-semibold mb-8">Blog</h1>
 
         {/* Category filter */}
-        <div className="flex flex-wrap gap-2 mb-10">
+        <div
+          className="flex flex-wrap gap-2 mb-10"
+          role="group"
+          aria-label="Filter posts by category"
+        >
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
+              aria-pressed={activeCategory === cat}
               className={`px-3 py-1.5 rounded-md text-sm transition-colors ${
                 activeCategory === cat
                   ? "bg-foreground text-background font-medium"
@@ -66,7 +71,7 @@ export function BlogPage() {
             {filtered.map((post) => (
               <Link key={post.slug} to={`/blog/${post.slug}`}>
                 <Card className="hover:border-primary/50 transition-colors">
-                  <CardHeader className="pb-2">
+                  <CardHeader>
                     <div className="flex items-start justify-between gap-4">
                       <CardTitle className="text-base font-medium">
                         {post.title}
@@ -81,7 +86,10 @@ export function BlogPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-center justify-between">
-                      <time className="text-xs text-muted-foreground">
+                      <time
+                        className="text-xs text-muted-foreground"
+                        dateTime={post.date}
+                      >
                         {new Date(post.date).toLocaleDateString("en-US", {
                           year: "numeric",
                           month: "long",

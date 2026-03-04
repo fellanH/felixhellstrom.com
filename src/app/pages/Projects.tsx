@@ -1,4 +1,4 @@
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, Package } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -27,7 +27,7 @@ export function ProjectsPage() {
     <>
       <PageHead
         title="Projects"
-        description="AI tools, web apps, and products I'm building."
+        description="AI tools, web apps, and products I'm building. Context Vault, omni-cli, trained-on.com, and more."
         url="/projects"
       />
       <div className="mx-auto max-w-3xl px-4 sm:px-6 py-16">
@@ -36,16 +36,16 @@ export function ProjectsPage() {
           Things I'm building, in various stages of done.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid gap-4">
           {projects.map((project) => (
             <Card key={project.slug}>
-              <CardHeader className="pb-2">
+              <CardHeader>
                 <div className="flex items-start justify-between gap-2">
                   <CardTitle className="text-base font-medium">
                     {project.title}
                   </CardTitle>
                   <span
-                    className={`text-xs px-2 py-0.5 rounded-full font-medium ${statusColor[project.status]}`}
+                    className={`text-xs px-2 py-0.5 rounded-full font-medium shrink-0 ${statusColor[project.status]}`}
                   >
                     {statusLabel[project.status]}
                   </span>
@@ -55,6 +55,11 @@ export function ProjectsPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
+                {project.stats && (
+                  <p className="text-xs text-muted-foreground mb-3 font-medium">
+                    {project.stats}
+                  </p>
+                )}
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {project.tags.map((tag) => (
                     <Badge key={tag} variant="outline" className="text-xs">
@@ -62,7 +67,7 @@ export function ProjectsPage() {
                     </Badge>
                   ))}
                 </div>
-                {(project.url || project.github) && (
+                {(project.url || project.github || project.npm) && (
                   <div className="flex items-center gap-3">
                     {project.url && (
                       <a
@@ -84,6 +89,17 @@ export function ProjectsPage() {
                       >
                         <Github className="size-3" />
                         GitHub
+                      </a>
+                    )}
+                    {project.npm && (
+                      <a
+                        href={project.npm}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <Package className="size-3" />
+                        npm
                       </a>
                     )}
                   </div>

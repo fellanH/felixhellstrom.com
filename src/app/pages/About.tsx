@@ -6,29 +6,72 @@ export function AboutPage() {
     <>
       <PageHead
         title="About"
-        description="Felix Hellström — AI engineer at Stormfors, building AI tools and Webflow sites in Sweden."
+        description="Felix Hellström. Full-stack developer and technical lead based in Sweden. 28+ client projects, building AI tools and web platforms."
         url="/about"
       />
       <div className="mx-auto max-w-3xl px-4 sm:px-6 py-16">
-        <h1 className="text-3xl font-semibold mb-8">About</h1>
+        <div className="flex items-center gap-5 mb-8">
+          <img
+            src="/images/people/felix-profile.jpg"
+            alt="Felix Hellström"
+            className="size-24 rounded-full object-cover ring-2 ring-border"
+          />
+          <div>
+            <h1 className="text-3xl font-semibold">About</h1>
+            <p className="text-muted-foreground mt-1">
+              Full-Stack Developer & AI Toolmaker
+            </p>
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-3 gap-4 mb-10 py-6 border-y border-border">
+          {[
+            { value: "28+", label: "Client projects" },
+            { value: "3", label: "Languages" },
+            { value: "5+", label: "Years shipping" },
+          ].map((stat) => (
+            <div key={stat.label} className="text-center">
+              <p className="text-2xl font-semibold">{stat.value}</p>
+              <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
+            </div>
+          ))}
+        </div>
 
         <div className="prose max-w-none">
           <p>
-            I'm Felix Hellström, an AI engineer and web developer based in
+            I'm Felix, a full-stack developer and technical lead based in
             Sweden. I work at{" "}
             <a
-              href="https://stormfors.se"
+              href="https://stormfors.com"
               target="_blank"
               rel="noopener noreferrer"
             >
               Stormfors
             </a>
-            , Sweden's leading Webflow agency, where I build production Webflow
-            sites and integrate AI into client workflows.
+            , where I lead delivery across 10+ simultaneous client projects.
+            Scoping, architecture, development, deployment, integrations, and
+            ongoing support.
           </p>
 
           <p>
-            On the side, I build products. My current focus is{" "}
+            I'm trilingual and conduct client work in Swedish, English, and
+            Italian.
+          </p>
+
+          <h2>What I build at work</h2>
+          <p>
+            Production Webflow sites, HubSpot CMS builds, and custom
+            integrations for clients like Porsche Club Sweden, Precis Digital,
+            and Neonode. Recent highlights:{" "}
+            <a href="/work">a decoupled Mapbox architecture for Salty.co</a>, a
+            Contentful-to-HubSpot migration pipeline (37 pages, 135 press
+            releases), and a sub-month site launch for Resident Interface.
+          </p>
+
+          <h2>What I build on my own time</h2>
+          <p>
+            My current focus is{" "}
             <a
               href="https://context-vault.com"
               target="_blank"
@@ -36,44 +79,50 @@ export function AboutPage() {
             >
               context-vault
             </a>{" "}
-            — a local-first MCP server that gives AI agents persistent memory
-            across sessions. I'm also working on trained-on.com, an AI training
-            data marketplace.
+            , a local-first MCP server that gives AI agents persistent memory
+            across sessions. Published on npm, 693+ tests, with a full SaaS
+            ecosystem. I'm also building{" "}
+            <a
+              href="https://trained-on.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              trained-on.com
+            </a>
+            , an AI product photo generation platform for e-commerce.
           </p>
 
           <h2>Technical focus</h2>
           <ul>
             <li>
-              AI agents and the Claude/MCP ecosystem — building tools that make
-              agents actually useful for day-to-day development
+              AI agents and the MCP ecosystem. Building tools that make agents
+              useful for real development workflows
             </li>
             <li>
-              Webflow development — CMS architecture, custom code, Webflow
-              Logic, and Webflow DevLink
+              Webflow and HubSpot CMS. Architecture, custom code, migrations,
+              and integrations
             </li>
             <li>
-              React and TypeScript — mostly Vite, Next.js, and React Router for
-              web apps
+              React and TypeScript. Vite, Next.js, Tauri for web and desktop
+              apps
             </li>
             <li>
-              Local-first software — SQLite, MCP servers, tools that work
-              without a cloud subscription
+              Local-first software. SQLite, MCP servers, tools that work without
+              a cloud dependency
             </li>
           </ul>
 
           <h2>Background</h2>
           <p>
-            Before Stormfors, I founded Klarhimmel, a digital agency. That gave
-            me a broad foundation across design, development, and running client
-            projects. I eventually moved into a more focused engineering role
-            because I wanted to go deeper on the technical side.
+            Before Stormfors I ran my own digital agency, which gave me a
+            foundation across design, development, and managing client projects
+            end-to-end. I moved into a focused engineering role to go deeper on
+            the technical side, but I kept the product mindset.
           </p>
-
           <p>
-            The thread through all of it: I'm drawn to tools that make
-            developers more productive. That's why the AI/MCP space is so
-            interesting right now — we're at the early stage of building the
-            infrastructure that will make AI agents genuinely useful.
+            I picked up HubSpot CMS entirely on the job in December 2025 and
+            shipped two production projects within weeks. That's what I'm good
+            at: learning fast and delivering while I learn.
           </p>
         </div>
 
@@ -87,10 +136,7 @@ export function AboutPage() {
               },
               { label: "GitHub", href: "https://github.com/fellanH" },
               { label: "X / Twitter", href: "https://x.com/felixhellstrom" },
-              {
-                label: "context-vault.com",
-                href: "https://context-vault.com",
-              },
+              { label: "npm", href: "https://www.npmjs.com/~fellanh" },
             ].map((link) => (
               <a
                 key={link.href}

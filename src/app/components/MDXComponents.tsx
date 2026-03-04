@@ -8,6 +8,7 @@ type CodeProps = ComponentPropsWithoutRef<"code">;
 type BlockquoteProps = ComponentPropsWithoutRef<"blockquote">;
 type ListProps = ComponentPropsWithoutRef<"ul">;
 type ListItemProps = ComponentPropsWithoutRef<"li">;
+type ImgProps = ComponentPropsWithoutRef<"img">;
 
 export const components = {
   h1: (props: HeadingProps) => (
@@ -34,6 +35,14 @@ export const components = {
   a: (props: AnchorProps) => (
     <a
       className="text-primary underline underline-offset-2 hover:opacity-80 transition-opacity"
+      {...props}
+    />
+  ),
+  img: ({ alt, ...props }: ImgProps) => (
+    <img
+      alt={alt || ""}
+      className="rounded-lg border border-border my-6 w-full"
+      loading="lazy"
       {...props}
     />
   ),
