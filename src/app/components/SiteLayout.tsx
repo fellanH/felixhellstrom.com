@@ -4,6 +4,7 @@ import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/components/ui/utils";
+import { Container } from "./LayoutPrimitives";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -53,40 +54,38 @@ export function SiteLayout() {
       </a>
 
       <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-sm">
-        <div className="px-[5%]">
-          <div className="flex h-14 items-center justify-between">
-            <Link
-              to="/"
-              className="font-semibold text-foreground hover:text-primary transition-colors"
-            >
-              Felix Hellström
-            </Link>
-            <nav
-              className="flex items-center gap-0.5 sm:gap-1"
-              aria-label="Main navigation"
-            >
-              {navLinks.map((link) => {
-                const isActive = location.pathname.startsWith(link.href);
-                return (
-                  <Link
-                    key={link.href}
-                    to={link.href}
-                    aria-current={isActive ? "page" : undefined}
-                    className={cn(
-                      "px-2 sm:px-3 py-1.5 rounded-md text-sm transition-colors",
-                      isActive
-                        ? "text-foreground font-medium"
-                        : "text-muted-foreground hover:text-foreground",
-                    )}
+        <Container className="flex h-14 items-center justify-between">
+          <Link
+            to="/"
+            className="font-semibold text-foreground hover:text-primary transition-colors"
+          >
+            Felix Hellström
+          </Link>
+          <nav
+            className="flex items-center gap-0.5 sm:gap-1"
+            aria-label="Main navigation"
+          >
+            {navLinks.map((link) => {
+              const isActive = location.pathname.startsWith(link.href);
+              return (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  aria-current={isActive ? "page" : undefined}
+                  className={cn(
+                    "px-2 sm:px-3 py-1.5 rounded-md text-sm transition-colors",
+                    isActive
+                      ? "text-foreground font-medium"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
                   >
-                    {link.label}
-                  </Link>
-                );
-              })}
-              <ThemeToggle />
-            </nav>
-          </div>
-        </div>
+                  {link.label}
+                </Link>
+              );
+            })}
+            <ThemeToggle />
+          </nav>
+        </Container>
       </header>
 
       <main id="main-content" className="flex-1" tabIndex={-1}>
@@ -96,7 +95,7 @@ export function SiteLayout() {
       </main>
 
       <footer className="border-t border-border mt-16">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8">
+        <Container className="py-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
             <p>© {CURRENT_YEAR} Felix Hellström</p>
             <div className="flex items-center gap-4">
@@ -126,7 +125,7 @@ export function SiteLayout() {
               </a>
             </div>
           </div>
-        </div>
+        </Container>
       </footer>
     </div>
   );

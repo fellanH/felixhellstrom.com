@@ -26,6 +26,9 @@ const ProjectsPage = lazy(() =>
 const ContactPage = lazy(() =>
   import("./pages/Contact").then((m) => ({ default: m.ContactPage })),
 );
+const StyleguidePage = lazy(() =>
+  import("./pages/Styleguide").then((m) => ({ default: m.StyleguidePage })),
+);
 const NotFoundPage = lazy(() =>
   import("./pages/NotFound").then((m) => ({ default: m.NotFoundPage })),
 );
@@ -43,6 +46,7 @@ export const router = createBrowserRouter([
       { path: "work/:slug", Component: WorkDetailPage },
       { path: "projects", Component: ProjectsPage },
       { path: "contact", Component: ContactPage },
+      { path: "styleguide", Component: StyleguidePage },
       { path: "*", Component: NotFoundPage },
     ],
   },

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router";
 import { PageHead } from "../components/PageHead";
 import { FeedCard } from "../components/FeedCards";
+import { PageShell } from "../components/LayoutPrimitives";
 import { feed } from "../content/feed";
 
 type FeedFilter = "all" | "work" | "blog" | "products" | "recommendations" | "stats";
@@ -121,7 +122,7 @@ export function HomePage() {
       />
 
       {/* Hero */}
-      <section className="mx-auto max-w-2xl px-4 sm:px-6 pt-20 pb-12">
+      <PageShell className="pt-20 pb-12">
         <div className="mb-6">
           <h1 className="text-3xl sm:text-4xl font-semibold leading-tight mb-2">
             I build things, that ship.
@@ -161,14 +162,10 @@ export function HomePage() {
           </a>
           .
         </p>
-      </section>
+      </PageShell>
 
       {/* Feed */}
-      <section
-        id="feed"
-        className="mx-auto max-w-2xl px-4 sm:px-6 pb-20"
-        aria-label="Recent activity"
-      >
+      <PageShell id="feed" className="pb-20" aria-label="Recent activity">
         <div
           className="flex flex-wrap gap-2 mb-6"
           role="group"
@@ -243,7 +240,7 @@ export function HomePage() {
             All recommendations
           </a>
         </div>
-      </section>
+      </PageShell>
     </>
   );
 }

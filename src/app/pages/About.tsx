@@ -1,5 +1,6 @@
 import { ExternalLink } from "lucide-react";
 import { PageHead } from "../components/PageHead";
+import { PageShell, PageHeader } from "../components/LayoutPrimitives";
 
 export function AboutPage() {
   return (
@@ -9,27 +10,26 @@ export function AboutPage() {
         description="Felix Hellström. Full-stack developer and technical lead based in Sweden. 28+ client projects, building AI tools and web platforms."
         url="/about"
       />
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 py-16">
+      <PageShell>
         <div className="flex items-center gap-5 mb-8">
           <img
-            src="/images/people/felix-profile.jpg"
+            src="/images/felix-hero.jpeg"
             alt="Felix Hellström"
             className="size-24 rounded-full object-cover ring-2 ring-border"
           />
-          <div>
-            <h1 className="text-3xl font-semibold">About</h1>
-            <p className="text-muted-foreground mt-1">
-              Full-Stack Developer & AI Toolmaker
-            </p>
-          </div>
+          <PageHeader
+            title="About"
+            description="Full-Stack Developer & AI Toolmaker"
+            className="mb-0"
+          />
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4 mb-10 py-6 border-y border-border">
           {[
-            { value: "28+", label: "Client projects" },
-            { value: "3", label: "Languages" },
-            { value: "5+", label: "Years shipping" },
+            { value: "100+", label: "Client projects" },
+            { value: "2", label: "Languages" },
+            { value: "10+", label: "Years of shipping" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <p className="text-2xl font-semibold">{stat.value}</p>
@@ -151,7 +151,7 @@ export function AboutPage() {
             ))}
           </div>
         </div>
-      </div>
+      </PageShell>
     </>
   );
 }

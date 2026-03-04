@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { PageHead } from "../components/PageHead";
+import { PageShell, PageHeader } from "../components/LayoutPrimitives";
 import { caseStudies } from "../content/work";
 
 const featured = caseStudies.filter((c) => c.featured);
@@ -22,12 +23,12 @@ export function WorkPage() {
         description="Selected client projects and case studies by Felix Hellström."
         url="/work"
       />
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 py-16">
-        <h1 className="text-3xl font-semibold mb-4">Work</h1>
-        <p className="text-muted-foreground mb-10">
-          Selected client projects from 5+ years of professional work. Webflow,
-          HubSpot CMS, custom integrations, and full-stack builds.
-        </p>
+      <PageShell>
+        <PageHeader
+          title="Work"
+          description="Selected client projects from 10+ years of professional work. Webflow, HubSpot CMS, custom integrations, and full-stack builds."
+          className="mb-10"
+        />
 
         <h2 className="text-lg font-semibold mb-4">Featured</h2>
         <div className="grid gap-4 mb-12">
@@ -104,7 +105,7 @@ export function WorkPage() {
             </Link>
           ))}
         </div>
-      </div>
+      </PageShell>
     </>
   );
 }
