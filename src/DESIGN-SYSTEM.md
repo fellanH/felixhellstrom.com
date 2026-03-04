@@ -30,6 +30,26 @@ Use Tailwind aliases like `bg-background`, `text-foreground`, `bg-card`, `border
 - `PageHeader`
   - Handles page titles, optional eyebrow, and description with consistent spacing and typography.
 
+### Section modules
+
+Higher-level layouts built on top of primitives live in `src/app/components/sections/`:
+
+- Home
+  - `HomeHero`: Hero layout with primary CTAs and a contextual \"currently\" card.
+  - `HomeFeedSection`: Filterable activity feed using `FeedCard` and `Button` chips.
+- Work
+  - `WorkCaseStudyGrid`: Featured + more projects grid for case studies.
+  - `WorkDetailLayout`: Case study detail layout (hero, media, and rich sections).
+- Projects
+  - `ProjectsGrid`: Product cards with status chips, tags, and external links.
+- About
+  - `AboutHeaderSection`: Profile header with avatar and summary.
+  - `AboutBodySection`: Two-column narrative + snapshot/links aside.
+- Contact
+  - `ContactMethodsSection`: Contact methods as responsive cards.
+- Blog
+  - `BlogIndexSection`: Category filter chips + blog post cards.
+
 ### UI primitives
 
 - `Button` (`src/components/ui/button.tsx`)
