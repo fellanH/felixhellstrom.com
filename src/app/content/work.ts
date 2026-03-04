@@ -9,6 +9,7 @@ export interface CaseStudy {
   image?: string;
   video?: string;
   url?: string;
+  hideImage?: boolean;
 }
 
 export const caseStudies: CaseStudy[] = [
@@ -23,6 +24,7 @@ export const caseStudies: CaseStudy[] = [
     year: "2026",
     featured: true,
     image: "/images/work/neonode.jpg",
+    hideImage: true,
     url: "https://neonode.com",
   },
   {

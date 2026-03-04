@@ -34,7 +34,7 @@ export function WorkPage() {
           {featured.map((study, i) => (
             <Link key={study.slug} to={`/work/${study.slug}`}>
               <Card className="hover:border-primary/50 transition-colors overflow-hidden">
-                {study.image && (
+                {study.image && !study.hideImage && (
                   <div className="aspect-[2/1] overflow-hidden border-b border-border">
                     <img
                       src={study.image}

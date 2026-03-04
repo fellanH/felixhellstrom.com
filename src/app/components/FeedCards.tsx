@@ -69,7 +69,7 @@ function CaseStudyCard({ data }: { data: CaseStudy }) {
   return (
     <Link to={`/work/${data.slug}`} className="group block">
       <div className="rounded-xl border border-border bg-card overflow-hidden hover:border-primary/50 transition-colors">
-        {data.image && (
+        {data.image && !data.hideImage && (
           <div className="aspect-[2.2/1] overflow-hidden">
             <img
               src={data.image}
@@ -223,14 +223,26 @@ function StatCard({
   detail?: string;
 }) {
   return (
-    <div className="rounded-xl border border-border bg-card p-5 text-center">
-      <TrendingUp
-        className="size-4 text-muted-foreground mx-auto mb-2"
-        aria-hidden="true"
-      />
-      <p className="text-3xl font-bold tracking-tight">{value}</p>
-      <p className="text-sm font-medium mt-1">{label}</p>
-      {detail && <p className="text-xs text-muted-foreground mt-1">{detail}</p>}
+    <div className="rounded-xl border border-border bg-card p-5">
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          <div className="size-9 rounded-full bg-muted flex items-center justify-center">
+            <TrendingUp
+              className="size-4 text-muted-foreground"
+              aria-hidden="true"
+            />
+          </div>
+          <p className="text-3xl font-bold tracking-tight leading-none">
+            {value}
+          </p>
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-medium">{label}</p>
+          {detail && (
+            <p className="text-xs text-muted-foreground mt-0.5">{detail}</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
