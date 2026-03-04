@@ -1,36 +1,91 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { PageHead } from "../components/PageHead";
 import { FeedCard } from "../components/FeedCards";
 import { feed } from "../content/feed";
 
 type FeedFilter = "all" | "work" | "blog" | "products" | "recommendations" | "stats";
 
+function SubFilterButton({
+  label,
+  active,
+  onClick,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      aria-pressed={active}
+      className={`inline-flex items-center rounded-md border px-2.5 py-0.5 text-[11px] transition-colors ${
+        active
+          ? "border-foreground bg-foreground text-background font-medium"
+          : "border-border text-muted-foreground hover:text-foreground"
+      }`}
+    >
+      {label}
+    </button>
+  );
+}
+
 export function HomePage() {
   const [filter, setFilter] = useState<FeedFilter>("all");
+  const [subFilter, setSubFilter] = useState<string>("All");
+
+  useEffect(() => {
+    // Reset sub-filter whenever the top-level filter changes
+    setSubFilter("All");
+  }, [filter]);
+
+  const subFilterOptions = useMemo(() => {
+    // Curated sub-filters per top-level category
+    if (filter === "work") {
+      return ["All", "Webflow", "HubSpot CMS", "Next.js"];
+    }
+    if (filter === "blog") {
+      return ["All", "AI Workflows", "Webflow", "Products"];
+    }
+    if (filter === "products") {
+      return ["All", "MCP", "AI", "SaaS"];
+    }
+    return [];
+  }, [filter]);
 
   const filteredFeed = useMemo(
     () =>
       feed.filter((item) => {
-        switch (filter) {
-          case "work":
-            return item.type === "case-study";
-          case "blog":
-            return item.type === "blog-post";
-          case "products":
-            return item.type === "project";
-          case "recommendations":
-            return item.type === "recommendation";
-          case "stats":
-            return item.type === "stat";
-          case "all":
-          default:
-            return true;
+        // Top-level filter
+        if (filter === "work" && item.type !== "case-study") return false;
+        if (filter === "blog" && item.type !== "blog-post") return false;
+        if (filter === "products" && item.type !== "project") return false;
+        if (filter === "recommendations" && item.type !== "recommendation")
+          return false;
+        if (filter === "stats" && item.type !== "stat") return false;
+
+        // Sub-filters (only applied when not "All")
+        if (filter === "work" && subFilter !== "All" && item.type === "case-study") {
+          return item.data.tags.includes(subFilter);
         }
+        if (
+          filter === "blog" &&
+          subFilter !== "All" &&
+          item.type === "blog-post"
+        ) {
+          return item.data.category === subFilter;
+        }
+        if (
+          filter === "products" &&
+          subFilter !== "All" &&
+          item.type === "project"
+        ) {
+          return item.data.tags.includes(subFilter);
+        }
+
+        return true;
       }),
-    [filter],
+    [filter, subFilter],
   );
 
   return (
@@ -76,7 +131,7 @@ export function HomePage() {
             automations by night.
           </p>
         </div>
-        <p className="text-base text-muted-foreground leading-relaxed mb-8">
+        <p className="text-base text-muted-foreground leading-relaxed">
           By day I lead technical delivery at{" "}
           <a
             href="https://stormfors.com"
@@ -106,16 +161,6 @@ export function HomePage() {
           </a>
           .
         </p>
-        <div className="flex gap-3">
-          <Button asChild>
-            <Link to="/work">
-              See my work <ArrowRight className="size-4" />
-            </Link>
-          </Button>
-          <Button asChild variant="outline">
-            <Link to="/blog">Read the blog</Link>
-          </Button>
-        </div>
       </section>
 
       {/* Feed */}
@@ -124,7 +169,11 @@ export function HomePage() {
         className="mx-auto max-w-2xl px-4 sm:px-6 pb-20"
         aria-label="Recent activity"
       >
-        <div className="mb-6 flex flex-wrap gap-2 text-xs">
+        <div
+          className="flex flex-wrap gap-2 mb-6"
+          role="group"
+          aria-label="Filter activity by type"
+        >
           {[
             { id: "all", label: "All" },
             { id: "work", label: "Work" },
@@ -135,19 +184,35 @@ export function HomePage() {
           ].map((option) => (
             <button
               key={option.id}
-              type="button"
               onClick={() => setFilter(option.id as FeedFilter)}
-              className={`inline-flex items-center rounded-full border px-3 py-1 transition-colors ${
-                filter === option.id
-                  ? "border-primary bg-primary/10 text-primary"
-                  : "border-border bg-card text-muted-foreground hover:text-foreground"
-              }`}
               aria-pressed={filter === option.id}
+              className={`px-3 py-1.5 rounded-md text-sm transition-colors ${
+                filter === option.id
+                  ? "bg-foreground text-background font-medium"
+                  : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              }`}
             >
               {option.label}
             </button>
           ))}
         </div>
+
+        {filter !== "all" && subFilterOptions.length > 0 && (
+          <div
+            className="flex flex-wrap gap-2 mb-6 text-xs"
+            role="group"
+            aria-label={`Filter ${filter} items by sub-category`}
+          >
+            {subFilterOptions.map((option) => (
+              <SubFilterButton
+                key={option}
+                label={option}
+                active={subFilter === option}
+                onClick={() => setSubFilter(option)}
+              />
+            ))}
+          </div>
+        )}
 
         <div className="flex flex-col gap-4">
           {filteredFeed.map((item, i) => (
