@@ -641,6 +641,70 @@ def build_home() -> str:
     )
 
 
+def post_list_module(props: dict) -> str:
+    """Render blog index style post list."""
+    title = props.get("title", "Blog")
+    subtitle = props.get(
+        "subtitle",
+        "Writing about AI agent workflows, MCP development, and building tools like context-vault and omni in public.",
+    )
+    limit = props.get("limit")
+
+    sql = "SELECT id, slug, title, date, description, category FROM posts ORDER BY date DESC"
+    if limit:
+        sql += " LIMIT ?"
+        posts = q(sql, (limit,))
+    else:
+        posts = q(sql)
+
+    b = f'    {heading(title, tag="h1")}\n'
+    b += f'    <p class="subtitle">{e(subtitle)}</p>\n'
+    for p in posts:
+        tg = get_tags("post_tags", "post_id", p["id"])
+        b += f'    {post_card(p, tg)}\n'
+    return b
+
+
+def build_blog_index_from_config() -> str:
+    """Blog index page driven by pages/blog-index.json and post_list_module."""
+    cfg_path = HERE / "pages" / "blog-index.json"
+    page_cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
+    sections_cfg = page_cfg.get("sections", [])
+
+    sections_html: list[str] = []
+    for section_cfg in sections_cfg:
+        section_id = section_cfg["id"]
+        section_height = section_cfg.get("height", "large")
+        section_width = section_cfg.get("width", "medium")
+        modules_cfg = section_cfg.get("modules", [])
+
+        modules_html: list[str] = []
+        for mod in modules_cfg:
+            mtype = mod.get("type")
+            props = mod.get("props", {})
+            if mtype == "postList":
+                modules_html.append(post_list_module(props))
+
+        sections_html.append(
+            section_block(
+                section_id,
+                modules=modules_html,
+                padding=section_height,
+                container=section_width,
+            )
+        )
+
+    body_html = "\n".join(sections_html)
+
+    return shell(
+        page_cfg["title"],
+        page_cfg.get("activeNav", "Blog"),
+        body_html,
+        description=page_cfg.get("description", SITE_DESC),
+        path=page_cfg.get("path", "/"),
+    )
+
+
 # ── page: about ──────────────────────────────────────────────────────────
 
 def build_about() -> str:
@@ -732,16 +796,8 @@ def build_about() -> str:
 # ── page: blog index ─────────────────────────────────────────────────────
 
 def build_blog_index() -> str:
-    posts = q("SELECT id, slug, title, date, description, category FROM posts ORDER BY date DESC")
-
-    b = f'    {heading("Blog", tag="h1")}\n    <p class="subtitle">Writing about AI agent workflows, MCP development, and building tools like context-vault and omni in public.</p>\n'
-    for p in posts:
-        tg = get_tags("post_tags", "post_id", p["id"])
-        b += f'    {post_card(p, tg)}\n'
-
-    return shell(f"Blog — {SITE_NAME}", "blog", section("blog-index", b, padding="large", container="medium"),
-                 description="Posts about AI agents, Webflow and CMS migrations, and building tools like context-vault and omni in public.",
-                 path="/blog/")
+    """Blog index now uses JSON + post_list_module via blog-index.json."""
+    return build_blog_index_from_config()
 
 
 # ── page: blog post ──────────────────────────────────────────────────────

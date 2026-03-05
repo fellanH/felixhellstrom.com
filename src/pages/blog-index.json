@@ -1,0 +1,27 @@
+{
+  "id": "blog-index",
+  "path": "/blog/",
+  "title": "Blog — Felix Hellström",
+  "description": "Posts about AI agents, Webflow and CMS migrations, and building tools like context-vault and omni in public.",
+  "activeNav": "Blog",
+
+  "sections": [
+    {
+      "id": "blog-index",
+      "height": "large",
+      "width": "medium",
+      "modules": [
+        {
+          "type": "postList",
+          "component": "postList",
+          "props": {
+            "title": "Blog",
+            "subtitle": "Writing about AI agent workflows, MCP development, and building tools like context-vault and omni in public.",
+            "limit": null
+          }
+        }
+      ]
+    }
+  ]
+}
+
