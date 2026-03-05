@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inside omni, My Autonomous Agent Orchestrator — Felix Hellström</title>
+  <meta name="description" content="How I built omni, a 3-layer agent system that opens GitHub issues, runs Claude Code agents, and merged 11 PRs while I slept." />
+  <link rel="canonical" href="https://felixhellstrom.com/blog/omni-agent-orchestrator/" />
+  <meta property="og:title" content="Inside omni, My Autonomous Agent Orchestrator — Felix Hellström" />
+  <meta property="og:description" content="How I built omni, a 3-layer agent system that opens GitHub issues, runs Claude Code agents, and merged 11 PRs while I slept." />
+  <meta property="og:image" content="https://felixhellstrom.com/images/og-image.png" />
+  <meta property="og:url" content="https://felixhellstrom.com/blog/omni-agent-orchestrator/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/images/favicon.png" />
+  <link rel="alternate" type="application/rss+xml" title="Felix Hellström" href="https://felixhellstrom.com/feed.xml" />
+  <script>
+;(function () {
+  var t = localStorage.getItem('theme');
+  if (t) document.documentElement.setAttribute('data-theme', t);
+})();
+
+
+</script>
+  <link rel="stylesheet" href="/normalize.css" />
+  <link rel="stylesheet" href="/style.css" />
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Inside omni, My Autonomous Agent Orchestrator", "description": "How I built omni, a 3-layer agent system that opens GitHub issues, runs Claude Code agents, and merged 11 PRs while I slept.", "datePublished": "2026-03-06", "author": {"@type": "Person", "name": "Felix Hellström", "url": "https://felixhellstrom.com"}, "publisher": {"@type": "Person", "name": "Felix Hellström", "url": "https://felixhellstrom.com"}, "url": "https://felixhellstrom.com/blog/omni-agent-orchestrator/", "image": "https://felixhellstrom.com/images/og-image.png", "keywords": ["ai-agents", "automation", "omni", "workflow"]}</script>
+</head>
+<body>
+  <header class="site-header"><nav><div class="nav-inner"><a href="/" class="nav-wordmark">Felix Hellström</a><div class="nav-links"><a href="/">Home</a><a href="/learn/">Learn</a><a href="/projects/">Projects</a><a href="/work/">Work</a><a href="/about/">About</a></div><div class="nav-actions"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button><a href="/contact/" class="nav-cta">Contact</a></div></div></nav></header>
+  <main>
+<section class="section_blog-post">
+  <div class="padding-global padding-section-large">
+    <div class="container-medium">
+
+    <a href="/blog/" class="back">← All posts</a>
+    <article>
+      <p class="meta">2026-03-06 · AI Workflows</p>
+      <h1>Inside omni, My Autonomous Agent Orchestrator</h1>
+      <div class="tags"><span class="tag">ai-agents</span><span class="tag">automation</span><span class="tag">omni</span><span class="tag">workflow</span></div>
+      <div class="prose">
+<h2>Overview</h2>
+<p>In March 2026 I let an autonomous agent system run my GitHub workflow overnight for the first time.</p>
+<p>By the time I woke up, it had completed <strong>686 cycles</strong>, opened and merged <strong>11 pull requests</strong>, and self-healed <strong>8 stalls</strong> without me touching the keyboard.</p>
+<p>That system is <strong>omni</strong>, a CLI orchestrator I use as a personal operating system for AI agents.</p>
+<h2>What omni does</h2>
+<p>omni is a <strong>3-layer agent orchestrator</strong>:</p>
+<ol><li><strong>Master layer</strong> – decides which workspace or project needs attention next.</li><li><strong>Workspace layer</strong> – understands a specific codebase, open issues, and local tools.</li><li><strong>Project layer</strong> – runs Claude Code agents against a single GitHub issue until it is implemented, tested, and ready to merge.</li></ol>
+<p>Instead of treating AI as a one-off assistant, omni treats agents as <strong>long-running workers</strong> with a backlog:</p>
+<ul><li>It reads GitHub issues and converts them into concrete tasks.</li><li>It spins up short-lived Claude Code agents to implement changes in local repos.</li><li>It commits and pushes branches, opens pull requests, and responds to CI feedback.</li><li>It logs failures and friction points back into a vault, so the system can improve over time.</li></ul>
+<p>The goal isn’t to replace engineers. The goal is to <strong>give a senior engineer a swarm of reliable, scriptable collaborators</strong>.</p>
+<h2>Why I built it this way</h2>
+<p>Most “AI coding” setups stop at:</p>
+<blockquote><p>“Open the editor, ask the model to change a file, copy/paste a diff.”</p></blockquote>
+<p>That works for small changes, but it breaks down when you want:</p>
+<ul><li>A queue of GitHub issues that get implemented automatically.</li><li>Agents that can run commands, read lints, and keep state between steps.</li><li>A feedback loop where every failure becomes a future improvement.</li></ul>
+<p>omni is my answer to that. It:</p>
+<ul><li>Treats <strong>GitHub issues as the source of truth</strong>.</li><li>Uses <strong>Claude Code agents as workers</strong>, not as a UI gimmick.</li><li>Stores <strong>context and run history in a vault</strong>, so agents can learn from previous attempts.</li></ul>
+<p>The result is an OS-like layer that sits between my repos, GitHub, and Claude Code.</p>
+<h2>The first overnight run</h2>
+<p>The first real test for omni was simple:   <em>“Run all night and try to close as many issues as you can.”</em></p>
+<p>Over one night it:</p>
+<ul><li>Ran <strong>686 orchestration cycles</strong> across multiple projects.</li><li>Opened and merged <strong>11 pull requests</strong>.</li><li>Hit <strong>8 stalls</strong> (e.g. flaky tests, ambiguous specs) and recovered from them without manual intervention.</li></ul>
+<p>The interesting part wasn’t the raw numbers, it was the <strong>failure modes</strong>:</p>
+<ul><li>Places where the agent got stuck in tool loops.</li><li>Missing lint rules or tests that needed to exist.</li><li>Ambiguous GitHub issues that a human would have rewritten without thinking.</li></ul>
+<p>Every one of those became a new constraint for the system. The next night, omni knew a bit more about what “done” looks like.</p>
+<h2>How it fits into my work</h2>
+<p>omni isn’t a SaaS product (yet). It’s a <strong>tool I run locally</strong> as part of a bigger stack:</p>
+<ul><li><code>context-vault</code> provides a <strong>persistent memory layer</strong> for agents.</li><li>This site (felixhellstrom.com) is an <strong>agent-native static site</strong> – SQLite + markdown + a single Python generator.</li><li>omni runs on top of that environment, spinning up agents that can safely edit repos like this one.</li></ul>
+<p>If you work with:</p>
+<ul><li>A lot of small issues across multiple repos.</li><li>Repetitive refactors or migrations.</li><li>Documentation and content updates that agents can do faster than humans.</li></ul>
+<p>then omni is the kind of system I like to design and implement.</p>
+<h2>Work with me</h2>
+<p>If you’re interested in building:</p>
+<ul><li>Agent orchestration systems** like omni,</li><li>MCP-based tools** like context-vault, or</li><li>Production Webflow / HubSpot CMS setups** that integrate with AI workflows,</li></ul>
+<p>you can <a href="/contact/">get in touch here</a>. I work full-time as Technical Lead at Stormfors and take on a small number of projects through my independent practice.</p>
+      </div>
+    </article>
+
+    </div>
+  </div>
+</section>
+
+
+  </main>
+  <footer>
+    <p>&copy; 2026 Felix Hellström · <a href="https://github.com/fellanH">GitHub</a> · <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> · <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a></p>
+  </footer>
+  <script>
+;(function () {
+  var btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+
+  function icon() {
+    var d = document.documentElement.getAttribute('data-theme');
+    if (!d) d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    btn.textContent = d === 'dark' ? '\u2600' : '\u263E';
+  }
+
+  icon();
+
+  btn.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    if (!cur) cur = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    var next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    icon();
+  });
+})();
+
+
+</script>
+</body>
+</html>
+

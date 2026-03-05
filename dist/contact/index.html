@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Felix Hellström</title>
+  <meta name="description" content="Get in touch for AI tooling, web platforms, Webflow, HubSpot, or consulting." />
+  <link rel="canonical" href="https://felixhellstrom.com/contact/" />
+  <meta property="og:title" content="Contact — Felix Hellström" />
+  <meta property="og:description" content="Get in touch for AI tooling, web platforms, Webflow, HubSpot, or consulting." />
+  <meta property="og:image" content="https://felixhellstrom.com/images/og-image.png" />
+  <meta property="og:url" content="https://felixhellstrom.com/contact/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/images/favicon.png" />
+  <link rel="alternate" type="application/rss+xml" title="Felix Hellström" href="https://felixhellstrom.com/feed.xml" />
+  <script>
+;(function () {
+  var t = localStorage.getItem('theme');
+  if (t) document.documentElement.setAttribute('data-theme', t);
+})();
+
+
+</script>
+  <link rel="stylesheet" href="/normalize.css" />
+  <link rel="stylesheet" href="/style.css" />
+  
+</head>
+<body>
+  <header class="site-header"><nav><div class="nav-inner"><a href="/" class="nav-wordmark">Felix Hellström</a><div class="nav-links"><a href="/">Home</a><a href="/learn/">Learn</a><a href="/projects/">Projects</a><a href="/work/">Work</a><a href="/about/">About</a></div><div class="nav-actions"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button><a href="/contact/" class="nav-cta">Contact</a></div></div></nav></header>
+  <main>
+<section class="section_contact">
+  <div class="padding-global padding-section-large">
+    <div class="container-medium">
+
+    <h1>Contact</h1>
+    <p class="subtitle">Open to interesting problems — AI tooling, web platforms, and product work. If you're building something and need someone who ships, reach out.</p>
+
+    <div class="grid grid-2">
+      <div class="card"><p class="label">Email</p><h3><a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a></h3><p class="meta">For project discussions and opportunities.</p></div>
+      <div class="card"><p class="label">LinkedIn</p><h3><a href="https://linkedin.com/in/felixhellstrom" target="_blank" rel="noopener">linkedin.com/in/felixhellstrom ↗</a></h3><p class="meta">Best for professional connections and project inquiries.</p></div>
+      <div class="card"><p class="label">GitHub</p><h3><a href="https://github.com/fellanH" target="_blank" rel="noopener">github.com/fellanH ↗</a></h3><p class="meta">Open source projects and code. 99 repositories.</p></div>
+      <div class="card"><p class="label">X / Twitter</p><h3><a href="https://x.com/felixhellstrom" target="_blank" rel="noopener">@felixhellstrom ↗</a></h3><p class="meta">Thoughts on AI, tools, and building.</p></div>
+    </div>
+
+    <h2>Availability</h2>
+    <div class="card"><p>Currently Technical Lead at <a href="https://stormfors.com" target="_blank" rel="noopener">Stormfors</a> full-time. I take on select projects through my independent practice <strong>Klarhimmel</strong>. Best fit:</p><ul class="body-list"><li>AI agent tooling and MCP integrations</li><li>Complex Webflow or HubSpot CMS builds</li><li>Content migration pipelines (Contentful, WordPress → HubSpot)</li><li>Technical architecture consulting</li></ul></div>
+
+    <h2>What happens next</h2>
+    <div class="card"><p>If you reach out about a project, Ill usually reply within 1–2 business days.</p><ul class="body-list"><li>Well start with a short email exchange or 30–45 minute call to understand scope, timelines, and constraints.</li><li>If its a mutual fit, Ill propose a concrete plan (phases, deliverables, budget) before we commit.</li><li>If its not a fit, Ill do my best to point you in a useful direction.</li></ul></div>
+
+    <h2>Location</h2>
+    <div class="card"><p>Based in <strong>Stockholm, Sweden</strong>. Available for remote work globally.</p><p class="meta">Languages: Swedish (native) · English (fluent)</p></div>
+
+    </div>
+  </div>
+</section>
+
+
+  </main>
+  <footer>
+    <p>&copy; 2026 Felix Hellström · <a href="https://github.com/fellanH">GitHub</a> · <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> · <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a></p>
+  </footer>
+  <script>
+;(function () {
+  var btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+
+  function icon() {
+    var d = document.documentElement.getAttribute('data-theme');
+    if (!d) d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    btn.textContent = d === 'dark' ? '\u2600' : '\u263E';
+  }
+
+  icon();
+
+  btn.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    if (!cur) cur = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    var next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    icon();
+  });
+})();
+
+
+</script>
+</body>
+</html>
+

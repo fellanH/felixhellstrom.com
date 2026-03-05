@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11 PRs While I Slept — Felix Hellström</title>
+  <meta name="description" content="I let an autonomous agent orchestrator run overnight for the first time. 686 cycles, 11 merged PRs, and a lot of lessons about what breaks when no one is watching." />
+  <link rel="canonical" href="https://felixhellstrom.com/blog/eleven-prs-while-i-slept/" />
+  <meta property="og:title" content="11 PRs While I Slept — Felix Hellström" />
+  <meta property="og:description" content="I let an autonomous agent orchestrator run overnight for the first time. 686 cycles, 11 merged PRs, and a lot of lessons about what breaks when no one is watching." />
+  <meta property="og:image" content="https://felixhellstrom.com/images/og-image.png" />
+  <meta property="og:url" content="https://felixhellstrom.com/blog/eleven-prs-while-i-slept/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/images/favicon.png" />
+  <link rel="alternate" type="application/rss+xml" title="Felix Hellström" href="https://felixhellstrom.com/feed.xml" />
+  <script>
+;(function () {
+  var t = localStorage.getItem('theme');
+  if (t) document.documentElement.setAttribute('data-theme', t);
+})();
+
+
+</script>
+  <link rel="stylesheet" href="/normalize.css" />
+  <link rel="stylesheet" href="/style.css" />
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "11 PRs While I Slept", "description": "I let an autonomous agent orchestrator run overnight for the first time. 686 cycles, 11 merged PRs, and a lot of lessons about what breaks when no one is watching.", "datePublished": "2026-03-05", "author": {"@type": "Person", "name": "Felix Hellström", "url": "https://felixhellstrom.com"}, "publisher": {"@type": "Person", "name": "Felix Hellström", "url": "https://felixhellstrom.com"}, "url": "https://felixhellstrom.com/blog/eleven-prs-while-i-slept/", "image": "https://felixhellstrom.com/images/og-image.png", "keywords": ["ai-agents", "automation", "claude-code", "omni-cli"]}</script>
+</head>
+<body>
+  <header class="site-header"><nav><div class="nav-inner"><a href="/" class="nav-wordmark">Felix Hellström</a><div class="nav-links"><a href="/">Home</a><a href="/learn/">Learn</a><a href="/projects/">Projects</a><a href="/work/">Work</a><a href="/about/">About</a></div><div class="nav-actions"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button><a href="/contact/" class="nav-cta">Contact</a></div></div></nav></header>
+  <main>
+<section class="section_blog-post">
+  <div class="padding-global padding-section-large">
+    <div class="container-medium">
+
+    <a href="/blog/" class="back">← All posts</a>
+    <article>
+      <p class="meta">2026-03-05 · AI Workflows</p>
+      <h1>11 PRs While I Slept</h1>
+      <div class="tags"><span class="tag">ai-agents</span><span class="tag">automation</span><span class="tag">claude-code</span><span class="tag">omni-cli</span></div>
+      <div class="prose">
+<h2>The Setup</h2>
+<p>I've been building an autonomous agent orchestrator called omni-cli. It manages AI coding agents, assigns them issues from a backlog, and handles the full lifecycle: dispatch, implementation, PR creation, review, and merge.</p>
+<p>On the night of March 1st, I let it run unsupervised for the first time. I went to sleep. Here's what happened.</p>
+<h2>The Numbers</h2>
+<p>Over 7.5 hours, the system ran 686 cycles. It dispatched 103 tasks across 54 unique issues. 11 pull requests were merged automatically. 9 were flagged for manual review. 8 stalls were detected and self-healed.</p>
+<p>And 94.5% of cycles were idle.</p>
+<p>Let that sink in. The system was doing meaningful work for 5.5% of its runtime, and that 5.5% produced 11 production-quality PRs that I woke up to find merged.</p>
+<h2>What Went Right</h2>
+<p><strong>The dispatch loop worked.</strong> The orchestrator pulled issues from the backlog, assigned them to agents, and let them work. When an agent finished, it moved to the next issue. No manual intervention needed.</p>
+<p><strong>Self-healing worked.</strong> 8 times, an agent stalled (usually waiting on a network request or stuck in a test loop). The system detected the stall, killed the agent, and re-dispatched the issue. All 8 eventually completed.</p>
+<p><strong>The PRs were real.</strong> These weren't formatting changes or README updates. They included dependency upgrades, bug fixes, feature implementations, and test additions. Each one passed the test suite before merge.</p>
+<h2>What Went Wrong</h2>
+<p><strong>94% idle time.</strong> The biggest problem was the polling interval. The system checked for available work every N seconds with a fixed interval. When the backlog ran dry, it just kept polling an empty queue. No adaptive backoff, no backlog replenishment.</p>
+<p><strong>No wall-clock timeout.</strong> One stuck agent ran for 6+ hours before the cycle ended naturally. That's an entire night wasted on one task that should have been killed after 30 minutes.</p>
+<p><strong>Duplicate dispatches.</strong> 103 dispatches for 54 unique issues means some issues were dispatched twice. The deduplication logic had a race condition where two cycles could grab the same issue if they started within the same polling window.</p>
+<p><strong>No quality gates.</strong> PRs were auto-merged after passing tests. No diff size limits, no post-merge CI check, no human review requirement for changes above a certain complexity threshold. For a first run, I got lucky. I need guardrails before the next one.</p>
+<p><strong>Destructive restarts.</strong> When the system reconciled state on startup, it killed all running agents. This meant any in-flight work was lost. A graceful reconciliation that preserves running agents would have saved several dispatch cycles.</p>
+<h2>The Architecture</h2>
+<p>The system runs three layers:</p>
+<p><strong>The scheduler</strong> pulls from a GitHub issue backlog, prioritizes by labels, and assigns to available agent slots.</p>
+<p><strong>The agents</strong> are Claude Code instances running in tmux panes. Each gets a single issue, a workspace checkout, and a set of instructions. They implement the change, run tests, and open a PR.</p>
+<p><strong>The supervisor</strong> monitors agent health by checking tmux pane output for status indicators. When it detects a stall (no output change for N minutes), it kills and re-dispatches.</p>
+<p>The weakest part is the tmux-based health detection. Parsing terminal output with regex to determine if an agent is working or stuck is fragile. The next version will use structured status files that agents write to directly.</p>
+<h2>What's Next</h2>
+<p>The priority list is clear:</p>
+<ol><li><strong>Adaptive polling.</strong> Back off when the queue is empty, ramp up when new issues arrive.</li><li><strong>Wall-clock timeout.</strong> Kill any agent that's been running longer than 30 minutes on a single issue.</li><li><strong>Dispatch deduplication.</strong> Lock issues before dispatch to prevent double-assignment.</li><li><strong>Post-merge CI.</strong> Run the full test suite after merge, not just before.</li><li><strong>Graceful reconciliation.</strong> On restart, check for running agents before killing everything.</li></ol>
+<p>The goal is to get idle time under 20% and merged PRs above 20 per overnight run. If the system can reliably produce 20+ quality PRs while I sleep, the economics of solo development change completely.</p>
+<h2>The Takeaway</h2>
+<p>11 PRs while I slept. It's a proof of concept, not a production system. The failure modes are obvious and the efficiency is terrible. But the core loop works: assign issue, implement, test, merge, repeat.</p>
+<p>The interesting part isn't the number. It's that the system found its own problems and logged them. The friction entries from the overnight run became the issues that the system is now working on fixing. It's debugging itself.</p>
+<p>That's the loop I was trying to build. It works.</p>
+      </div>
+    </article>
+
+    </div>
+  </div>
+</section>
+
+
+  </main>
+  <footer>
+    <p>&copy; 2026 Felix Hellström · <a href="https://github.com/fellanH">GitHub</a> · <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> · <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a></p>
+  </footer>
+  <script>
+;(function () {
+  var btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+
+  function icon() {
+    var d = document.documentElement.getAttribute('data-theme');
+    if (!d) d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    btn.textContent = d === 'dark' ? '\u2600' : '\u263E';
+  }
+
+  icon();
+
+  btn.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    if (!cur) cur = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    var next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    icon();
+  });
+})();
+
+
+</script>
+</body>
+</html>
+

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contentful to HubSpot CMS Migration — Neonode — Felix Hellström</title>
+  <meta name="description" content="Designed an idempotent migration pipeline for 37 pages, 135 press releases, and 5 content groups. Multi-CDN asset handling across Cision and Contentful origins. Learned HubSpot CMS from zero." />
+  <link rel="canonical" href="https://felixhellstrom.com/work/neonode-hubspot-migration/" />
+  <meta property="og:title" content="Contentful to HubSpot CMS Migration — Neonode — Felix Hellström" />
+  <meta property="og:description" content="Designed an idempotent migration pipeline for 37 pages, 135 press releases, and 5 content groups. Multi-CDN asset handling across Cision and Contentful origins. Learned HubSpot CMS from zero." />
+  <meta property="og:image" content="https://felixhellstrom.com/images/og-image.png" />
+  <meta property="og:url" content="https://felixhellstrom.com/work/neonode-hubspot-migration/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/images/favicon.png" />
+  <link rel="alternate" type="application/rss+xml" title="Felix Hellström" href="https://felixhellstrom.com/feed.xml" />
+  <script>
+;(function () {
+  var t = localStorage.getItem('theme');
+  if (t) document.documentElement.setAttribute('data-theme', t);
+})();
+
+
+</script>
+  <link rel="stylesheet" href="/normalize.css" />
+  <link rel="stylesheet" href="/style.css" />
+  
+</head>
+<body>
+  <header class="site-header"><nav><div class="nav-inner"><a href="/" class="nav-wordmark">Felix Hellström</a><div class="nav-links"><a href="/">Home</a><a href="/learn/">Learn</a><a href="/projects/">Projects</a><a href="/work/" aria-current="page">Work</a><a href="/about/">About</a></div><div class="nav-actions"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button><a href="/contact/" class="nav-cta">Contact</a></div></div></nav></header>
+  <main>
+<section class="section_work-detail">
+  <div class="padding-global padding-section-large">
+    <div class="container-medium">
+
+    <a href="/work/" class="back">← All work</a>
+    <article>
+      <p class="meta">Neonode · 2026</p>
+      <h1>Contentful to HubSpot CMS Migration</h1>
+      <div class="tags"><span class="tag">Contentful</span><span class="tag">HubSpot CMS</span><span class="tag">Migration</span><span class="tag">Node.js</span></div>
+      <div class="prose"><h2>The challenge</h2>
+<p>Neonode needed to move their entire web presence — 37 pages, 135 press releases, and 5 content groups — from Contentful to HubSpot CMS. The content spanned multiple CDN origins (Cision and Contentful), with complex asset references that couldn't simply be copy-pasted across platforms.</p>
+<p>I had zero HubSpot CMS experience when the project started in December 2025.</p>
+<h2>What I built</h2>
+<p>An idempotent migration pipeline in Node.js that maps Contentful's content model to HubSpot modules, resolves multi-CDN asset URLs, and handles incremental re-runs without duplicating content. The pipeline processes press releases with their associated metadata, images, and cross-references in a single pass.</p>
+<p>I learned HubSpot CMS architecture, HubL templating, and the HubSpot APIs on the job — shipping the first production pages within two weeks of starting.</p>
+<blockquote><p>"Felix quickly became proficient in HubSpot CMS and delivered a complex migration pipeline that handled our entire content library. His ability to ramp up on new technology while maintaining delivery quality is impressive." — Stefan Soneus, Neonode</p></blockquote>
+<h2>Key details</h2>
+<ul><li>37 pages** migrated with full content fidelity</li><li>135 press releases** with Cision CDN asset resolution</li><li>Idempotent pipeline** — safe to re-run without duplicates</li><li>Zero downtime** cutover from Contentful to HubSpot</li></ul></div>
+      <p><a href="https://neonode.com" target="_blank" rel="noopener">Visit live site ↗</a></p>
+    </article>
+
+    </div>
+  </div>
+</section>
+
+
+  </main>
+  <footer>
+    <p>&copy; 2026 Felix Hellström · <a href="https://github.com/fellanH">GitHub</a> · <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> · <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a></p>
+  </footer>
+  <script>
+;(function () {
+  var btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+
+  function icon() {
+    var d = document.documentElement.getAttribute('data-theme');
+    if (!d) d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    btn.textContent = d === 'dark' ? '\u2600' : '\u263E';
+  }
+
+  icon();
+
+  btn.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    if (!cur) cur = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    var next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    icon();
+  });
+})();
+
+
+</script>
+</body>
+</html>
+

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hasselbacken Luxury Hotel Website Rebuild — Hasselbacken — Felix Hellström</title>
+  <meta name="description" content="Rebuilt the website for one of Sweden&#x27;s most famous hotels. Full Webflow build with booking integrations, restaurant pages, and event spaces. Video hero, multi-language support." />
+  <link rel="canonical" href="https://felixhellstrom.com/work/hasselbacken-luxury-hotel/" />
+  <meta property="og:title" content="Hasselbacken Luxury Hotel Website Rebuild — Hasselbacken — Felix Hellström" />
+  <meta property="og:description" content="Rebuilt the website for one of Sweden&#x27;s most famous hotels. Full Webflow build with booking integrations, restaurant pages, and event spaces. Video hero, multi-language support." />
+  <meta property="og:image" content="https://felixhellstrom.com/images/og-image.png" />
+  <meta property="og:url" content="https://felixhellstrom.com/work/hasselbacken-luxury-hotel/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/images/favicon.png" />
+  <link rel="alternate" type="application/rss+xml" title="Felix Hellström" href="https://felixhellstrom.com/feed.xml" />
+  <script>
+;(function () {
+  var t = localStorage.getItem('theme');
+  if (t) document.documentElement.setAttribute('data-theme', t);
+})();
+
+
+</script>
+  <link rel="stylesheet" href="/normalize.css" />
+  <link rel="stylesheet" href="/style.css" />
+  
+</head>
+<body>
+  <header class="site-header"><nav><div class="nav-inner"><a href="/" class="nav-wordmark">Felix Hellström</a><div class="nav-links"><a href="/">Home</a><a href="/learn/">Learn</a><a href="/projects/">Projects</a><a href="/work/" aria-current="page">Work</a><a href="/about/">About</a></div><div class="nav-actions"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button><a href="/contact/" class="nav-cta">Contact</a></div></div></nav></header>
+  <main>
+<section class="section_work-detail">
+  <div class="padding-global padding-section-large">
+    <div class="container-medium">
+
+    <a href="/work/" class="back">← All work</a>
+    <article>
+      <p class="meta">Hasselbacken · 2024</p>
+      <h1>Hasselbacken Luxury Hotel Website Rebuild</h1>
+      <div class="tags"><span class="tag">Booking Integration</span><span class="tag">Hospitality</span><span class="tag">Webflow</span></div>
+      <video src="https://r2.vidzflow.com/source/10e3c722-0575-4afb-b308-f5227eb8fb91.mp4" autoplay muted loop playsinline class="media-full"></video>
+      <div class="prose"><h2>The challenge</h2>
+<p>Hasselbacken is one of Sweden's most storied venues — a luxury hotel, restaurant, and event space on Djurgården in Stockholm. The existing website didn't reflect the prestige of the brand or the breadth of their offering.</p>
+<h2>What I built</h2>
+<p>A full Webflow rebuild with a cinematic video hero, smooth page transitions, and booking integrations for hotel rooms, restaurant reservations, and event inquiries. The site supports multiple languages and balances visual richness with fast load times.</p>
+<p>The design leans into the venue's heritage — warm tones, generous whitespace, and large-format photography that lets the spaces speak for themselves. Every section was built as a reusable CMS module so the Hasselbacken team can update content without developer involvement.</p>
+<h2>Technical depth</h2>
+<ul><li>Video hero** with responsive sources and lazy-loaded fallback images</li><li>Booking integrations** for hotel, restaurant, and events — each with distinct flows</li><li>Multi-language** content structure in Webflow CMS</li><li>Client-First** class architecture for long-term maintainability</li><li>Performance** — optimized media delivery through Vidzflow CDN</li></ul>
+<p>The project required close collaboration with the client's marketing team to ensure the site captured the right tone — luxurious but approachable, historic but modern.</p></div>
+      <p><a href="https://www.hasselbacken.com/" target="_blank" rel="noopener">Visit live site ↗</a></p>
+    </article>
+
+    </div>
+  </div>
+</section>
+
+
+  </main>
+  <footer>
+    <p>&copy; 2026 Felix Hellström · <a href="https://github.com/fellanH">GitHub</a> · <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> · <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a></p>
+  </footer>
+  <script>
+;(function () {
+  var btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+
+  function icon() {
+    var d = document.documentElement.getAttribute('data-theme');
+    if (!d) d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    btn.textContent = d === 'dark' ? '\u2600' : '\u263E';
+  }
+
+  icon();
+
+  btn.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    if (!cur) cur = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    var next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    icon();
+  });
+})();
+
+
+</script>
+</body>
+</html>
+

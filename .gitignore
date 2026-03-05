@@ -1,5 +1,2 @@
-node_modules
-dist
-.env
-.env.local
-.vercel
+src/content.db
+.archive/

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Felix Hellström</title>
+    <link>https://felixhellstrom.com</link>
+    <description>Building AI agent tools and writing about what works. MCP, multi-agent orchestration, and the agent-native stack.</description>
+    <language>en</language>
+    <atom:link href="https://felixhellstrom.com/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Inside omni, My Autonomous Agent Orchestrator</title>
+      <link>https://felixhellstrom.com/blog/omni-agent-orchestrator/</link>
+      <guid>https://felixhellstrom.com/blog/omni-agent-orchestrator/</guid>
+      <pubDate>2026-03-06</pubDate>
+      <description>How I built omni, a 3-layer agent system that opens GitHub issues, runs Claude Code agents, and merged 11 PRs while I slept.</description>
+    </item>
+    <item>
+      <title>11 PRs While I Slept</title>
+      <link>https://felixhellstrom.com/blog/eleven-prs-while-i-slept/</link>
+      <guid>https://felixhellstrom.com/blog/eleven-prs-while-i-slept/</guid>
+      <pubDate>2026-03-05</pubDate>
+      <description>I let an autonomous agent orchestrator run overnight for the first time. 686 cycles, 11 merged PRs, and a lot of lessons about what breaks when no one is watching.</description>
+    </item>
+    <item>
+      <title>Building an AI Memory Layer with Context Vault</title>
+      <link>https://felixhellstrom.com/blog/building-ai-memory-layer/</link>
+      <guid>https://felixhellstrom.com/blog/building-ai-memory-layer/</guid>
+      <pubDate>2026-03-04</pubDate>
+      <description>How I built a persistent memory system for Claude Code that survives across sessions, and why local-first matters.</description>
+    </item>
+    <item>
+      <title>Building a Self-Improving Agent OS</title>
+      <link>https://felixhellstrom.com/blog/building-self-improving-agent-os/</link>
+      <guid>https://felixhellstrom.com/blog/building-self-improving-agent-os/</guid>
+      <pubDate>2026-03-03</pubDate>
+      <description>How I built a personal operating system where AI agents log their own friction and write their own backlog. The system improves itself as you use it.</description>
+    </item>
+    <item>
+      <title>Using Git with AI Agents in Cursor</title>
+      <link>https://felixhellstrom.com/blog/using-git-with-ai-agents/</link>
+      <guid>https://felixhellstrom.com/blog/using-git-with-ai-agents/</guid>
+      <pubDate>2025-09-25</pubDate>
+      <description>A practical workflow for integrating Git into AI coding sessions. Branches, atomic commits, and intent-driven messages.</description>
+    </item>
+    <item>
+      <title>After 8 Years of Webflow, Here&#x27;s My Advice for Beginners</title>
+      <link>https://felixhellstrom.com/blog/webflow-advice-for-beginners/</link>
+      <guid>https://felixhellstrom.com/blog/webflow-advice-for-beginners/</guid>
+      <pubDate>2025-02-25</pubDate>
+      <description>Three crucial things I wish someone had told me when I first started with Webflow: Relume, Client-First, and REM units.</description>
+    </item>
+  </channel>
+</rss>

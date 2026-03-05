@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using Git with AI Agents in Cursor — Felix Hellström</title>
+  <meta name="description" content="A practical workflow for integrating Git into AI coding sessions. Branches, atomic commits, and intent-driven messages." />
+  <link rel="canonical" href="https://felixhellstrom.com/blog/using-git-with-ai-agents/" />
+  <meta property="og:title" content="Using Git with AI Agents in Cursor — Felix Hellström" />
+  <meta property="og:description" content="A practical workflow for integrating Git into AI coding sessions. Branches, atomic commits, and intent-driven messages." />
+  <meta property="og:image" content="https://felixhellstrom.com/images/og-image.png" />
+  <meta property="og:url" content="https://felixhellstrom.com/blog/using-git-with-ai-agents/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/images/favicon.png" />
+  <link rel="alternate" type="application/rss+xml" title="Felix Hellström" href="https://felixhellstrom.com/feed.xml" />
+  <script>
+;(function () {
+  var t = localStorage.getItem('theme');
+  if (t) document.documentElement.setAttribute('data-theme', t);
+})();
+
+
+</script>
+  <link rel="stylesheet" href="/normalize.css" />
+  <link rel="stylesheet" href="/style.css" />
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Using Git with AI Agents in Cursor", "description": "A practical workflow for integrating Git into AI coding sessions. Branches, atomic commits, and intent-driven messages.", "datePublished": "2025-09-25", "author": {"@type": "Person", "name": "Felix Hellström", "url": "https://felixhellstrom.com"}, "publisher": {"@type": "Person", "name": "Felix Hellström", "url": "https://felixhellstrom.com"}, "url": "https://felixhellstrom.com/blog/using-git-with-ai-agents/", "image": "https://felixhellstrom.com/images/og-image.png", "keywords": ["ai-agents", "cursor", "git", "workflow"]}</script>
+</head>
+<body>
+  <header class="site-header"><nav><div class="nav-inner"><a href="/" class="nav-wordmark">Felix Hellström</a><div class="nav-links"><a href="/">Home</a><a href="/learn/">Learn</a><a href="/projects/">Projects</a><a href="/work/">Work</a><a href="/about/">About</a></div><div class="nav-actions"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button><a href="/contact/" class="nav-cta">Contact</a></div></div></nav></header>
+  <main>
+<section class="section_blog-post">
+  <div class="padding-global padding-section-large">
+    <div class="container-medium">
+
+    <a href="/blog/" class="back">← All posts</a>
+    <article>
+      <p class="meta">2025-09-25 · AI Workflows</p>
+      <h1>Using Git with AI Agents in Cursor</h1>
+      <div class="tags"><span class="tag">ai-agents</span><span class="tag">cursor</span><span class="tag">git</span><span class="tag">workflow</span></div>
+      <div class="prose">
+<h2>Why Use Git?</h2>
+<p>Using Git provides a safety net when coding with AI. You have a complete history of every change the AI suggested and you accepted. If an AI-generated feature introduces a bug, you can instantly revert to a working version using <code>git revert</code> or <code>git reset</code>.</p>
+<p>You can create separate <strong>branches</strong> to test different AI prompts and approaches for the same problem without messing up your main codebase. Commit messages force you to articulate the <em>purpose</em> of the AI's code, ensuring you understand what was added and why.</p>
+<h2>Setting Up Your .gitignore</h2>
+<p>Your <code>.gitignore</code> file tells Git which files or folders to ignore. This is essential for keeping your repository clean from auto-generated files, local configurations, and large data/model files. Create a file named <code>.gitignore</code> in the root of your project.</p>
+<p>This configuration ignores common files from Cursor/VS Code, Python virtual environments, and large model or data files that shouldn't be in version control.</p>
+<h2>The "Vibe Coding" Workflow with Git</h2>
+<p>Here is a practical, step-by-step workflow for integrating Git into your AI coding sessions.</p>
+<h3>1. Start with a Clean Branch</h3>
+<p>Before you start prompting the AI, always create a new <strong>branch</strong>. This isolates your AI-generated experiments. Name the branch based on the feature you're building.</p>
+<h3>2. Prompt, Generate, and Review</h3>
+<p>Now, start your "vibe coding" session. Use your AI agent (Cursor's chat, Claude Code, inline edits) to generate code, fix bugs, or write documentation.</p>
+<p>After the AI generates a block of code, <strong>don't commit it immediately</strong>. First, review it carefully to ensure you understand it and that it aligns with your project's goals.</p>
+<h3>3. Make Small, Atomic Commits</h3>
+<p>This is the most important step. Instead of committing a huge chunk of AI-generated code at once, break it down into small, logical pieces. Use Git's staging feature, <code>git add -p</code> (or <code>git add --patch</code>), to review and stage changes chunk by chunk.</p>
+<p>When the terminal prompts you for each chunk, you can choose:</p>
+<ul><li>y**: Yes, stage this hunk</li><li>n**: No, do not stage this hunk</li><li>s**: Split this hunk into smaller pieces (if possible)</li><li>e**: Manually edit the hunk before staging</li><li>q**: Quit</li></ul>
+<p>This granular control ensures you only commit code that you've personally vetted.</p>
+<h3>4. Write Intent-Driven Commit Messages</h3>
+<p>Your commit messages should explain the <em>why</em>, not just the <em>what</em>. Since the AI wrote the code, your message adds the human context. A good format:</p>
+<p><strong>feat: Add user login functionality via AI</strong></p>
+<p>"Used Cursor to generate the initial Flask route and template. The prompt was: 'Create a Flask route at /login that handles GET and POST requests.' Reviewed the generated code for basic security and correctness."</p>
+<p>This clarifies what feature was added, that an AI was used, the specific prompt that led to the code, and that you reviewed it.</p>
+<h3>5. Iterate and Refine</h3>
+<p>Continue this cycle: <strong>prompt, generate, review, stage, commit</strong>. As you refine the feature, keep making small commits:</p>
+<ul><li><code>fix: Correct validation logic from AI suggestion</code></li><li><code>refactor: Restructure AI-generated code into services</code></li><li><code>docs: Add docstrings to AI functions</code></li></ul>
+<p>Once the feature is complete, push your branch and create a pull request to merge it into your <code>main</code> branch. This gives you one final chance to review all the AI-assisted changes together.</p>
+      </div>
+    </article>
+
+    </div>
+  </div>
+</section>
+
+
+  </main>
+  <footer>
+    <p>&copy; 2026 Felix Hellström · <a href="https://github.com/fellanH">GitHub</a> · <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> · <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a></p>
+  </footer>
+  <script>
+;(function () {
+  var btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+
+  function icon() {
+    var d = document.documentElement.getAttribute('data-theme');
+    if (!d) d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    btn.textContent = d === 'dark' ? '\u2600' : '\u263E';
+  }
+
+  icon();
+
+  btn.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    if (!cur) cur = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    var next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    icon();
+  });
+})();
+
+
+</script>
+</body>
+</html>
+

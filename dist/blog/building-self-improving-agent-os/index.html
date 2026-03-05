@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building a Self-Improving Agent OS — Felix Hellström</title>
+  <meta name="description" content="How I built a personal operating system where AI agents log their own friction and write their own backlog. The system improves itself as you use it." />
+  <link rel="canonical" href="https://felixhellstrom.com/blog/building-self-improving-agent-os/" />
+  <meta property="og:title" content="Building a Self-Improving Agent OS — Felix Hellström" />
+  <meta property="og:description" content="How I built a personal operating system where AI agents log their own friction and write their own backlog. The system improves itself as you use it." />
+  <meta property="og:image" content="https://felixhellstrom.com/images/og-image.png" />
+  <meta property="og:url" content="https://felixhellstrom.com/blog/building-self-improving-agent-os/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/images/favicon.png" />
+  <link rel="alternate" type="application/rss+xml" title="Felix Hellström" href="https://felixhellstrom.com/feed.xml" />
+  <script>
+;(function () {
+  var t = localStorage.getItem('theme');
+  if (t) document.documentElement.setAttribute('data-theme', t);
+})();
+
+
+</script>
+  <link rel="stylesheet" href="/normalize.css" />
+  <link rel="stylesheet" href="/style.css" />
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Building a Self-Improving Agent OS", "description": "How I built a personal operating system where AI agents log their own friction and write their own backlog. The system improves itself as you use it.", "datePublished": "2026-03-03", "author": {"@type": "Person", "name": "Felix Hellström", "url": "https://felixhellstrom.com"}, "publisher": {"@type": "Person", "name": "Felix Hellström", "url": "https://felixhellstrom.com"}, "url": "https://felixhellstrom.com/blog/building-self-improving-agent-os/", "image": "https://felixhellstrom.com/images/og-image.png", "keywords": ["ai-agents", "automation", "mcp", "omni"]}</script>
+</head>
+<body>
+  <header class="site-header"><nav><div class="nav-inner"><a href="/" class="nav-wordmark">Felix Hellström</a><div class="nav-links"><a href="/">Home</a><a href="/learn/">Learn</a><a href="/projects/">Projects</a><a href="/work/">Work</a><a href="/about/">About</a></div><div class="nav-actions"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button><a href="/contact/" class="nav-cta">Contact</a></div></div></nav></header>
+  <main>
+<section class="section_blog-post">
+  <div class="padding-global padding-section-large">
+    <div class="container-medium">
+
+    <a href="/blog/" class="back">← All posts</a>
+    <article>
+      <p class="meta">2026-03-03 · Building in Public</p>
+      <h1>Building a Self-Improving Agent OS</h1>
+      <div class="tags"><span class="tag">ai-agents</span><span class="tag">automation</span><span class="tag">mcp</span><span class="tag">omni</span></div>
+      <div class="prose">
+<h2>The Problem</h2>
+<p>Every AI session starts cold. No memory of what you built last week. No awareness of the patterns that work, the decisions that were already made, or the friction you hit and solved.</p>
+<p>I was managing multiple products, client projects, and side projects across different AI agents. Context was scattered across CLAUDE.md files, random notes, and my own memory. Agents would re-discover the same problems, re-make the same decisions, and miss the same context.</p>
+<p>I needed a system where the agents could learn from themselves.</p>
+<h2>The Omni Wrapper</h2>
+<p>The solution started with a single directory: <code>~/omni/</code>. Everything lives inside it. Workspaces, projects, an inbox, and an operating system layer. The folder tree IS the agent configuration.</p>
+<pre><code>~/omni/
+  workspaces/
+    products/          # Products I&#x27;m building
+    client-work/       # Client projects
+    personal/          # Personal projects
+  os/                  # The system itself
+  inbox/               # Incoming tasks, triage queue</code></pre>
+<p>Each workspace contains project repos. The skeleton is git-tracked, but individual project repos are gitignored. This means the structure is version-controlled while the actual code stays in its own repos.</p>
+<h2>The 3-Layer Agent System</h2>
+<p>The agents run in three layers:</p>
+<p><strong>L0: Master orchestrator.</strong> Sets priorities, deploys agents, handles escalations. This is the brain that decides what gets worked on next.</p>
+<p><strong>L1: Workspace orchestrator.</strong> Triages issues within a product ecosystem. If context-vault has 5 open issues, the L1 agent decides the order and assigns work.</p>
+<p><strong>L2: Project agent.</strong> Implements a single issue end-to-end. Opens a PR, runs tests, requests review.</p>
+<p>Sequential by default. Parallel only for proven-independent work. I learned the hard way that running 8 concurrent agents thrashes the machine and creates merge conflicts that waste more time than they save.</p>
+<h2>Context Vault as Persistent Memory</h2>
+<p>Instead of duplicating context in markdown files, CLAUDE.md files are thin "boot loaders" that declare vault queries. Context lives once, in the vault, and gets loaded dynamically.</p>
+<pre><code># In CLAUDE.md
+When starting work, run: context-vault search &quot;project:context-vault&quot;</code></pre>
+<p>Agents share context across workspaces without reading each other's files. A decision made in one project is visible to agents in another. The vault is the single source of truth.</p>
+<h2>The Self-Improving Loop</h2>
+<p>This is the part that changed everything.</p>
+<p>Agents log friction they encounter while doing real work. When an agent hits something slow, confusing, or broken in the system itself, it saves a <code>friction</code> entry to the vault. At the end of each session, friction entries get triaged into GitHub issues.</p>
+<p>The flow:</p>
+<ol><li>Agent hits friction while working (slow build, missing context, confusing API)</li><li>Agent logs it to the vault with an <code>omni-friction</code> tag (takes 5 seconds)</li><li>At checkout, friction entries get reviewed and promoted to issues</li><li>Those issues get assigned to the same agent system that discovered them</li><li>The system that finds problems is the same system that fixes them</li></ol>
+<p>Infrastructure improvements become emergent, not planned. You discover what needs fixing by doing real work. The system optimizes for low-friction capture in the moment, then structured triage later.</p>
+<h2>The First Overnight Run</h2>
+<p>I let the system run autonomously overnight for the first time on March 1st.</p>
+<p>686 cycles over 7.5 hours. 11 PRs merged. 9 flagged for review. 8 stalls that self-healed. 103 dispatches across 54 unique issues.</p>
+<p>It was messy. 94% of cycles were idle because there was no adaptive polling. One stuck agent ran for 6 hours unchecked because there was no wall-clock timeout. But the 11 PRs that DID merge were real, tested, production-quality changes.</p>
+<p>The system discovered its own problems overnight and logged them as friction entries. The next morning, I triaged those entries into issues. The system is now working on fixing the problems it found in itself.</p>
+<h2>What I Learned</h2>
+<p><strong>Emergent over planned.</strong> The best infrastructure improvements came from friction logged during real work, not from architecture planning sessions.</p>
+<p><strong>Sequential beats parallel.</strong> For AI agents, doing one thing well is better than doing eight things badly. Parallel execution sounds cool but creates coordination overhead that eats the productivity gains.</p>
+<p><strong>The folder tree is the config.</strong> Instead of complex configuration files, the physical structure of <code>~/omni/</code> tells agents where things live and what they should care about.</p>
+<p><strong>Persistent memory changes the game.</strong> Once agents can remember across sessions, they stop being stateless tools and start becoming collaborators that accumulate knowledge over time.</p>
+<p>The system is still rough. But it's already improving itself faster than I could improve it manually. That's the whole point.</p>
+      </div>
+    </article>
+
+    </div>
+  </div>
+</section>
+
+
+  </main>
+  <footer>
+    <p>&copy; 2026 Felix Hellström · <a href="https://github.com/fellanH">GitHub</a> · <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> · <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a></p>
+  </footer>
+  <script>
+;(function () {
+  var btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+
+  function icon() {
+    var d = document.documentElement.getAttribute('data-theme');
+    if (!d) d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    btn.textContent = d === 'dark' ? '\u2600' : '\u263E';
+  }
+
+  icon();
+
+  btn.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    if (!cur) cur = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    var next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    icon();
+  });
+})();
+
+
+</script>
+</body>
+</html>
+

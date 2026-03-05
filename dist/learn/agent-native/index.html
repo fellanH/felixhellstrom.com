@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Agent-Native Stack — Learn — Felix Hellström</title>
+  <meta name="description" content="A philosophy for building software that AI agents can navigate, modify, and maintain. SQLite + Markdown + static HTML over frameworks and complexity." />
+  <link rel="canonical" href="https://felixhellstrom.com/learn/agent-native/" />
+  <meta property="og:title" content="The Agent-Native Stack — Learn — Felix Hellström" />
+  <meta property="og:description" content="A philosophy for building software that AI agents can navigate, modify, and maintain. SQLite + Markdown + static HTML over frameworks and complexity." />
+  <meta property="og:image" content="https://felixhellstrom.com/images/og-image.png" />
+  <meta property="og:url" content="https://felixhellstrom.com/learn/agent-native/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/images/favicon.png" />
+  <link rel="alternate" type="application/rss+xml" title="Felix Hellström" href="https://felixhellstrom.com/feed.xml" />
+  <script>
+;(function () {
+  var t = localStorage.getItem('theme');
+  if (t) document.documentElement.setAttribute('data-theme', t);
+})();
+
+
+</script>
+  <link rel="stylesheet" href="/normalize.css" />
+  <link rel="stylesheet" href="/style.css" />
+  
+</head>
+<body>
+  <header class="site-header"><nav><div class="nav-inner"><a href="/" class="nav-wordmark">Felix Hellström</a><div class="nav-links"><a href="/">Home</a><a href="/learn/" aria-current="page">Learn</a><a href="/projects/">Projects</a><a href="/work/">Work</a><a href="/about/">About</a></div><div class="nav-actions"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button><a href="/contact/" class="nav-cta">Contact</a></div></div></nav></header>
+  <main>
+<section class="section_learn-pillar">
+  <div class="padding-global padding-section-large">
+    <div class="container-medium">
+    <a href="/learn/" class="back">← All pillars</a>
+    <h1>The Agent-Native Stack</h1>
+    <p class="subtitle">A philosophy for building software that AI agents can navigate, modify, and maintain. SQLite + Markdown + static HTML over frameworks and complexity.</p>
+    <div class="prose">
+<h1>The Agent-Native Web</h1>
+<p><em>A manifesto for building websites in the age of AI agents.</em></p>
+<p>---</p>
+<h2>The problem</h2>
+<p>The modern web stack is a monument to accidental complexity.</p>
+<p>To publish a paragraph of text on the internet in 2025, you need: a JavaScript framework, a CSS framework, a bundler, a package manager, a lockfile, a CMS with an API, an authentication layer, a hosting platform with build pipelines, environment variables, edge functions, and 300MB of <code>node_modules</code>.</p>
+<p>All of this infrastructure exists to solve two problems:</p>
+<ol><li>Making it easy for humans to edit content through a GUI</li><li>Making it fast to deliver that content to a browser</li></ol>
+<p>But there's a new actor in the system now. AI agents don't need GUIs. They don't need dashboards, drag-and-drop editors, or WYSIWYG fields. They need <strong>structured data they can read and write directly.</strong></p>
+<p>The entire CMS layer — the admin panels, the REST APIs, the webhooks, the content models with their validation rules and preview URLs — exists to translate between human intent and structured data. An AI agent doesn't need that translation layer. It IS the translation layer.</p>
+<h2>The thesis</h2>
+<p><strong>If an AI agent is your primary content editor, the optimal web architecture is radically simpler than what the industry currently builds.</strong></p>
+<p>The stack collapses to:</p>
+<pre><code>SQLite database     ← structured content
+Markdown files      ← long-form prose
+Python script       ← generates HTML
+Static HTML         ← what gets served</code></pre>
+<p>No framework. No runtime. No build pipeline. No dependencies.</p>
+<h2>The principles</h2>
+<h3>1. The database is the CMS</h3>
+<p>SQLite is the perfect content store for agent-edited sites. It's structured (agents can read schemas and write SQL), portable (one file), version-controllable (seed scripts in git), and queryable (no API layer between the agent and the data).</p>
+<p>Every CMS dashboard is a GUI wrapper around a database. Remove the GUI, and you're left with the database. That's the point.</p>
+<h3>2. Markdown is the editor</h3>
+<p>Agents produce markdown as naturally as humans produce speech. It's their native output format for prose. Designing a content layer around markdown means zero friction between agent output and published content.</p>
+<p>No JSX. No MDX imports. No component shortcodes. No frontmatter schemas. Just text with formatting.</p>
+<h3>3. Zero dependencies is a feature</h3>
+<p>Every dependency is:</p>
+<ul><li>A potential build failure</li><li>A security advisory waiting to happen</li><li>A breaking change in the next major version</li><li>A reason <code>npm install</code> takes 30 seconds</li><li>A node in a supply chain you don't control</li></ul>
+<p>The Python standard library includes everything a static site generator needs: <code>sqlite3</code>, <code>pathlib</code>, <code>re</code>, <code>html.escape</code>. The generator for felixhellstrom.com is 651 lines with zero imports beyond stdlib.</p>
+<p>A site with no dependencies cannot have a broken build.</p>
+<h3>4. The repository is the product</h3>
+<p>There is no "build output" directory. The HTML files in the repo are the HTML files that get served. <code>git push</code> is the deploy command.</p>
+<p>This means:</p>
+<ul><li>You can read the site by reading the repo</li><li>You can debug the site by diffing commits</li><li>You can rollback by reverting a commit</li><li>You can preview by opening an HTML file</li></ul>
+<p>The gap between source and output is zero.</p>
+<h3>5. The generator is disposable</h3>
+<p>The Python script that converts database → HTML is the least important part of the system. It could be rewritten in any language in an afternoon. The valuable artifacts are the database and the markdown files.</p>
+<p>This inverts the traditional relationship where the framework is the investment and the content is portable. Here, the content is the investment and the framework is trivially replaceable.</p>
+<h2>The workflow</h2>
+<p>The traditional workflow:</p>
+<pre><code>Human → CMS dashboard → API → Build pipeline → CDN → Browser</code></pre>
+<p>The agent-native workflow:</p>
+<pre><code>Human → Agent → Database + Markdown → Script → HTML → Browser</code></pre>
+<p>The second pipeline has fewer moving parts, fewer failure modes, and produces faster output. The agent replaces the CMS dashboard, the API, and the build pipeline in a single step.</p>
+<h2>The economics</h2>
+<p>A Next.js site on Vercel with a headless CMS:</p>
+<ul><li>Build time:** 30-120 seconds</li><li>Dependencies:** 200-500 packages</li><li>Cold start:** 100-500ms (serverless)</li><li>Monthly cost:** $0-20 (can spike)</li><li>Maintenance:** Weekly dependency updates, occasional breaking changes</li><li>Failure modes:** Build failures, API timeouts, cache invalidation bugs, hydration mismatches</li></ul>
+<p>A static HTML site generated from SQLite:</p>
+<ul><li>Build time:** <1 second</li><li>Dependencies:** 0</li><li>Cold start:** 0ms (static files)</li><li>Monthly cost:** $0 (any static host)</li><li>Maintenance:** None</li><li>Failure modes:** None (it's HTML files)</li></ul>
+<h2>Where this doesn't work</h2>
+<p>This approach is wrong for:</p>
+<ul><li>Applications** that need client-side interactivity, authentication, or real-time data</li><li>Teams** where non-technical people need to edit content without developer involvement</li><li>Scale** where thousands of pages need incremental builds</li><li>Commerce** where dynamic pricing, inventory, and checkout flows are required</li></ul>
+<p>This approach is right for:</p>
+<ul><li>Personal sites and portfolios</li><li>Blogs and content sites</li><li>Documentation sites</li><li>Marketing landing pages</li><li>Any site where the content changes less than daily and the primary editor is an AI agent</li></ul>
+<h2>The long-term vision</h2>
+<p>As AI agents become the default interface for content creation, the layers between intent and output will continue to compress. The CMS dashboard becomes unnecessary. The API layer becomes unnecessary. The framework becomes unnecessary.</p>
+<p>What remains is:</p>
+<ul><li>A content store** (database or files) that agents can read and write</li><li>A rendering step** (script) that converts content to HTML</li><li>A delivery layer** (static hosting) that serves the output</li></ul>
+<p>This isn't a regression. It's a progression. We added all those layers because humans needed them. Agents don't. Removing them makes the system faster, cheaper, more reliable, and easier to reason about.</p>
+<p>The best framework is the one you can delete.</p>
+<p>---</p>
+<p><em>First published March 2026, alongside the rebuild of <a href="https://felixhellstrom.com">felixhellstrom.com</a>.</em> <em>Written by Felix Hellström, with Claude.</em></p>
+    </div>
+
+    </div>
+  </div>
+</section>
+
+
+  </main>
+  <footer>
+    <p>&copy; 2026 Felix Hellström · <a href="https://github.com/fellanH">GitHub</a> · <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> · <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a></p>
+  </footer>
+  <script>
+;(function () {
+  var btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+
+  function icon() {
+    var d = document.documentElement.getAttribute('data-theme');
+    if (!d) d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    btn.textContent = d === 'dark' ? '\u2600' : '\u263E';
+  }
+
+  icon();
+
+  btn.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    if (!cur) cur = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    var next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    icon();
+  });
+})();
+
+
+</script>
+</body>
+</html>
+
