@@ -667,118 +667,170 @@ def module_work_detail(props: dict, ctx: dict) -> str:
     return b
 
 
-def _has_media(row: sqlite3.Row) -> bool:
-    """Check if a case study row has visible media."""
-    if row["video"] and not row["hide_image"]:
-        return True
-    return bool(row["image"])
-
-
 def build_home_context() -> dict:
-    """Context (data) used by home page modules.
+    """Build the homepage feed from curated feed_items + remaining content.
 
-    Returns items as (position, type, html, span) tuples.
-    span is a CSS class string like "span-row-2" or empty.
+    Pre-fetches all content in bulk (6 queries total regardless of feed size),
+    then assembles items in a single pass.
+
+    Returns {"items": [{"type": str, "html": str, "span": str}, ...]}.
     """
-    feed_rows = q("SELECT * FROM feed_items ORDER BY position")
+    conn = db()
+    try:
+        ex = conn.execute
 
-    covered_posts: set[int] = set()
-    covered_cs: set[int] = set()
-    covered_projects: set[int] = set()
-    covered_testimonials: set[int] = set()
+        # ── bulk-load all content into lookup dicts (6 queries) ──
+        posts_by_id = {
+            r["id"]: r for r in ex(
+                "SELECT id, slug, title, date, description, category FROM posts"
+            ).fetchall()
+        }
+        cs_by_id = {
+            r["id"]: r for r in ex(
+                "SELECT id, slug, title, client, description, year, image, video, url, hide_image "
+                "FROM case_studies"
+            ).fetchall()
+        }
+        projects_by_id = {
+            r["id"]: r for r in ex(
+                "SELECT id, slug, title, description, status, url, github, npm, stats FROM projects"
+            ).fetchall()
+        }
+        testimonials_by_id = {
+            r["id"]: r for r in ex(
+                "SELECT id, name, role, quote, image, linkedin FROM testimonials"
+            ).fetchall()
+        }
 
-    # items: (position, type, html, span_class)
-    items: list[tuple[int, str, str, str]] = []
-    for i, row in enumerate(feed_rows):
-        t = row["type"]
-        span = ""
-        if t == "blog-post" and row["post_id"]:
-            covered_posts.add(row["post_id"])
-        elif t == "case-study" and row["case_study_id"]:
-            covered_cs.add(row["case_study_id"])
-            # Check if this case study has media → span 2 rows
-            cs_check = q(
-                "SELECT image, video, hide_image FROM case_studies WHERE id = ?",
-                (row["case_study_id"],),
-            )
-            if cs_check and _has_media(cs_check[0]):
-                span = "span-row-2"
-        elif t == "project" and row["project_id"]:
-            covered_projects.add(row["project_id"])
-        elif t == "recommendation" and row["testimonial_id"]:
-            covered_testimonials.add(row["testimonial_id"])
-        html = feed_item_card(row)
-        if html:
-            items.append((i, t, html, span))
+        # Pre-load all tags into {(table, fk_id): [tag, ...]}
+        all_tags: dict[tuple[str, int], list[str]] = {}
+        for table, fk in [("post_tags", "post_id"), ("case_study_tags", "case_study_id"), ("project_tags", "project_id")]:
+            for r in ex(f"SELECT {fk}, tag FROM {table}").fetchall():
+                all_tags.setdefault((table, r[fk]), []).append(r["tag"])
 
-    # Append any content NOT referenced in feed_items
-    idx = len(items)
+        def tags(table: str, fk_id: int) -> list[str]:
+            return all_tags.get((table, fk_id), [])
 
-    for p in q("SELECT id, slug, title, date, description, category FROM posts ORDER BY date DESC"):
-        if p["id"] not in covered_posts:
-            tg = get_tags("post_tags", "post_id", p["id"])
-            items.append((idx, "blog-post", post_card(p, tg), ""))
-            idx += 1
+        def has_media(cs) -> bool:
+            return bool((cs["video"] and not cs["hide_image"]) or cs["image"])
 
-    for cs in q(
-        "SELECT id, slug, title, client, description, year, image, video, url, hide_image "
-        "FROM case_studies ORDER BY year DESC, title"
-    ):
-        if cs["id"] not in covered_cs:
-            tg = get_tags("case_study_tags", "case_study_id", cs["id"])
-            span = "span-row-2" if _has_media(cs) else ""
-            items.append((idx, "case-study", work_card(cs, tg), span))
-            idx += 1
+        # ── render helpers (type → html, span) ──
+        def render_feed_row(row) -> tuple[str, str, str] | None:
+            """Return (type, html, span) or None if the referenced content is missing."""
+            t = row["type"]
 
-    for pr in q("SELECT id, slug, title, description, status, url, github, npm, stats FROM projects"):
-        if pr["id"] not in covered_projects:
-            tg = get_tags("project_tags", "project_id", pr["id"])
-            items.append((idx, "project", project_card(pr, tg), ""))
-            idx += 1
+            if t == "blog-post" and row["post_id"]:
+                p = posts_by_id.get(row["post_id"])
+                if not p:
+                    return None
+                return t, post_card(p, tags("post_tags", p["id"])), ""
 
-    for t in q("SELECT id, name, role, quote, image, linkedin FROM testimonials"):
-        if t["id"] not in covered_testimonials:
-            items.append((idx, "recommendation", testimonial_card(t), ""))
-            idx += 1
+            if t == "case-study" and row["case_study_id"]:
+                cs = cs_by_id.get(row["case_study_id"])
+                if not cs:
+                    return None
+                span = "span-row-2" if has_media(cs) else ""
+                return t, work_card(cs, tags("case_study_tags", cs["id"])), span
+
+            if t == "project" and row["project_id"]:
+                pr = projects_by_id.get(row["project_id"])
+                if not pr:
+                    return None
+                return t, project_card(pr, tags("project_tags", pr["id"])), ""
+
+            if t == "recommendation" and row["testimonial_id"]:
+                tm = testimonials_by_id.get(row["testimonial_id"])
+                if not tm:
+                    return None
+                return t, testimonial_card(tm), ""
+
+            if t == "stat" and row["value"]:
+                inner = f'<div class="stat-value">{e(row["value"])}</div>'
+                if row["label"]:
+                    inner += f'<div class="stat-label">{e(row["label"])}</div>'
+                if row["detail"]:
+                    inner += f'<p class="meta">{e(row["detail"])}</p>'
+                return t, card(inner), ""
+
+            return None
+
+        # ── curated feed items ──
+        feed_rows = ex("SELECT * FROM feed_items ORDER BY position").fetchall()
+        covered: set[tuple[str, int]] = set()
+        items: list[dict[str, str]] = []
+
+        for row in feed_rows:
+            result = render_feed_row(row)
+            if not result:
+                continue
+            dtype, html, span = result
+            items.append({"type": dtype, "html": html, "span": span})
+            # Track covered content IDs
+            for col in ("post_id", "case_study_id", "project_id", "testimonial_id"):
+                if row[col]:
+                    covered.add((col, row[col]))
+
+        # ── append uncurated content ──
+        for pid, p in posts_by_id.items():
+            if ("post_id", pid) not in covered:
+                items.append({"type": "blog-post", "html": post_card(p, tags("post_tags", pid)), "span": ""})
+
+        for cid, cs in cs_by_id.items():
+            if ("case_study_id", cid) not in covered:
+                span = "span-row-2" if has_media(cs) else ""
+                items.append({"type": "case-study", "html": work_card(cs, tags("case_study_tags", cid)), "span": span})
+
+        for pid, pr in projects_by_id.items():
+            if ("project_id", pid) not in covered:
+                items.append({"type": "project", "html": project_card(pr, tags("project_tags", pid)), "span": ""})
+
+        for tid, tm in testimonials_by_id.items():
+            if ("testimonial_id", tid) not in covered:
+                items.append({"type": "recommendation", "html": testimonial_card(tm), "span": ""})
+
+    finally:
+        conn.close()
 
     return {"items": items}
 
 
-def build_home_feed(items: list[tuple[int, str, str, str]]) -> str:
+def build_home_feed(items: list[dict[str, str]]) -> str:
     """Build the home feed module (filter + uniform grid + load-more + JS)."""
-    feed = ""
+    BATCH = 9
+    filters = [
+        ("all", "All"),
+        ("case-study", "Work"),
+        ("blog-post", "Blog"),
+        ("project", "Projects"),
+        ("recommendation", "Testimonials"),
+    ]
 
-    # Filter bar
-    feed += f'    {heading("From the workbench")}\n'
-    feed += '    <div class="filter-bar">\n'
-    feed += '      <button class="filter-btn active" data-filter="all">All</button>\n'
-    feed += '      <button class="filter-btn" data-filter="case-study">Work</button>\n'
-    feed += '      <button class="filter-btn" data-filter="blog-post">Blog</button>\n'
-    feed += '      <button class="filter-btn" data-filter="project">Projects</button>\n'
-    feed += '      <button class="filter-btn" data-filter="recommendation">Testimonials</button>\n'
-    feed += "    </div>\n"
+    parts = [
+        f'    {heading("From the workbench")}',
+        '    <div class="filter-bar">',
+        *[
+            f'      <button class="filter-btn{" active" if slug == "all" else ""}" data-filter="{slug}">{label}</button>'
+            for slug, label in filters
+        ],
+        '    </div>',
+        '    <div class="feed-grid">',
+    ]
 
-    # Uniform grid — all items, hidden beyond first 9
-    feed += '    <div class="feed-grid">\n'
-    for i, (_, dtype, html, span) in enumerate(items):
-        cls = "feed-item"
-        if span:
-            cls += f" {span}"
-        if i >= 9:
-            cls += " hidden"
-        feed += f'      <div class="{cls}" data-type="{dtype}">{html}</div>\n'
-    feed += "    </div>\n"
+    for i, item in enumerate(items):
+        cls = " ".join(filter(None, ["feed-item", item["span"], "hidden" if i >= BATCH else ""]))
+        parts.append(f'      <div class="{cls}" data-type="{item["type"]}">{item["html"]}</div>')
 
-    # Load more button
-    feed += '    <div class="load-more-wrap">\n'
-    feed += '      <button class="btn btn-outline" id="load-more">Show more</button>\n'
-    feed += "    </div>\n"
+    parts += [
+        '    </div>',
+        '    <div class="load-more-wrap">',
+        '      <button class="btn btn-outline" id="load-more">Show more</button>',
+        '    </div>',
+        '    <script>',
+        read_template("home-feed.js"),
+        '    </script>',
+    ]
 
-    # Inline JS for filter + load-more
-    home_feed_js = read_template("home-feed.js")
-    feed += "    <script>\n" + home_feed_js + "\n    </script>\n"
-
-    return feed
+    return "\n".join(parts) + "\n"
 
 
 def build_page_context(page_id: str) -> dict:
@@ -1029,73 +1081,6 @@ def testimonial_card(row) -> str:
         return card_clickable(href, inner, external=True)
     return card(inner)
 
-
-def feed_item_card(row: sqlite3.Row) -> str:
-    """Render a mixed feed item based on type."""
-    t = row["type"]
-
-    if t == "blog-post" and row["post_id"]:
-        post_rows = q(
-            "SELECT id, slug, title, date, description, category FROM posts WHERE id = ?",
-            (row["post_id"],),
-        )
-        if not post_rows:
-            return ""
-        p = post_rows[0]
-        tg = get_tags("post_tags", "post_id", p["id"])
-        return post_card(p, tg)
-
-    if t == "case-study" and row["case_study_id"]:
-        cs_rows = q(
-            "SELECT id, slug, title, client, description, year, image, video, url, hide_image FROM case_studies WHERE id = ?",
-            (row["case_study_id"],),
-        )
-        if not cs_rows:
-            return ""
-        cs = cs_rows[0]
-        tg = get_tags("case_study_tags", "case_study_id", cs["id"])
-        return work_card(cs, tg)
-
-    if t == "project" and row["project_id"]:
-        pr_rows = q(
-            "SELECT id, slug, title, description, status, url, github, npm, stats FROM projects WHERE id = ?",
-            (row["project_id"],),
-        )
-        if not pr_rows:
-            return ""
-        pr = pr_rows[0]
-        tg = get_tags("project_tags", "project_id", pr["id"])
-        return project_card(pr, tg)
-
-    if t == "recommendation" and row["testimonial_id"]:
-        t_rows = q(
-            "SELECT name, role, quote, image, linkedin FROM testimonials WHERE id = ?",
-            (row["testimonial_id"],),
-        )
-        if not t_rows:
-            return ""
-        return testimonial_card(t_rows[0])
-
-    # Stat items — big number + label + detail
-    if t == "stat" and row["value"]:
-        inner = f'<div class="stat-value">{e(row["value"])}</div>'
-        if row["label"]:
-            inner += f'<div class="stat-label">{e(row["label"])}</div>'
-        if row["detail"]:
-            inner += f'<p class="meta">{e(row["detail"])}</p>'
-        return card(inner)
-
-    # Fallback for generic/statement items
-    parts: list[str] = []
-    if row["label"]:
-        parts.append(f'<p class="label">{e(row["label"])}</p>')
-    if row["value"]:
-        parts.append(f"<h3>{e(row['value'])}</h3>")
-    if row["text"] or row["detail"]:
-        parts.append(f"<p class=\"meta\">{e(row['text'] or row['detail'])}</p>")
-    if not parts:
-        parts.append("<p class=\"meta\">Untitled feed item</p>")
-    return card("".join(parts))
 
 
 # ── page: home ───────────────────────────────────────────────────────────
