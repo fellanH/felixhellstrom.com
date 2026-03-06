@@ -667,31 +667,49 @@ def module_work_detail(props: dict, ctx: dict) -> str:
     return b
 
 
+def _has_media(row: sqlite3.Row) -> bool:
+    """Check if a case study row has visible media."""
+    if row["video"] and not row["hide_image"]:
+        return True
+    return bool(row["image"])
+
+
 def build_home_context() -> dict:
-    """Context (data) used by home page modules."""
-    # All feed_items in curated order — stats inline with content
+    """Context (data) used by home page modules.
+
+    Returns items as (position, type, html, span) tuples.
+    span is a CSS class string like "span-row-2" or empty.
+    """
     feed_rows = q("SELECT * FROM feed_items ORDER BY position")
 
-    # Track which content IDs are covered by feed_items
     covered_posts: set[int] = set()
     covered_cs: set[int] = set()
     covered_projects: set[int] = set()
     covered_testimonials: set[int] = set()
 
-    items: list[tuple[int, str, str]] = []
+    # items: (position, type, html, span_class)
+    items: list[tuple[int, str, str, str]] = []
     for i, row in enumerate(feed_rows):
         t = row["type"]
+        span = ""
         if t == "blog-post" and row["post_id"]:
             covered_posts.add(row["post_id"])
         elif t == "case-study" and row["case_study_id"]:
             covered_cs.add(row["case_study_id"])
+            # Check if this case study has media → span 2 rows
+            cs_check = q(
+                "SELECT image, video, hide_image FROM case_studies WHERE id = ?",
+                (row["case_study_id"],),
+            )
+            if cs_check and _has_media(cs_check[0]):
+                span = "span-row-2"
         elif t == "project" and row["project_id"]:
             covered_projects.add(row["project_id"])
         elif t == "recommendation" and row["testimonial_id"]:
             covered_testimonials.add(row["testimonial_id"])
         html = feed_item_card(row)
         if html:
-            items.append((i, t, html))
+            items.append((i, t, html, span))
 
     # Append any content NOT referenced in feed_items
     idx = len(items)
@@ -699,7 +717,7 @@ def build_home_context() -> dict:
     for p in q("SELECT id, slug, title, date, description, category FROM posts ORDER BY date DESC"):
         if p["id"] not in covered_posts:
             tg = get_tags("post_tags", "post_id", p["id"])
-            items.append((idx, "blog-post", post_card(p, tg)))
+            items.append((idx, "blog-post", post_card(p, tg), ""))
             idx += 1
 
     for cs in q(
@@ -708,25 +726,26 @@ def build_home_context() -> dict:
     ):
         if cs["id"] not in covered_cs:
             tg = get_tags("case_study_tags", "case_study_id", cs["id"])
-            items.append((idx, "case-study", work_card(cs, tg)))
+            span = "span-row-2" if _has_media(cs) else ""
+            items.append((idx, "case-study", work_card(cs, tg), span))
             idx += 1
 
     for pr in q("SELECT id, slug, title, description, status, url, github, npm, stats FROM projects"):
         if pr["id"] not in covered_projects:
             tg = get_tags("project_tags", "project_id", pr["id"])
-            items.append((idx, "project", project_card(pr, tg)))
+            items.append((idx, "project", project_card(pr, tg), ""))
             idx += 1
 
     for t in q("SELECT id, name, role, quote, image, linkedin FROM testimonials"):
         if t["id"] not in covered_testimonials:
-            items.append((idx, "recommendation", testimonial_card(t)))
+            items.append((idx, "recommendation", testimonial_card(t), ""))
             idx += 1
 
     return {"items": items}
 
 
-def build_home_feed(items: list[tuple[int, str, str]]) -> str:
-    """Build the home feed module (filter + bento grid + load-more + JS)."""
+def build_home_feed(items: list[tuple[int, str, str, str]]) -> str:
+    """Build the home feed module (filter + uniform grid + load-more + JS)."""
     feed = ""
 
     # Filter bar
@@ -739,11 +758,15 @@ def build_home_feed(items: list[tuple[int, str, str]]) -> str:
     feed += '      <button class="filter-btn" data-filter="recommendation">Testimonials</button>\n'
     feed += "    </div>\n"
 
-    # Bento grid — all items, hidden beyond first 9
-    feed += '    <div class="bento-grid">\n'
-    for i, (_, dtype, html) in enumerate(items):
-        hidden = " hidden" if i >= 9 else ""
-        feed += f'      <div class="bento-item{hidden}" data-type="{dtype}">{html}</div>\n'
+    # Uniform grid — all items, hidden beyond first 9
+    feed += '    <div class="feed-grid">\n'
+    for i, (_, dtype, html, span) in enumerate(items):
+        cls = "feed-item"
+        if span:
+            cls += f" {span}"
+        if i >= 9:
+            cls += " hidden"
+        feed += f'      <div class="{cls}" data-type="{dtype}">{html}</div>\n'
     feed += "    </div>\n"
 
     # Load more button
@@ -751,7 +774,7 @@ def build_home_feed(items: list[tuple[int, str, str]]) -> str:
     feed += '      <button class="btn btn-outline" id="load-more">Show more</button>\n'
     feed += "    </div>\n"
 
-    # Inline JS for filter + load-more (loaded from template)
+    # Inline JS for filter + load-more
     home_feed_js = read_template("home-feed.js")
     feed += "    <script>\n" + home_feed_js + "\n    </script>\n"
 

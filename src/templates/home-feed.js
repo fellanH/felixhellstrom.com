@@ -1,9 +1,9 @@
 (function () {
   var BATCH = 9;
-  var grid = document.querySelector(".bento-grid");
+  var grid = document.querySelector(".feed-grid");
   if (!grid) return;
 
-  var items = Array.from(grid.querySelectorAll(".bento-item"));
+  var items = Array.from(grid.querySelectorAll(".feed-item"));
   var filterBtns = document.querySelectorAll(".filter-btn");
   var loadMoreBtn = document.getElementById("load-more");
   if (!loadMoreBtn) return;
