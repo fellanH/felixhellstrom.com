@@ -1,0 +1,75 @@
+{
+  "id": "contact",
+  "path": "/contact/",
+  "title": "Contact — Felix Hellström",
+  "description": "Get in touch for AI tooling, web platforms, Webflow, HubSpot, or consulting.",
+  "activeNav": "Contact",
+
+  "shell": {
+    "template": "page-shell.html",
+    "props": {
+      "includePersonSchema": false
+    }
+  },
+
+  "sections": [
+    {
+      "id": "contact-header",
+      "height": "medium",
+      "width": "medium",
+      "modules": [
+        {
+          "type": "markdown",
+          "component": "markdown",
+          "props": {
+            "text": "# Contact\n\nOpen to interesting problems — AI tooling, web platforms, and product work. If you're building something and need someone who ships, reach out.",
+            "class": "prose"
+          }
+        }
+      ]
+    },
+    {
+      "id": "contact-channels",
+      "height": "large",
+      "width": "large",
+      "modules": [
+        {
+          "type": "cardList",
+          "component": "cardList",
+          "props": {
+            "layout": "grid-2",
+            "items": [
+              {
+                "label": "Email",
+                "title": "fehellstrom@gmail.com",
+                "body": "For project discussions and opportunities.",
+                "href": "mailto:fehellstrom@gmail.com"
+              },
+              {
+                "label": "LinkedIn",
+                "title": "linkedin.com/in/felixhellstrom ↗",
+                "body": "Best for professional connections and project inquiries.",
+                "href": "https://linkedin.com/in/felixhellstrom",
+                "external": true
+              },
+              {
+                "label": "GitHub",
+                "title": "github.com/fellanH ↗",
+                "body": "Open source projects and code.",
+                "href": "https://github.com/fellanH",
+                "external": true
+              },
+              {
+                "label": "X / Twitter",
+                "title": "@felixhellstrom ↗",
+                "body": "Thoughts on AI, tools, and building.",
+                "href": "https://x.com/felixhellstrom",
+                "external": true
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

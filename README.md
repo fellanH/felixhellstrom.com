@@ -20,14 +20,14 @@ That's it. Tell your agent what to change, or edit `content/` + `src/db/seed.sql
 
 Everything in **content/** is yours to edit:
 
-| Want to...        | Do this                                              |
-| ----------------- | ---------------------------------------------------- |
-| Write a blog post | Create a `.md` file in `content/posts/`              |
-| Add a photo       | Drop it in `content/images/`                         |
-| Change colors     | Edit CSS variables at the top of `content/style.css` |
-| Change fonts      | Edit the `body` font-family in `content/style.css`   |
-| Tweak typography  | Edit heading/paragraph sizes in `content/style.css`  |
-| Edit structured content (posts, work, projects, testimonials, feed) | Update rows in `src/db/seed.sql`        |
+| Want to...                                                          | Do this                                              |
+| ------------------------------------------------------------------- | ---------------------------------------------------- |
+| Write a blog post                                                   | Create a `.md` file in `content/posts/`              |
+| Add a photo                                                         | Drop it in `content/images/`                         |
+| Change colors                                                       | Edit CSS variables at the top of `content/style.css` |
+| Change fonts                                                        | Edit the `body` font-family in `content/style.css`   |
+| Tweak typography                                                    | Edit heading/paragraph sizes in `content/style.css`  |
+| Edit structured content (posts, work, projects, testimonials, feed) | Update rows in `src/db/seed.sql`                     |
 
 ### Color reference (`content/style.css`)
 

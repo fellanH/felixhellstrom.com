@@ -1,33 +1,40 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{title}</title>
-  <meta name="description" content="{desc}" />
-  <link rel="canonical" href="{canonical}" />
-  <meta property="og:title" content="{og_title}" />
-  <meta property="og:description" content="{og_desc}" />
-  <meta property="og:image" content="{site_url}/images/og-image.png" />
-  <meta property="og:url" content="{og_url}" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="/images/favicon.png" />
-  <link rel="alternate" type="application/rss+xml" title="{site_name}" href="{site_url}/feed.xml" />
-  {theme_init}
-  <link rel="stylesheet" href="/normalize.css" />
-  <link rel="stylesheet" href="/style.css" />
-  {person_ld}{extra_schema}
-</head>
-<body>
-  <header class="site-header">{nav}</header>
-  <main>
-{body}
-  </main>
-  <footer>
-    <p>&copy; {year} {site_name} · <a href="https://github.com/fellanH">GitHub</a> · <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> · <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a></p>
-  </footer>
-  {theme_toggle}
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content="{desc}" />
+    <link rel="canonical" href="{canonical}" />
+    <meta property="og:title" content="{og_title}" />
+    <meta property="og:description" content="{og_desc}" />
+    <meta property="og:image" content="{site_url}/images/og-image.png" />
+    <meta property="og:url" content="{og_url}" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/images/favicon.png" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="{site_name}"
+      href="{site_url}/feed.xml"
+    />
+    {theme_init}
+    <link rel="stylesheet" href="/normalize.css" />
+    <link rel="stylesheet" href="/style.css" />
+    {person_ld}{extra_schema}
+  </head>
+  <body>
+    <header class="site-header">{nav}</header>
+    <main>{body}</main>
+    <footer>
+      <p>
+        &copy; {year} {site_name} ·
+        <a href="https://github.com/fellanH">GitHub</a> ·
+        <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> ·
+        <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a>
+      </p>
+    </footer>
+    {theme_toggle}
+  </body>
 </html>
-

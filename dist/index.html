@@ -1,235 +1,1357 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Felix Hellström — Building AI agent tools and writing about what works. MCP, multi-agent orchestration, and the agent-native stack.</title>
-  <meta name="description" content="Building AI agent tools and writing about what works. MCP, multi-agent orchestration, and the agent-native stack." />
-  <link rel="canonical" href="https://felixhellstrom.com/" />
-  <meta property="og:title" content="Felix Hellström — Building AI agent tools and writing about what works. MCP, multi-agent orchestration, and the agent-native stack." />
-  <meta property="og:description" content="Building AI agent tools and writing about what works. MCP, multi-agent orchestration, and the agent-native stack." />
-  <meta property="og:image" content="https://felixhellstrom.com/images/og-image.png" />
-  <meta property="og:url" content="https://felixhellstrom.com/" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="/images/favicon.png" />
-  <link rel="alternate" type="application/rss+xml" title="Felix Hellström" href="https://felixhellstrom.com/feed.xml" />
-  <script>
-;(function () {
-  var t = localStorage.getItem('theme');
-  if (t) document.documentElement.setAttribute('data-theme', t);
-})();
-
-
-</script>
-  <link rel="stylesheet" href="/normalize.css" />
-  <link rel="stylesheet" href="/style.css" />
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Felix Hellström", "url": "https://felixhellstrom.com", "image": "https://felixhellstrom.com/images/felix-hero.jpeg", "jobTitle": "Full-Stack Developer & Technical Lead", "worksFor": {"@type": "Organization", "name": "Stormfors"}, "sameAs": ["https://github.com/fellanH", "https://linkedin.com/in/felixhellstrom", "https://x.com/felixhellstrom", "https://www.npmjs.com/~fellanh"], "knowsAbout": ["MCP", "AI Agents", "Claude Code", "SQLite", "Webflow", "TypeScript", "Python"]}</script>
-</head>
-<body>
-  <header class="site-header"><nav><div class="nav-inner"><a href="/" class="nav-wordmark">Felix Hellström</a><div class="nav-links"><a href="/" aria-current="page">Home</a><a href="/learn/">Learn</a><a href="/projects/">Projects</a><a href="/work/">Work</a><a href="/about/">About</a></div><div class="nav-actions"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button><a href="/contact/" class="nav-cta">Contact</a></div></div></nav></header>
-  <main>
-<section class="section_home-hero">
-  <div class="padding-global padding-section-small">
-    <div class="container-large">
-<div class="hero">
-  <div class="hero-bg">
-    <div class="hero-orb hero-orb-1"></div>
-    <div class="hero-orb hero-orb-2"></div>
-  </div>
-  <div class="hero-content">
-    <h1>Felix Hellström</h1>
-    <p class="hero-sub">
-      I build AI agent tools and write about what works. MCP servers, multi-agent orchestration, and the agent-native stack.
-    </p>
-    <div class="btn-row">
-      <a href="/learn/" class="btn btn-primary">Start learning</a>
-      <a href="/projects/" class="btn btn-outline">View projects</a>
-    </div>
-  </div>
-</div>
-
-
-    </div>
-  </div>
-</section>
-
-
-<section class="section_home-stats">
-  <div class="padding-global padding-section-medium">
-    <div class="container-large">
-    <div class="grid-stats">
-      <div><div class="stat-value">100+</div><div class="stat-label">Client projects shipped</div></div>
-      <div><div class="stat-value">693+</div><div class="stat-label">Tests in context-vault</div></div>
-      <div><div class="stat-value">10+ yrs</div><div class="stat-label">Professional experience</div></div>
-      <div><div class="stat-value">2</div><div class="stat-label">Languages (SV / EN)</div></div>
-    </div>
-
-    </div>
-  </div>
-</section>
-
-
-<section class="section_home-feed">
-  <div class="padding-global padding-section-large">
-    <div class="container-large">
-    <h2>From the workbench</h2>
-    <div class="filter-bar">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="case-study">Work</button>
-      <button class="filter-btn" data-filter="blog-post">Blog</button>
-      <button class="filter-btn" data-filter="project">Projects</button>
-      <button class="filter-btn" data-filter="recommendation">Testimonials</button>
-    </div>
-    <div class="bento-grid">
-      <div class="bento-item" data-type="case-study"><div class="card card-link"><a href="/work/neonode-hubspot-migration/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><img class="cover" src="/images/work/neonode.webp" alt="Contentful to HubSpot CMS Migration" /><p class="meta">Neonode · 2026 · <a href="https://neonode.com" target="_blank" rel="noopener">Visit ↗</a></p><h3><a href="/work/neonode-hubspot-migration/" class="link-block">Contentful to HubSpot CMS Migration</a></h3><p class="card-body">Designed an idempotent migration pipeline for 37 pages, 135 press releases, and 5 content groups. Multi-CDN asset handling across Cision and Contentful origins. Learned HubSpot CMS from zero.</p><div class="tags"><span class="tag">Contentful</span><span class="tag">HubSpot CMS</span><span class="tag">Migration</span><span class="tag">Node.js</span></div></div></div>
-      <div class="bento-item" data-type="case-study"><div class="card card-link"><a href="/work/porsche-club-sweden/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><video src="https://r2.vidzflow.com/source/7ddb99e5-d475-4928-90b5-099b38b4a9ca.mp4" autoplay muted loop playsinline class="cover"></video><p class="meta">Porsche Club Sweden · 2025 · <a href="https://www.porsche.nu/" target="_blank" rel="noopener">Visit ↗</a></p><h3><a href="/work/porsche-club-sweden/" class="link-block">Porsche Club Sweden Membership Platform</a></h3><p class="card-body">We transformed Porsche Club Sweden&#x27;s outdated website into a sleek, mobile-first experience that embodies passion, community, and modern architecture — delighting 6,000+ members.</p><div class="tags"><span class="tag">CMS</span><span class="tag">Mobile-First</span><span class="tag">Webflow</span></div></div></div>
-      <div class="bento-item" data-type="case-study"><div class="card card-link"><a href="/work/hasselbacken-luxury-hotel/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><video src="https://r2.vidzflow.com/source/10e3c722-0575-4afb-b308-f5227eb8fb91.mp4" autoplay muted loop playsinline class="cover"></video><p class="meta">Hasselbacken · 2024 · <a href="https://www.hasselbacken.com/" target="_blank" rel="noopener">Visit ↗</a></p><h3><a href="/work/hasselbacken-luxury-hotel/" class="link-block">Hasselbacken Luxury Hotel Website Rebuild</a></h3><p class="card-body">Rebuilt the website for one of Sweden&#x27;s most famous hotels. Full Webflow build with booking integrations, restaurant pages, and event spaces. Video hero, multi-language support.</p><div class="tags"><span class="tag">Booking Integration</span><span class="tag">Hospitality</span><span class="tag">Webflow</span></div></div></div>
-      <div class="bento-item" data-type="case-study"><div class="card card-link"><a href="/work/gasometer-visual-experience/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><img class="cover" src="/images/work/gasometer.avif" alt="Gasometer Visual Experience" /><p class="meta">Cirkus Venues · 2023 · <a href="https://www.gasometer.se/" target="_blank" rel="noopener">Visit ↗</a></p><h3><a href="/work/gasometer-visual-experience/" class="link-block">Gasometer Visual Experience</a></h3><p class="card-body">Built a visual experience site for a 1,740-seat theater venue in central Stockholm. Dark, cinematic design with immersive scroll-driven animations.</p><div class="tags"><span class="tag">Animation</span><span class="tag">Visual Design</span><span class="tag">Webflow</span></div></div></div>
-      <div class="bento-item" data-type="project"><div class="card card-link"><a href="https://weknowaeo.com" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><h3>We Know AEO <span class="status status-active">active</span></h3><p class="card-body">Research site exploring AI Engine Optimization. How to structure content so AI search engines (ChatGPT, Perplexity, Claude) surface your brand. Full Schema.org markup.</p><p class="meta"><a href="https://weknowaeo.com" target="_blank" rel="noopener">Website</a></p><div class="tags"><span class="tag">AEO</span><span class="tag">Next.js</span><span class="tag">SEO</span><span class="tag">Schema.org</span></div></div></div>
-      <div class="bento-item" data-type="project"><div class="card card-link"><a href="https://context-vault.com" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><h3>context-vault <span class="status status-active">active</span></h3><p class="card-body">Persistent memory for AI agents. Local-first MCP server that gives Claude Code and other AI tools a semantic memory layer that survives across sessions. Published on npm, 693+ tests, full SaaS ecosystem.</p><p class="meta">693+ tests, npm published, SaaS + self-hosted</p><p class="meta"><a href="https://context-vault.com" target="_blank" rel="noopener">Website</a> · <a href="https://github.com/fellanH/context-vault" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.npmjs.com/package/context-vault" target="_blank" rel="noopener">npm</a></p><div class="tags"><span class="tag">Claude Code</span><span class="tag">Embeddings</span><span class="tag">MCP</span><span class="tag">SQLite</span><span class="tag">TypeScript</span></div></div></div>
-      <div class="bento-item" data-type="project"><div class="card card-link"><a href="/blog/omni-agent-orchestrator/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><h3>omni-cli <span class="status status-active">active</span></h3><p class="card-body">Autonomous agent orchestrator. 3-layer system (master, workspace, project) that dispatches Claude Code agents to implement GitHub issues end-to-end. First overnight run: 686 cycles, 11 PRs merged, 8 self-healed stalls.</p><p class="meta">6,700+ lines, 11 PRs merged overnight</p><p class="meta"><a href="/blog/omni-agent-orchestrator/" target="_blank" rel="noopener">Website</a></p><div class="tags"><span class="tag">Automation</span><span class="tag">Claude Code</span><span class="tag">GitHub API</span><span class="tag">TypeScript</span></div></div></div>
-      <div class="bento-item" data-type="project"><div class="card card-link"><a href="https://github.com/fellanH/origin" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><h3>origin <span class="status status-building">building</span></h3><p class="card-body">Keyboard-driven split-panel desktop workspace. Tauri 2 app with hot-reload plugins, canvas layouts, and a motion system. Rust backend, React frontend.</p><p class="meta"><a href="https://github.com/fellanH/origin" target="_blank" rel="noopener">GitHub</a></p><div class="tags"><span class="tag">React</span><span class="tag">Rust</span><span class="tag">Tauri</span><span class="tag">TypeScript</span></div></div></div>
-      <div class="bento-item" data-type="project"><div class="card"><h3>trained-on.com <span class="status status-building">building</span></h3><p class="card-body">Self-serve platform for e-commerce store owners to generate professional product photography with custom-trained AI models. Stripe billing, Supabase auth, FAL.ai inference.</p><div class="tags"><span class="tag">AI</span><span class="tag">FAL.ai</span><span class="tag">Next.js</span><span class="tag">Stripe</span><span class="tag">Supabase</span></div></div></div>
-      <div class="bento-item hidden" data-type="blog-post"><div class="card card-link"><a href="/blog/omni-agent-orchestrator/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><p class="meta">2026-03-06 · AI Workflows</p><h3><a href="/blog/omni-agent-orchestrator/" class="link-block">Inside omni, My Autonomous Agent Orchestrator</a></h3><p class="card-body">How I built omni, a 3-layer agent system that opens GitHub issues, runs Claude Code agents, and merged 11 PRs while I slept.</p><div class="tags"><span class="tag">ai-agents</span><span class="tag">automation</span><span class="tag">omni</span><span class="tag">workflow</span></div></div></div>
-      <div class="bento-item hidden" data-type="blog-post"><div class="card card-link"><a href="/blog/eleven-prs-while-i-slept/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><p class="meta">2026-03-05 · AI Workflows</p><h3><a href="/blog/eleven-prs-while-i-slept/" class="link-block">11 PRs While I Slept</a></h3><p class="card-body">I let an autonomous agent orchestrator run overnight for the first time. 686 cycles, 11 merged PRs, and a lot of lessons about what breaks when no one is watching.</p><div class="tags"><span class="tag">ai-agents</span><span class="tag">automation</span><span class="tag">claude-code</span><span class="tag">omni-cli</span></div></div></div>
-      <div class="bento-item hidden" data-type="blog-post"><div class="card card-link"><a href="/blog/building-ai-memory-layer/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><p class="meta">2026-03-04 · Products</p><h3><a href="/blog/building-ai-memory-layer/" class="link-block">Building an AI Memory Layer with Context Vault</a></h3><p class="card-body">How I built a persistent memory system for Claude Code that survives across sessions, and why local-first matters.</p><div class="tags"><span class="tag">ai</span><span class="tag">claude-code</span><span class="tag">context-vault</span><span class="tag">mcp</span></div></div></div>
-      <div class="bento-item hidden" data-type="blog-post"><div class="card card-link"><a href="/blog/building-self-improving-agent-os/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><p class="meta">2026-03-03 · Building in Public</p><h3><a href="/blog/building-self-improving-agent-os/" class="link-block">Building a Self-Improving Agent OS</a></h3><p class="card-body">How I built a personal operating system where AI agents log their own friction and write their own backlog. The system improves itself as you use it.</p><div class="tags"><span class="tag">ai-agents</span><span class="tag">automation</span><span class="tag">mcp</span><span class="tag">omni</span></div></div></div>
-      <div class="bento-item hidden" data-type="blog-post"><div class="card card-link"><a href="/blog/using-git-with-ai-agents/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><p class="meta">2025-09-25 · AI Workflows</p><h3><a href="/blog/using-git-with-ai-agents/" class="link-block">Using Git with AI Agents in Cursor</a></h3><p class="card-body">A practical workflow for integrating Git into AI coding sessions. Branches, atomic commits, and intent-driven messages.</p><div class="tags"><span class="tag">ai-agents</span><span class="tag">cursor</span><span class="tag">git</span><span class="tag">workflow</span></div></div></div>
-      <div class="bento-item hidden" data-type="blog-post"><div class="card card-link"><a href="/blog/webflow-advice-for-beginners/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><p class="meta">2025-02-25 · Webflow</p><h3><a href="/blog/webflow-advice-for-beginners/" class="link-block">After 8 Years of Webflow, Here&#x27;s My Advice for Beginners</a></h3><p class="card-body">Three crucial things I wish someone had told me when I first started with Webflow: Relume, Client-First, and REM units.</p><div class="tags"><span class="tag">client-first</span><span class="tag">rem</span><span class="tag">tips</span><span class="tag">webflow</span></div></div></div>
-      <div class="bento-item hidden" data-type="case-study"><div class="card card-link"><a href="/work/precis-digital/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><img class="cover" src="/images/work/precis.jpg" alt="Corporate Website" /><p class="meta">Precis Digital · 2025 · <a href="https://www.precis.com" target="_blank" rel="noopener">Visit ↗</a></p><h3><a href="/work/precis-digital/" class="link-block">Corporate Website</a></h3><p class="card-body">Built the website for Precis, a major Swedish player in digital marketing, bringing together media, creative, tech, data and analytics into one cohesive offering.</p><div class="tags"><span class="tag">CMS</span><span class="tag">Corporate</span><span class="tag">Webflow</span></div></div></div>
-      <div class="bento-item hidden" data-type="case-study"><div class="card card-link"><a href="/work/salty-decoupled-mapbox/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><img class="cover" src="/images/work/salty.jpg" alt="Decoupled Mapbox + AWS Architecture" /><p class="meta">Salty.co · 2025 · <a href="https://salty.co" target="_blank" rel="noopener">Visit ↗</a></p><h3><a href="/work/salty-decoupled-mapbox/" class="link-block">Decoupled Mapbox + AWS Architecture</a></h3><p class="card-body">Designed a decoupled beach mapping platform combining Webflow CMS with Mapbox GL JS and AWS Lambda for weather data caching. Authored full architectural proposal with 3-phase roadmap.</p><div class="tags"><span class="tag">AWS Lambda</span><span class="tag">Mapbox GL JS</span><span class="tag">Vercel</span><span class="tag">Webflow</span></div></div></div>
-      <div class="bento-item hidden" data-type="case-study"><div class="card card-link"><a href="/work/resident-interface-launch/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><p class="meta">Resident Interface · 2025 · <a href="https://residentinterface.com" target="_blank" rel="noopener">Visit ↗</a></p><h3><a href="/work/resident-interface-launch/" class="link-block">Full Site Build &amp; Launch in 4 Weeks</a></h3><p class="card-body">End-to-end site build for US client, from proposal negotiation to launch in under a month. Comprehensive SEO deployment with massive organic traffic improvements post-launch.</p><div class="tags"><span class="tag">GA4</span><span class="tag">GTM</span><span class="tag">Technical SEO</span><span class="tag">Webflow CMS</span></div></div></div>
-      <div class="bento-item hidden" data-type="case-study"><div class="card card-link"><a href="/work/we-know-aeo/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><p class="meta">Internal · 2025 · <a href="https://www.weknowaeo.com/" target="_blank" rel="noopener">Visit ↗</a></p><h3><a href="/work/we-know-aeo/" class="link-block">We Know AEO: AI Engine Optimization</a></h3><p class="card-body">Built a Next.js site exploring AI Engine Optimization, the practice of structuring web content for AI search engines like ChatGPT, Perplexity, and Claude. Full schema markup and semantic HTML.</p><div class="tags"><span class="tag">AEO</span><span class="tag">Next.js</span><span class="tag">SEO</span><span class="tag">Schema.org</span></div></div></div>
-      <div class="bento-item hidden" data-type="case-study"><div class="card card-link"><a href="/work/miramis-enterprise-hub/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><video src="https://player.vimeo.com/progressive_redirect/playback/1032460293/rendition/2160p/file.mp4?loc=external&amp;log_user=0&amp;signature=37118ffc1f99e1a93bb90062c90644372c6d0a72aea74572a3f50651a9e0167c" autoplay muted loop playsinline class="cover"></video><p class="meta">Miramis / Qarlbo AB · 2024 · <a href="https://www.miramis.com/" target="_blank" rel="noopener">Visit ↗</a></p><h3><a href="/work/miramis-enterprise-hub/" class="link-block">Enterprise Hub with Custom Integrations</a></h3><p class="card-body">Custom Instagram integration, InRecruit JSON job integration, dynamic scaling, fluid responsive system, and preloader. Full styleguide delivery.</p><div class="tags"><span class="tag">API Integration</span><span class="tag">Custom Code</span><span class="tag">Webflow</span></div></div></div>
-      <div class="bento-item hidden" data-type="case-study"><div class="card card-link"><a href="/work/luna-diabetes/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><img class="cover" src="/images/work/luna-diabetes.avif" alt="Medical Device Website" /><p class="meta">Luna Diabetes · 2024 · <a href="https://www.lunadiabetes.com/" target="_blank" rel="noopener">Visit ↗</a></p><h3><a href="/work/luna-diabetes/" class="link-block">Medical Device Website</a></h3><p class="card-body">Ongoing partnership building and maintaining the website for Luna Diabetes, an automated insulin delivery company. Webflow CMS with compliance-ready content structure.</p><div class="tags"><span class="tag">CMS</span><span class="tag">Healthcare</span><span class="tag">Webflow</span></div></div></div>
-      <div class="bento-item hidden" data-type="case-study"><div class="card card-link"><a href="/work/rol-group/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><video src="https://cdn.vidzflow.com/v/qjQSxskb6T_1080p_1709900589.mp4" autoplay muted loop playsinline class="cover"></video><p class="meta">ROL Group · 2022 · <a href="https://www.rolgroup.com/" target="_blank" rel="noopener">Visit ↗</a></p><h3><a href="/work/rol-group/" class="link-block">Strategic Digital Consolidation</a></h3><p class="card-body">Led UX/UI design and Webflow development, transforming ROL Group&#x27;s digital presence into a seamless and engaging experience across global operations.</p><div class="tags"><span class="tag">Corporate</span><span class="tag">UX/UI</span><span class="tag">Webflow</span></div></div></div>
-      <div class="bento-item hidden" data-type="recommendation"><div class="card card-link"><a href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/" target="_blank" rel="noopener" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><div class="card-quote"><div class="card-header"><img src="/images/people/mitch-davey.avif" alt="Mitch Davey" class="card-header-avatar" /><div class="card-header-text"><p class="card-title">Mitch Davey</p><p class="card-subtitle">Colleague at Stormfors</p></div></div><p class="card-body">Felix is a true Webflow wizard whose endless curiosity and dedication to his craft are truly inspiring. Much of what I know about Webflow, I learned by following his example. Felix was one of the OG members of Stormfors when I joined, and I saw first-hand how his expertise and innovative approach significantly shaped the direction of the company. His ability to tackle complex projects and deliver outstanding results consistently makes him an invaluable asset to any team.</p></div></div></div>
-      <div class="bento-item hidden" data-type="recommendation"><div class="card card-link"><a href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/" target="_blank" rel="noopener" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><div class="card-quote"><div class="card-header"><img src="/images/people/colin-simpson.avif" alt="Colin Simpson" class="card-header-avatar" /><div class="card-header-text"><p class="card-title">Colin Simpson</p><p class="card-subtitle">Founder &amp; CEO</p></div></div><p class="card-body">Felix is a brilliant digital designer and developer. He understands his domain extremely well and constantly offers up his valuable perspective and solutions. I&#x27;ve thoroughly enjoyed working with him, especially because of his great communication style and attention to detail. You can tell he really loves what he does and it shows. I&#x27;d highly recommend Felix!</p></div></div></div>
-      <div class="bento-item hidden" data-type="recommendation"><div class="card card-link"><a href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/" target="_blank" rel="noopener" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><div class="card-quote"><div class="card-header"><img src="/images/people/johanna-appelgren.avif" alt="Johanna Appelgren" class="card-header-avatar" /><div class="card-header-text"><p class="card-title">Johanna Appelgren</p><p class="card-subtitle">Head of Marketing</p></div></div><p class="card-body">I had the pleasure of working with Felix on improving our company website and I couldn&#x27;t be more impressed with his skills as a web developer. Felix is not only highly knowledgeable, but also a true professional who takes pride in his work. He was always available to address any concerns and provided creative solutions that helped take our website to the next level.</p></div></div></div>
-      <div class="bento-item hidden" data-type="recommendation"><div class="card card-link"><a href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/" target="_blank" rel="noopener" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><div class="card-quote"><div class="card-header"><img src="/images/people/jed-mosely.avif" alt="Jed Mosely" class="card-header-avatar" /><div class="card-header-text"><p class="card-title">Jed Mosely</p><p class="card-subtitle">Founder &amp; CEO</p></div></div><p class="card-body">Felix was great to work with in building out our website true to our original intent. He&#x27;s likable and reliable. He didn&#x27;t back down from some technical challenges along the way. He&#x27;s a great blend of the professional and personable. Felix helped us understand our options and built and executed a plan that met our goals.</p></div></div></div>
-      <div class="bento-item hidden" data-type="recommendation"><div class="card card-link"><a href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/" target="_blank" rel="noopener" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><div class="card-quote"><div class="card-header"><img src="/images/people/tesceline-tabilas.avif" alt="Tesceline Tabilas" class="card-header-avatar" /><div class="card-header-text"><p class="card-title">Tesceline Tabilas</p><p class="card-subtitle">Client</p></div></div><p class="card-body">It was wonderful to partner with a web developer who has appreciation and respect for design. Two of Felix&#x27;s qualities that stood out to me were his understanding of the client&#x27;s needs and business and his ability to enhance meeting productivity by guiding conversation. I am impressed by his technical skills and grateful for his openness to share his knowledge.</p></div></div></div>
-      <div class="bento-item hidden" data-type="recommendation"><div class="card card-link"><a href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/" target="_blank" rel="noopener" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><div class="card-quote"><div class="card-header"><img src="/images/people/mikael-brunnberg.avif" alt="Mikael Brunnberg" class="card-header-avatar" /><div class="card-header-text"><p class="card-title">Mikael Brunnberg</p><p class="card-subtitle">Colleague at Stormfors</p></div></div><p class="card-body">Felix is one of the most productive and fast colleagues I have had the opportunity to work together with. He&#x27;s very creative and technically skilled in Webflow/web development and up to date with the modern tools. He&#x27;s fun, positive and super easy to collaborate with. A pleasure!</p></div></div></div>
-      <div class="bento-item hidden" data-type="recommendation"><div class="card card-link"><a href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/" target="_blank" rel="noopener" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><div class="card-quote"><div class="card-header"><img src="/images/people/lisbeth-langhorn.avif" alt="Lisbeth Langhorn" class="card-header-avatar" /><div class="card-header-text"><p class="card-title">Lisbeth Langhorn</p><p class="card-subtitle">Head of Marketing</p></div></div><p class="card-body">I can certainly recommend Felix to anyone seeking a Webflow professional who can elevate their digital presence. He possesses the skills, creativity, and dedication needed to bring your vision to life. I am confident that his contributions will significantly enhance any project fortunate enough to have him on board.</p></div></div></div>
-      <div class="bento-item hidden" data-type="recommendation"><div class="card card-link"><a href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/" target="_blank" rel="noopener" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><div class="card-quote"><div class="card-header"><img src="/images/people/frank-bagge.avif" alt="Frank Bagge" class="card-header-avatar" /><div class="card-header-text"><p class="card-title">Frank Bagge</p><p class="card-subtitle">Senior Consultant at Narva</p></div></div><p class="card-body">Incredibly grateful for the swift and outstanding delivery of a one-page solution for one of our valued customers at Narva! The efficiency, attention to detail, and seamless execution made all the difference. Truly a job well done!</p></div></div></div>
-      <div class="bento-item hidden" data-type="recommendation"><div class="card card-link"><a href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/" target="_blank" rel="noopener" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><div class="card-quote"><div class="card-header"><img src="/images/people/jacob-schultz.avif" alt="Jacob Schultz" class="card-header-avatar" /><div class="card-header-text"><p class="card-title">Jacob Schultz</p><p class="card-subtitle">Senior Designer</p></div></div><p class="card-body">Working alongside Felix was an absolute delight. His technical expertise and commitment were evident throughout the entire process. Felix has my warmest recommendation.</p></div></div></div>
-    </div>
-    <div class="load-more-wrap">
-      <button class="btn btn-outline" id="load-more">Show more</button>
-    </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Felix Hellström — Building AI agent tools and writing about what works.
+      MCP, multi-agent orchestration, and the agent-native stack.
+    </title>
+    <meta
+      name="description"
+      content="Building AI agent tools and writing about what works. MCP, multi-agent orchestration, and the agent-native stack."
+    />
+    <link rel="canonical" href="https://felixhellstrom.com/" />
+    <meta
+      property="og:title"
+      content="Felix Hellström — Building AI agent tools and writing about what works. MCP, multi-agent orchestration, and the agent-native stack."
+    />
+    <meta
+      property="og:description"
+      content="Building AI agent tools and writing about what works. MCP, multi-agent orchestration, and the agent-native stack."
+    />
+    <meta
+      property="og:image"
+      content="https://felixhellstrom.com/images/og-image.png"
+    />
+    <meta property="og:url" content="https://felixhellstrom.com/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/images/favicon.png" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Felix Hellström"
+      href="https://felixhellstrom.com/feed.xml"
+    />
     <script>
-;(function () {
-  var BATCH = 9;
-  var grid = document.querySelector('.bento-grid');
-  if (!grid) return;
-
-  var items = Array.from(grid.querySelectorAll('.bento-item'));
-  var filterBtns = document.querySelectorAll('.filter-btn');
-  var loadMoreBtn = document.getElementById('load-more');
-  if (!loadMoreBtn) return;
-
-  var activeFilter = 'all';
-
-  function updateVisibility() {
-    var matching = items.filter(function (el) {
-      return activeFilter === 'all' || el.getAttribute('data-type') === activeFilter;
-    });
-    var nonMatching = items.filter(function (el) {
-      return activeFilter !== 'all' && el.getAttribute('data-type') !== activeFilter;
-    });
-
-    // Hide non-matching
-    nonMatching.forEach(function (el) {
-      el.classList.add('hidden');
-    });
-
-    if (activeFilter === 'all') {
-      // Show first BATCH visible, hide rest
-      var visibleCount = 0;
-      items.forEach(function (el) {
-        if (visibleCount < BATCH) {
-          el.classList.remove('hidden');
-          visibleCount++;
-        } else {
-          el.classList.add('hidden');
-        }
-      });
-      loadMoreBtn.textContent = 'Show more';
-      loadMoreBtn.parentElement.style.display = visibleCount < items.length ? '' : 'none';
-    } else {
-      // Show ALL matching when a filter is active
-      matching.forEach(function (el) {
-        el.classList.remove('hidden');
-      });
-      loadMoreBtn.parentElement.style.display = 'none';
-    }
-  }
-
-  filterBtns.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      filterBtns.forEach(function (b) {
-        b.classList.remove('active');
-      });
-      btn.classList.add('active');
-      activeFilter = btn.getAttribute('data-filter');
-      updateVisibility();
-    });
-  });
-
-  loadMoreBtn.addEventListener('click', function () {
-    var hidden = items.filter(function (el) {
-      return el.classList.contains('hidden');
-    });
-    var toShow = hidden.slice(0, BATCH);
-    toShow.forEach(function (el) {
-      el.classList.remove('hidden');
-    });
-    var remaining = items.filter(function (el) {
-      return el.classList.contains('hidden');
-    });
-    if (remaining.length === 0) {
-      loadMoreBtn.parentElement.style.display = 'none';
-    }
-  });
-})();
-
-
+      (function () {
+        var t = localStorage.getItem("theme");
+        if (t) document.documentElement.setAttribute("data-theme", t);
+      })();
     </script>
+    <link rel="stylesheet" href="/normalize.css" />
+    <link rel="stylesheet" href="/style.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Felix Hellström",
+        "url": "https://felixhellstrom.com",
+        "image": "https://felixhellstrom.com/images/felix-hero.jpeg",
+        "jobTitle": "Full-Stack Developer & Technical Lead",
+        "worksFor": { "@type": "Organization", "name": "Stormfors" },
+        "sameAs": [
+          "https://github.com/fellanH",
+          "https://linkedin.com/in/felixhellstrom",
+          "https://x.com/felixhellstrom",
+          "https://www.npmjs.com/~fellanh"
+        ],
+        "knowsAbout": [
+          "MCP",
+          "AI Agents",
+          "Claude Code",
+          "SQLite",
+          "Webflow",
+          "TypeScript",
+          "Python"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav>
+        <div class="nav-inner">
+          <a href="/" class="nav-wordmark">Felix Hellström</a>
+          <div class="nav-links">
+            <a href="/" aria-current="page">Home</a><a href="/learn/">Learn</a
+            ><a href="/projects/">Projects</a><a href="/work/">Work</a
+            ><a href="/about/">About</a>
+          </div>
+          <div class="nav-actions">
+            <button
+              class="theme-toggle"
+              id="theme-toggle"
+              aria-label="Toggle dark mode"
+              title="Toggle dark mode"
+            >
+              &#9790;</button
+            ><a href="/contact/" class="nav-cta">Contact</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="section_home-hero">
+        <div class="padding-global padding-section-small">
+          <div class="container-large">
+            <div class="hero">
+              <div class="hero-bg">
+                <div class="hero-orb hero-orb-1"></div>
+                <div class="hero-orb hero-orb-2"></div>
+              </div>
+              <div class="hero-content">
+                <h1>Felix Hellström</h1>
+                <p class="hero-sub">
+                  I build AI agent tools and write about what works. MCP
+                  servers, multi-agent orchestration, and the agent-native
+                  stack.
+                </p>
+                <div class="btn-row">
+                  <a href="/learn/" class="btn btn-primary">Start learning</a>
+                  <a href="/projects/" class="btn btn-outline">View projects</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    </div>
-  </div>
-</section>
+      <section class="section_home-stats">
+        <div class="padding-global padding-section-small">
+          <div class="container-large">
+            <div class="grid-stats">
+              <div>
+                <div class="stat-value">100+</div>
+                <div class="stat-label">Client projects shipped</div>
+              </div>
+              <div>
+                <div class="stat-value">693+</div>
+                <div class="stat-label">Tests in context-vault</div>
+              </div>
+              <div>
+                <div class="stat-value">10+ yrs</div>
+                <div class="stat-label">Professional experience</div>
+              </div>
+              <div>
+                <div class="stat-value">2</div>
+                <div class="stat-label">Languages (SV / EN)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
+      <section class="section_home-feed">
+        <div class="padding-global padding-section-large">
+          <div class="container-large">
+            <h2>From the workbench</h2>
+            <div class="filter-bar">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="case-study">Work</button>
+              <button class="filter-btn" data-filter="blog-post">Blog</button>
+              <button class="filter-btn" data-filter="project">Projects</button>
+              <button class="filter-btn" data-filter="recommendation">
+                Testimonials
+              </button>
+            </div>
+            <div class="bento-grid">
+              <div class="bento-item" data-type="case-study">
+                <div class="card card-link">
+                  <a
+                    href="/work/neonode-hubspot-migration/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a
+                  ><img
+                    class="cover"
+                    src="/images/work/neonode.webp"
+                    alt="Contentful to HubSpot CMS Migration"
+                  />
+                  <p class="meta">
+                    Neonode · 2026 ·
+                    <a href="https://neonode.com" target="_blank" rel="noopener"
+                      >Visit ↗</a
+                    >
+                  </p>
+                  <h3>
+                    <a
+                      href="/work/neonode-hubspot-migration/"
+                      class="link-block"
+                      >Contentful to HubSpot CMS Migration</a
+                    >
+                  </h3>
+                  <p class="card-body">
+                    Designed an idempotent migration pipeline for 37 pages, 135
+                    press releases, and 5 content groups. Multi-CDN asset
+                    handling across Cision and Contentful origins. Learned
+                    HubSpot CMS from zero.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">Contentful</span
+                    ><span class="tag">HubSpot CMS</span
+                    ><span class="tag">Migration</span
+                    ><span class="tag">Node.js</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item" data-type="case-study">
+                <div class="card card-link">
+                  <a
+                    href="/work/porsche-club-sweden/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a
+                  ><video
+                    src="https://r2.vidzflow.com/source/7ddb99e5-d475-4928-90b5-099b38b4a9ca.mp4"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    class="cover"
+                  ></video>
+                  <p class="meta">
+                    Porsche Club Sweden · 2025 ·
+                    <a
+                      href="https://www.porsche.nu/"
+                      target="_blank"
+                      rel="noopener"
+                      >Visit ↗</a
+                    >
+                  </p>
+                  <h3>
+                    <a href="/work/porsche-club-sweden/" class="link-block"
+                      >Porsche Club Sweden Membership Platform</a
+                    >
+                  </h3>
+                  <p class="card-body">
+                    We transformed Porsche Club Sweden&#x27;s outdated website
+                    into a sleek, mobile-first experience that embodies passion,
+                    community, and modern architecture — delighting 6,000+
+                    members.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">CMS</span
+                    ><span class="tag">Mobile-First</span
+                    ><span class="tag">Webflow</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item" data-type="case-study">
+                <div class="card card-link">
+                  <a
+                    href="/work/hasselbacken-luxury-hotel/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a
+                  ><video
+                    src="https://r2.vidzflow.com/source/10e3c722-0575-4afb-b308-f5227eb8fb91.mp4"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    class="cover"
+                  ></video>
+                  <p class="meta">
+                    Hasselbacken · 2024 ·
+                    <a
+                      href="https://www.hasselbacken.com/"
+                      target="_blank"
+                      rel="noopener"
+                      >Visit ↗</a
+                    >
+                  </p>
+                  <h3>
+                    <a
+                      href="/work/hasselbacken-luxury-hotel/"
+                      class="link-block"
+                      >Hasselbacken Luxury Hotel Website Rebuild</a
+                    >
+                  </h3>
+                  <p class="card-body">
+                    Rebuilt the website for one of Sweden&#x27;s most famous
+                    hotels. Full Webflow build with booking integrations,
+                    restaurant pages, and event spaces. Video hero,
+                    multi-language support.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">Booking Integration</span
+                    ><span class="tag">Hospitality</span
+                    ><span class="tag">Webflow</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item" data-type="case-study">
+                <div class="card card-link">
+                  <a
+                    href="/work/gasometer-visual-experience/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a
+                  ><img
+                    class="cover"
+                    src="/images/work/gasometer.avif"
+                    alt="Gasometer Visual Experience"
+                  />
+                  <p class="meta">
+                    Cirkus Venues · 2023 ·
+                    <a
+                      href="https://www.gasometer.se/"
+                      target="_blank"
+                      rel="noopener"
+                      >Visit ↗</a
+                    >
+                  </p>
+                  <h3>
+                    <a
+                      href="/work/gasometer-visual-experience/"
+                      class="link-block"
+                      >Gasometer Visual Experience</a
+                    >
+                  </h3>
+                  <p class="card-body">
+                    Built a visual experience site for a 1,740-seat theater
+                    venue in central Stockholm. Dark, cinematic design with
+                    immersive scroll-driven animations.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">Animation</span
+                    ><span class="tag">Visual Design</span
+                    ><span class="tag">Webflow</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item" data-type="project">
+                <div class="card card-link">
+                  <a
+                    href="https://weknowaeo.com"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <h3>
+                    We Know AEO <span class="status status-active">active</span>
+                  </h3>
+                  <p class="card-body">
+                    Research site exploring AI Engine Optimization. How to
+                    structure content so AI search engines (ChatGPT, Perplexity,
+                    Claude) surface your brand. Full Schema.org markup.
+                  </p>
+                  <p class="meta">
+                    <a
+                      href="https://weknowaeo.com"
+                      target="_blank"
+                      rel="noopener"
+                      >Website</a
+                    >
+                  </p>
+                  <div class="tags">
+                    <span class="tag">AEO</span><span class="tag">Next.js</span
+                    ><span class="tag">SEO</span
+                    ><span class="tag">Schema.org</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item" data-type="project">
+                <div class="card card-link">
+                  <a
+                    href="https://context-vault.com"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <h3>
+                    context-vault
+                    <span class="status status-active">active</span>
+                  </h3>
+                  <p class="card-body">
+                    Persistent memory for AI agents. Local-first MCP server that
+                    gives Claude Code and other AI tools a semantic memory layer
+                    that survives across sessions. Published on npm, 693+ tests,
+                    full SaaS ecosystem.
+                  </p>
+                  <p class="meta">
+                    693+ tests, npm published, SaaS + self-hosted
+                  </p>
+                  <p class="meta">
+                    <a
+                      href="https://context-vault.com"
+                      target="_blank"
+                      rel="noopener"
+                      >Website</a
+                    >
+                    ·
+                    <a
+                      href="https://github.com/fellanH/context-vault"
+                      target="_blank"
+                      rel="noopener"
+                      >GitHub</a
+                    >
+                    ·
+                    <a
+                      href="https://www.npmjs.com/package/context-vault"
+                      target="_blank"
+                      rel="noopener"
+                      >npm</a
+                    >
+                  </p>
+                  <div class="tags">
+                    <span class="tag">Claude Code</span
+                    ><span class="tag">Embeddings</span
+                    ><span class="tag">MCP</span><span class="tag">SQLite</span
+                    ><span class="tag">TypeScript</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item" data-type="project">
+                <div class="card card-link">
+                  <a
+                    href="/blog/omni-agent-orchestrator/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <h3>
+                    omni-cli <span class="status status-active">active</span>
+                  </h3>
+                  <p class="card-body">
+                    Autonomous agent orchestrator. 3-layer system (master,
+                    workspace, project) that dispatches Claude Code agents to
+                    implement GitHub issues end-to-end. First overnight run: 686
+                    cycles, 11 PRs merged, 8 self-healed stalls.
+                  </p>
+                  <p class="meta">6,700+ lines, 11 PRs merged overnight</p>
+                  <p class="meta">
+                    <a
+                      href="/blog/omni-agent-orchestrator/"
+                      target="_blank"
+                      rel="noopener"
+                      >Website</a
+                    >
+                  </p>
+                  <div class="tags">
+                    <span class="tag">Automation</span
+                    ><span class="tag">Claude Code</span
+                    ><span class="tag">GitHub API</span
+                    ><span class="tag">TypeScript</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item" data-type="project">
+                <div class="card card-link">
+                  <a
+                    href="https://github.com/fellanH/origin"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <h3>
+                    origin <span class="status status-building">building</span>
+                  </h3>
+                  <p class="card-body">
+                    Keyboard-driven split-panel desktop workspace. Tauri 2 app
+                    with hot-reload plugins, canvas layouts, and a motion
+                    system. Rust backend, React frontend.
+                  </p>
+                  <p class="meta">
+                    <a
+                      href="https://github.com/fellanH/origin"
+                      target="_blank"
+                      rel="noopener"
+                      >GitHub</a
+                    >
+                  </p>
+                  <div class="tags">
+                    <span class="tag">React</span><span class="tag">Rust</span
+                    ><span class="tag">Tauri</span
+                    ><span class="tag">TypeScript</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item" data-type="project">
+                <div class="card">
+                  <h3>
+                    trained-on.com
+                    <span class="status status-building">building</span>
+                  </h3>
+                  <p class="card-body">
+                    Self-serve platform for e-commerce store owners to generate
+                    professional product photography with custom-trained AI
+                    models. Stripe billing, Supabase auth, FAL.ai inference.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">AI</span><span class="tag">FAL.ai</span
+                    ><span class="tag">Next.js</span
+                    ><span class="tag">Stripe</span
+                    ><span class="tag">Supabase</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="blog-post">
+                <div class="card card-link">
+                  <a
+                    href="/blog/omni-agent-orchestrator/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <p class="meta">2026-03-06 · AI Workflows</p>
+                  <h3>
+                    <a href="/blog/omni-agent-orchestrator/" class="link-block"
+                      >Inside omni, My Autonomous Agent Orchestrator</a
+                    >
+                  </h3>
+                  <p class="card-body">
+                    How I built omni, a 3-layer agent system that opens GitHub
+                    issues, runs Claude Code agents, and merged 11 PRs while I
+                    slept.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">ai-agents</span
+                    ><span class="tag">automation</span
+                    ><span class="tag">omni</span
+                    ><span class="tag">workflow</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="blog-post">
+                <div class="card card-link">
+                  <a
+                    href="/blog/eleven-prs-while-i-slept/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <p class="meta">2026-03-05 · AI Workflows</p>
+                  <h3>
+                    <a href="/blog/eleven-prs-while-i-slept/" class="link-block"
+                      >11 PRs While I Slept</a
+                    >
+                  </h3>
+                  <p class="card-body">
+                    I let an autonomous agent orchestrator run overnight for the
+                    first time. 686 cycles, 11 merged PRs, and a lot of lessons
+                    about what breaks when no one is watching.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">ai-agents</span
+                    ><span class="tag">automation</span
+                    ><span class="tag">claude-code</span
+                    ><span class="tag">omni-cli</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="blog-post">
+                <div class="card card-link">
+                  <a
+                    href="/blog/building-ai-memory-layer/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <p class="meta">2026-03-04 · Products</p>
+                  <h3>
+                    <a href="/blog/building-ai-memory-layer/" class="link-block"
+                      >Building an AI Memory Layer with Context Vault</a
+                    >
+                  </h3>
+                  <p class="card-body">
+                    How I built a persistent memory system for Claude Code that
+                    survives across sessions, and why local-first matters.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">ai</span
+                    ><span class="tag">claude-code</span
+                    ><span class="tag">context-vault</span
+                    ><span class="tag">mcp</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="blog-post">
+                <div class="card card-link">
+                  <a
+                    href="/blog/building-self-improving-agent-os/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <p class="meta">2026-03-03 · Building in Public</p>
+                  <h3>
+                    <a
+                      href="/blog/building-self-improving-agent-os/"
+                      class="link-block"
+                      >Building a Self-Improving Agent OS</a
+                    >
+                  </h3>
+                  <p class="card-body">
+                    How I built a personal operating system where AI agents log
+                    their own friction and write their own backlog. The system
+                    improves itself as you use it.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">ai-agents</span
+                    ><span class="tag">automation</span
+                    ><span class="tag">mcp</span><span class="tag">omni</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="blog-post">
+                <div class="card card-link">
+                  <a
+                    href="/blog/using-git-with-ai-agents/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <p class="meta">2025-09-25 · AI Workflows</p>
+                  <h3>
+                    <a href="/blog/using-git-with-ai-agents/" class="link-block"
+                      >Using Git with AI Agents in Cursor</a
+                    >
+                  </h3>
+                  <p class="card-body">
+                    A practical workflow for integrating Git into AI coding
+                    sessions. Branches, atomic commits, and intent-driven
+                    messages.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">ai-agents</span
+                    ><span class="tag">cursor</span><span class="tag">git</span
+                    ><span class="tag">workflow</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="blog-post">
+                <div class="card card-link">
+                  <a
+                    href="/blog/webflow-advice-for-beginners/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <p class="meta">2025-02-25 · Webflow</p>
+                  <h3>
+                    <a
+                      href="/blog/webflow-advice-for-beginners/"
+                      class="link-block"
+                      >After 8 Years of Webflow, Here&#x27;s My Advice for
+                      Beginners</a
+                    >
+                  </h3>
+                  <p class="card-body">
+                    Three crucial things I wish someone had told me when I first
+                    started with Webflow: Relume, Client-First, and REM units.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">client-first</span
+                    ><span class="tag">rem</span><span class="tag">tips</span
+                    ><span class="tag">webflow</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="case-study">
+                <div class="card card-link">
+                  <a
+                    href="/work/precis-digital/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a
+                  ><img
+                    class="cover"
+                    src="/images/work/precis.jpg"
+                    alt="Corporate Website"
+                  />
+                  <p class="meta">
+                    Precis Digital · 2025 ·
+                    <a
+                      href="https://www.precis.com"
+                      target="_blank"
+                      rel="noopener"
+                      >Visit ↗</a
+                    >
+                  </p>
+                  <h3>
+                    <a href="/work/precis-digital/" class="link-block"
+                      >Corporate Website</a
+                    >
+                  </h3>
+                  <p class="card-body">
+                    Built the website for Precis, a major Swedish player in
+                    digital marketing, bringing together media, creative, tech,
+                    data and analytics into one cohesive offering.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">CMS</span
+                    ><span class="tag">Corporate</span
+                    ><span class="tag">Webflow</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="case-study">
+                <div class="card card-link">
+                  <a
+                    href="/work/salty-decoupled-mapbox/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a
+                  ><img
+                    class="cover"
+                    src="/images/work/salty.jpg"
+                    alt="Decoupled Mapbox + AWS Architecture"
+                  />
+                  <p class="meta">
+                    Salty.co · 2025 ·
+                    <a href="https://salty.co" target="_blank" rel="noopener"
+                      >Visit ↗</a
+                    >
+                  </p>
+                  <h3>
+                    <a href="/work/salty-decoupled-mapbox/" class="link-block"
+                      >Decoupled Mapbox + AWS Architecture</a
+                    >
+                  </h3>
+                  <p class="card-body">
+                    Designed a decoupled beach mapping platform combining
+                    Webflow CMS with Mapbox GL JS and AWS Lambda for weather
+                    data caching. Authored full architectural proposal with
+                    3-phase roadmap.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">AWS Lambda</span
+                    ><span class="tag">Mapbox GL JS</span
+                    ><span class="tag">Vercel</span
+                    ><span class="tag">Webflow</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="case-study">
+                <div class="card card-link">
+                  <a
+                    href="/work/resident-interface-launch/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <p class="meta">
+                    Resident Interface · 2025 ·
+                    <a
+                      href="https://residentinterface.com"
+                      target="_blank"
+                      rel="noopener"
+                      >Visit ↗</a
+                    >
+                  </p>
+                  <h3>
+                    <a
+                      href="/work/resident-interface-launch/"
+                      class="link-block"
+                      >Full Site Build &amp; Launch in 4 Weeks</a
+                    >
+                  </h3>
+                  <p class="card-body">
+                    End-to-end site build for US client, from proposal
+                    negotiation to launch in under a month. Comprehensive SEO
+                    deployment with massive organic traffic improvements
+                    post-launch.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">GA4</span><span class="tag">GTM</span
+                    ><span class="tag">Technical SEO</span
+                    ><span class="tag">Webflow CMS</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="case-study">
+                <div class="card card-link">
+                  <a
+                    href="/work/we-know-aeo/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <p class="meta">
+                    Internal · 2025 ·
+                    <a
+                      href="https://www.weknowaeo.com/"
+                      target="_blank"
+                      rel="noopener"
+                      >Visit ↗</a
+                    >
+                  </p>
+                  <h3>
+                    <a href="/work/we-know-aeo/" class="link-block"
+                      >We Know AEO: AI Engine Optimization</a
+                    >
+                  </h3>
+                  <p class="card-body">
+                    Built a Next.js site exploring AI Engine Optimization, the
+                    practice of structuring web content for AI search engines
+                    like ChatGPT, Perplexity, and Claude. Full schema markup and
+                    semantic HTML.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">AEO</span><span class="tag">Next.js</span
+                    ><span class="tag">SEO</span
+                    ><span class="tag">Schema.org</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="case-study">
+                <div class="card card-link">
+                  <a
+                    href="/work/miramis-enterprise-hub/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a
+                  ><video
+                    src="https://player.vimeo.com/progressive_redirect/playback/1032460293/rendition/2160p/file.mp4?loc=external&amp;log_user=0&amp;signature=37118ffc1f99e1a93bb90062c90644372c6d0a72aea74572a3f50651a9e0167c"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    class="cover"
+                  ></video>
+                  <p class="meta">
+                    Miramis / Qarlbo AB · 2024 ·
+                    <a
+                      href="https://www.miramis.com/"
+                      target="_blank"
+                      rel="noopener"
+                      >Visit ↗</a
+                    >
+                  </p>
+                  <h3>
+                    <a href="/work/miramis-enterprise-hub/" class="link-block"
+                      >Enterprise Hub with Custom Integrations</a
+                    >
+                  </h3>
+                  <p class="card-body">
+                    Custom Instagram integration, InRecruit JSON job
+                    integration, dynamic scaling, fluid responsive system, and
+                    preloader. Full styleguide delivery.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">API Integration</span
+                    ><span class="tag">Custom Code</span
+                    ><span class="tag">Webflow</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="case-study">
+                <div class="card card-link">
+                  <a
+                    href="/work/luna-diabetes/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a
+                  ><img
+                    class="cover"
+                    src="/images/work/luna-diabetes.avif"
+                    alt="Medical Device Website"
+                  />
+                  <p class="meta">
+                    Luna Diabetes · 2024 ·
+                    <a
+                      href="https://www.lunadiabetes.com/"
+                      target="_blank"
+                      rel="noopener"
+                      >Visit ↗</a
+                    >
+                  </p>
+                  <h3>
+                    <a href="/work/luna-diabetes/" class="link-block"
+                      >Medical Device Website</a
+                    >
+                  </h3>
+                  <p class="card-body">
+                    Ongoing partnership building and maintaining the website for
+                    Luna Diabetes, an automated insulin delivery company.
+                    Webflow CMS with compliance-ready content structure.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">CMS</span
+                    ><span class="tag">Healthcare</span
+                    ><span class="tag">Webflow</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="case-study">
+                <div class="card card-link">
+                  <a
+                    href="/work/rol-group/"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a
+                  ><video
+                    src="https://cdn.vidzflow.com/v/qjQSxskb6T_1080p_1709900589.mp4"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    class="cover"
+                  ></video>
+                  <p class="meta">
+                    ROL Group · 2022 ·
+                    <a
+                      href="https://www.rolgroup.com/"
+                      target="_blank"
+                      rel="noopener"
+                      >Visit ↗</a
+                    >
+                  </p>
+                  <h3>
+                    <a href="/work/rol-group/" class="link-block"
+                      >Strategic Digital Consolidation</a
+                    >
+                  </h3>
+                  <p class="card-body">
+                    Led UX/UI design and Webflow development, transforming ROL
+                    Group&#x27;s digital presence into a seamless and engaging
+                    experience across global operations.
+                  </p>
+                  <div class="tags">
+                    <span class="tag">Corporate</span
+                    ><span class="tag">UX/UI</span
+                    ><span class="tag">Webflow</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="recommendation">
+                <div class="card card-link">
+                  <a
+                    href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/"
+                    target="_blank"
+                    rel="noopener"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <div class="card-quote">
+                    <div class="card-header">
+                      <img
+                        src="/images/people/mitch-davey.avif"
+                        alt="Mitch Davey"
+                        class="card-header-avatar"
+                      />
+                      <div class="card-header-text">
+                        <p class="card-title">Mitch Davey</p>
+                        <p class="card-subtitle">Colleague at Stormfors</p>
+                      </div>
+                    </div>
+                    <p class="card-body">
+                      Felix is a true Webflow wizard whose endless curiosity and
+                      dedication to his craft are truly inspiring. Much of what
+                      I know about Webflow, I learned by following his example.
+                      Felix was one of the OG members of Stormfors when I
+                      joined, and I saw first-hand how his expertise and
+                      innovative approach significantly shaped the direction of
+                      the company. His ability to tackle complex projects and
+                      deliver outstanding results consistently makes him an
+                      invaluable asset to any team.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="recommendation">
+                <div class="card card-link">
+                  <a
+                    href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/"
+                    target="_blank"
+                    rel="noopener"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <div class="card-quote">
+                    <div class="card-header">
+                      <img
+                        src="/images/people/colin-simpson.avif"
+                        alt="Colin Simpson"
+                        class="card-header-avatar"
+                      />
+                      <div class="card-header-text">
+                        <p class="card-title">Colin Simpson</p>
+                        <p class="card-subtitle">Founder &amp; CEO</p>
+                      </div>
+                    </div>
+                    <p class="card-body">
+                      Felix is a brilliant digital designer and developer. He
+                      understands his domain extremely well and constantly
+                      offers up his valuable perspective and solutions.
+                      I&#x27;ve thoroughly enjoyed working with him, especially
+                      because of his great communication style and attention to
+                      detail. You can tell he really loves what he does and it
+                      shows. I&#x27;d highly recommend Felix!
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="recommendation">
+                <div class="card card-link">
+                  <a
+                    href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/"
+                    target="_blank"
+                    rel="noopener"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <div class="card-quote">
+                    <div class="card-header">
+                      <img
+                        src="/images/people/johanna-appelgren.avif"
+                        alt="Johanna Appelgren"
+                        class="card-header-avatar"
+                      />
+                      <div class="card-header-text">
+                        <p class="card-title">Johanna Appelgren</p>
+                        <p class="card-subtitle">Head of Marketing</p>
+                      </div>
+                    </div>
+                    <p class="card-body">
+                      I had the pleasure of working with Felix on improving our
+                      company website and I couldn&#x27;t be more impressed with
+                      his skills as a web developer. Felix is not only highly
+                      knowledgeable, but also a true professional who takes
+                      pride in his work. He was always available to address any
+                      concerns and provided creative solutions that helped take
+                      our website to the next level.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="recommendation">
+                <div class="card card-link">
+                  <a
+                    href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/"
+                    target="_blank"
+                    rel="noopener"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <div class="card-quote">
+                    <div class="card-header">
+                      <img
+                        src="/images/people/jed-mosely.avif"
+                        alt="Jed Mosely"
+                        class="card-header-avatar"
+                      />
+                      <div class="card-header-text">
+                        <p class="card-title">Jed Mosely</p>
+                        <p class="card-subtitle">Founder &amp; CEO</p>
+                      </div>
+                    </div>
+                    <p class="card-body">
+                      Felix was great to work with in building out our website
+                      true to our original intent. He&#x27;s likable and
+                      reliable. He didn&#x27;t back down from some technical
+                      challenges along the way. He&#x27;s a great blend of the
+                      professional and personable. Felix helped us understand
+                      our options and built and executed a plan that met our
+                      goals.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="recommendation">
+                <div class="card card-link">
+                  <a
+                    href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/"
+                    target="_blank"
+                    rel="noopener"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <div class="card-quote">
+                    <div class="card-header">
+                      <img
+                        src="/images/people/tesceline-tabilas.avif"
+                        alt="Tesceline Tabilas"
+                        class="card-header-avatar"
+                      />
+                      <div class="card-header-text">
+                        <p class="card-title">Tesceline Tabilas</p>
+                        <p class="card-subtitle">Client</p>
+                      </div>
+                    </div>
+                    <p class="card-body">
+                      It was wonderful to partner with a web developer who has
+                      appreciation and respect for design. Two of Felix&#x27;s
+                      qualities that stood out to me were his understanding of
+                      the client&#x27;s needs and business and his ability to
+                      enhance meeting productivity by guiding conversation. I am
+                      impressed by his technical skills and grateful for his
+                      openness to share his knowledge.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="recommendation">
+                <div class="card card-link">
+                  <a
+                    href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/"
+                    target="_blank"
+                    rel="noopener"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <div class="card-quote">
+                    <div class="card-header">
+                      <img
+                        src="/images/people/mikael-brunnberg.avif"
+                        alt="Mikael Brunnberg"
+                        class="card-header-avatar"
+                      />
+                      <div class="card-header-text">
+                        <p class="card-title">Mikael Brunnberg</p>
+                        <p class="card-subtitle">Colleague at Stormfors</p>
+                      </div>
+                    </div>
+                    <p class="card-body">
+                      Felix is one of the most productive and fast colleagues I
+                      have had the opportunity to work together with. He&#x27;s
+                      very creative and technically skilled in Webflow/web
+                      development and up to date with the modern tools.
+                      He&#x27;s fun, positive and super easy to collaborate
+                      with. A pleasure!
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="recommendation">
+                <div class="card card-link">
+                  <a
+                    href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/"
+                    target="_blank"
+                    rel="noopener"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <div class="card-quote">
+                    <div class="card-header">
+                      <img
+                        src="/images/people/lisbeth-langhorn.avif"
+                        alt="Lisbeth Langhorn"
+                        class="card-header-avatar"
+                      />
+                      <div class="card-header-text">
+                        <p class="card-title">Lisbeth Langhorn</p>
+                        <p class="card-subtitle">Head of Marketing</p>
+                      </div>
+                    </div>
+                    <p class="card-body">
+                      I can certainly recommend Felix to anyone seeking a
+                      Webflow professional who can elevate their digital
+                      presence. He possesses the skills, creativity, and
+                      dedication needed to bring your vision to life. I am
+                      confident that his contributions will significantly
+                      enhance any project fortunate enough to have him on board.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="recommendation">
+                <div class="card card-link">
+                  <a
+                    href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/"
+                    target="_blank"
+                    rel="noopener"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <div class="card-quote">
+                    <div class="card-header">
+                      <img
+                        src="/images/people/frank-bagge.avif"
+                        alt="Frank Bagge"
+                        class="card-header-avatar"
+                      />
+                      <div class="card-header-text">
+                        <p class="card-title">Frank Bagge</p>
+                        <p class="card-subtitle">Senior Consultant at Narva</p>
+                      </div>
+                    </div>
+                    <p class="card-body">
+                      Incredibly grateful for the swift and outstanding delivery
+                      of a one-page solution for one of our valued customers at
+                      Narva! The efficiency, attention to detail, and seamless
+                      execution made all the difference. Truly a job well done!
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="bento-item hidden" data-type="recommendation">
+                <div class="card card-link">
+                  <a
+                    href="https://www.linkedin.com/in/felixhellstrom/details/recommendations/"
+                    target="_blank"
+                    rel="noopener"
+                    class="card-link-overlay"
+                    aria-hidden="true"
+                    tabindex="-1"
+                  ></a>
+                  <div class="card-quote">
+                    <div class="card-header">
+                      <img
+                        src="/images/people/jacob-schultz.avif"
+                        alt="Jacob Schultz"
+                        class="card-header-avatar"
+                      />
+                      <div class="card-header-text">
+                        <p class="card-title">Jacob Schultz</p>
+                        <p class="card-subtitle">Senior Designer</p>
+                      </div>
+                    </div>
+                    <p class="card-body">
+                      Working alongside Felix was an absolute delight. His
+                      technical expertise and commitment were evident throughout
+                      the entire process. Felix has my warmest recommendation.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="load-more-wrap">
+              <button class="btn btn-outline" id="load-more">Show more</button>
+            </div>
+            <script>
+              (function () {
+                var BATCH = 9;
+                var grid = document.querySelector(".bento-grid");
+                if (!grid) return;
 
-  </main>
-  <footer>
-    <p>&copy; 2026 Felix Hellström · <a href="https://github.com/fellanH">GitHub</a> · <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> · <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a></p>
-  </footer>
-  <script>
-;(function () {
-  var btn = document.getElementById('theme-toggle');
-  if (!btn) return;
+                var items = Array.from(grid.querySelectorAll(".bento-item"));
+                var filterBtns = document.querySelectorAll(".filter-btn");
+                var loadMoreBtn = document.getElementById("load-more");
+                if (!loadMoreBtn) return;
 
-  function icon() {
-    var d = document.documentElement.getAttribute('data-theme');
-    if (!d) d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
-    btn.textContent = d === 'dark' ? '\u2600' : '\u263E';
-  }
+                var activeFilter = "all";
 
-  icon();
+                function updateVisibility() {
+                  var matching = items.filter(function (el) {
+                    return (
+                      activeFilter === "all" ||
+                      el.getAttribute("data-type") === activeFilter
+                    );
+                  });
+                  var nonMatching = items.filter(function (el) {
+                    return (
+                      activeFilter !== "all" &&
+                      el.getAttribute("data-type") !== activeFilter
+                    );
+                  });
 
-  btn.addEventListener('click', function () {
-    var cur = document.documentElement.getAttribute('data-theme');
-    if (!cur) cur = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
-    var next = cur === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    icon();
-  });
-})();
+                  // Hide non-matching
+                  nonMatching.forEach(function (el) {
+                    el.classList.add("hidden");
+                  });
 
+                  if (activeFilter === "all") {
+                    // Show first BATCH visible, hide rest
+                    var visibleCount = 0;
+                    items.forEach(function (el) {
+                      if (visibleCount < BATCH) {
+                        el.classList.remove("hidden");
+                        visibleCount++;
+                      } else {
+                        el.classList.add("hidden");
+                      }
+                    });
+                    loadMoreBtn.textContent = "Show more";
+                    loadMoreBtn.parentElement.style.display =
+                      visibleCount < items.length ? "" : "none";
+                  } else {
+                    // Show ALL matching when a filter is active
+                    matching.forEach(function (el) {
+                      el.classList.remove("hidden");
+                    });
+                    loadMoreBtn.parentElement.style.display = "none";
+                  }
+                }
 
-</script>
-</body>
+                filterBtns.forEach(function (btn) {
+                  btn.addEventListener("click", function () {
+                    filterBtns.forEach(function (b) {
+                      b.classList.remove("active");
+                    });
+                    btn.classList.add("active");
+                    activeFilter = btn.getAttribute("data-filter");
+                    updateVisibility();
+                  });
+                });
+
+                loadMoreBtn.addEventListener("click", function () {
+                  var hidden = items.filter(function (el) {
+                    return el.classList.contains("hidden");
+                  });
+                  var toShow = hidden.slice(0, BATCH);
+                  toShow.forEach(function (el) {
+                    el.classList.remove("hidden");
+                  });
+                  var remaining = items.filter(function (el) {
+                    return el.classList.contains("hidden");
+                  });
+                  if (remaining.length === 0) {
+                    loadMoreBtn.parentElement.style.display = "none";
+                  }
+                });
+              })();
+            </script>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>
+        &copy; 2026 Felix Hellström ·
+        <a href="https://github.com/fellanH">GitHub</a> ·
+        <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> ·
+        <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a>
+      </p>
+    </footer>
+    <script>
+      (function () {
+        var btn = document.getElementById("theme-toggle");
+        if (!btn) return;
+
+        function icon() {
+          var d = document.documentElement.getAttribute("data-theme");
+          if (!d)
+            d = matchMedia("(prefers-color-scheme:dark)").matches
+              ? "dark"
+              : "light";
+          btn.textContent = d === "dark" ? "\u2600" : "\u263E";
+        }
+
+        icon();
+
+        btn.addEventListener("click", function () {
+          var cur = document.documentElement.getAttribute("data-theme");
+          if (!cur)
+            cur = matchMedia("(prefers-color-scheme:dark)").matches
+              ? "dark"
+              : "light";
+          var next = cur === "dark" ? "light" : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          localStorage.setItem("theme", next);
+          icon();
+        });
+      })();
+    </script>
+  </body>
 </html>
-

@@ -5,6 +5,13 @@
   "description": "Posts about AI agents, Webflow and CMS migrations, and building tools like context-vault and omni in public.",
   "activeNav": "Blog",
 
+  "shell": {
+    "template": "page-shell.html",
+    "props": {
+      "includePersonSchema": false
+    }
+  },
+
   "sections": [
     {
       "id": "blog-index",
@@ -24,4 +31,3 @@
     }
   ]
 }
-

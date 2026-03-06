@@ -1,89 +1,188 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gasometer Visual Experience — Cirkus Venues — Felix Hellström</title>
-  <meta name="description" content="Built a visual experience site for a 1,740-seat theater venue in central Stockholm. Dark, cinematic design with immersive scroll-driven animations." />
-  <link rel="canonical" href="https://felixhellstrom.com/work/gasometer-visual-experience/" />
-  <meta property="og:title" content="Gasometer Visual Experience — Cirkus Venues — Felix Hellström" />
-  <meta property="og:description" content="Built a visual experience site for a 1,740-seat theater venue in central Stockholm. Dark, cinematic design with immersive scroll-driven animations." />
-  <meta property="og:image" content="https://felixhellstrom.com/images/og-image.png" />
-  <meta property="og:url" content="https://felixhellstrom.com/work/gasometer-visual-experience/" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="/images/favicon.png" />
-  <link rel="alternate" type="application/rss+xml" title="Felix Hellström" href="https://felixhellstrom.com/feed.xml" />
-  <script>
-;(function () {
-  var t = localStorage.getItem('theme');
-  if (t) document.documentElement.setAttribute('data-theme', t);
-})();
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gasometer Visual Experience — Cirkus Venues — Felix Hellström</title>
+    <meta
+      name="description"
+      content="Built a visual experience site for a 1,740-seat theater venue in central Stockholm. Dark, cinematic design with immersive scroll-driven animations."
+    />
+    <link
+      rel="canonical"
+      href="https://felixhellstrom.com/work/gasometer-visual-experience/"
+    />
+    <meta
+      property="og:title"
+      content="Gasometer Visual Experience — Cirkus Venues — Felix Hellström"
+    />
+    <meta
+      property="og:description"
+      content="Built a visual experience site for a 1,740-seat theater venue in central Stockholm. Dark, cinematic design with immersive scroll-driven animations."
+    />
+    <meta
+      property="og:image"
+      content="https://felixhellstrom.com/images/og-image.png"
+    />
+    <meta
+      property="og:url"
+      content="https://felixhellstrom.com/work/gasometer-visual-experience/"
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/images/favicon.png" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Felix Hellström"
+      href="https://felixhellstrom.com/feed.xml"
+    />
+    <script>
+      (function () {
+        var t = localStorage.getItem("theme");
+        if (t) document.documentElement.setAttribute("data-theme", t);
+      })();
+    </script>
+    <link rel="stylesheet" href="/normalize.css" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav>
+        <div class="nav-inner">
+          <a href="/" class="nav-wordmark">Felix Hellström</a>
+          <div class="nav-links">
+            <a href="/">Home</a><a href="/learn/">Learn</a
+            ><a href="/projects/">Projects</a
+            ><a href="/work/" aria-current="page">Work</a
+            ><a href="/about/">About</a>
+          </div>
+          <div class="nav-actions">
+            <button
+              class="theme-toggle"
+              id="theme-toggle"
+              aria-label="Toggle dark mode"
+              title="Toggle dark mode"
+            >
+              &#9790;</button
+            ><a href="/contact/" class="nav-cta">Contact</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="section_work-detail">
+        <div class="padding-global padding-section-large">
+          <div class="container-medium">
+            <a href="/work/" class="back">← All work</a>
+            <article>
+              <p class="meta">Cirkus Venues · 2023</p>
+              <h1>Gasometer Visual Experience</h1>
+              <div class="tags">
+                <span class="tag">Animation</span
+                ><span class="tag">Visual Design</span
+                ><span class="tag">Webflow</span>
+              </div>
+              <img
+                src="/images/work/gasometer.avif"
+                alt="Gasometer Visual Experience"
+                class="media-full"
+              />
+              <div class="prose">
+                <h2>The challenge</h2>
+                <p>
+                  Gasometer is a 1,740-seat theater and event venue in central
+                  Stockholm, operated by Cirkus Venues. They needed a website
+                  that matched the scale and atmosphere of the physical space —
+                  something that felt immersive, not just informational.
+                </p>
+                <h2>What I built</h2>
+                <p>
+                  A dark, cinematic Webflow site with scroll-driven animations
+                  and full-bleed imagery. The design treats the venue itself as
+                  the hero — large-format photography, ambient color palettes,
+                  and transitions that mirror the experience of walking into the
+                  space.
+                </p>
+                <p>
+                  Every interaction was intentional. Scroll-triggered reveals,
+                  parallax layers, and subtle motion give the site a sense of
+                  depth without sacrificing performance or accessibility.
+                </p>
+                <h2>Craft details</h2>
+                <ul>
+                  <li>
+                    Scroll-driven animations** built with Webflow interactions —
+                    no external libraries
+                  </li>
+                  <li>
+                    Dark cinematic palette** that matches the venue's atmosphere
+                  </li>
+                  <li>
+                    Full-bleed imagery** with optimized loading and responsive
+                    breakpoints
+                  </li>
+                  <li>Minimal UI chrome** — the venue is the content</li>
+                  <li>
+                    Performance-first** — animations are GPU-accelerated, images
+                    are properly sized
+                  </li>
+                </ul>
+                <p>
+                  This project was about restraint as much as ambition. The best
+                  visual experiences don't overwhelm — they guide attention.
+                  Every animation serves the story of the space.
+                </p>
+              </div>
+              <p>
+                <a
+                  href="https://www.gasometer.se/"
+                  target="_blank"
+                  rel="noopener"
+                  >Visit live site ↗</a
+                >
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>
+        &copy; 2026 Felix Hellström ·
+        <a href="https://github.com/fellanH">GitHub</a> ·
+        <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> ·
+        <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a>
+      </p>
+    </footer>
+    <script>
+      (function () {
+        var btn = document.getElementById("theme-toggle");
+        if (!btn) return;
 
+        function icon() {
+          var d = document.documentElement.getAttribute("data-theme");
+          if (!d)
+            d = matchMedia("(prefers-color-scheme:dark)").matches
+              ? "dark"
+              : "light";
+          btn.textContent = d === "dark" ? "\u2600" : "\u263E";
+        }
 
-</script>
-  <link rel="stylesheet" href="/normalize.css" />
-  <link rel="stylesheet" href="/style.css" />
-  
-</head>
-<body>
-  <header class="site-header"><nav><div class="nav-inner"><a href="/" class="nav-wordmark">Felix Hellström</a><div class="nav-links"><a href="/">Home</a><a href="/learn/">Learn</a><a href="/projects/">Projects</a><a href="/work/" aria-current="page">Work</a><a href="/about/">About</a></div><div class="nav-actions"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button><a href="/contact/" class="nav-cta">Contact</a></div></div></nav></header>
-  <main>
-<section class="section_work-detail">
-  <div class="padding-global padding-section-large">
-    <div class="container-medium">
+        icon();
 
-    <a href="/work/" class="back">← All work</a>
-    <article>
-      <p class="meta">Cirkus Venues · 2023</p>
-      <h1>Gasometer Visual Experience</h1>
-      <div class="tags"><span class="tag">Animation</span><span class="tag">Visual Design</span><span class="tag">Webflow</span></div>
-      <img src="/images/work/gasometer.avif" alt="Gasometer Visual Experience" class="media-full" />
-      <div class="prose"><h2>The challenge</h2>
-<p>Gasometer is a 1,740-seat theater and event venue in central Stockholm, operated by Cirkus Venues. They needed a website that matched the scale and atmosphere of the physical space — something that felt immersive, not just informational.</p>
-<h2>What I built</h2>
-<p>A dark, cinematic Webflow site with scroll-driven animations and full-bleed imagery. The design treats the venue itself as the hero — large-format photography, ambient color palettes, and transitions that mirror the experience of walking into the space.</p>
-<p>Every interaction was intentional. Scroll-triggered reveals, parallax layers, and subtle motion give the site a sense of depth without sacrificing performance or accessibility.</p>
-<h2>Craft details</h2>
-<ul><li>Scroll-driven animations** built with Webflow interactions — no external libraries</li><li>Dark cinematic palette** that matches the venue's atmosphere</li><li>Full-bleed imagery** with optimized loading and responsive breakpoints</li><li>Minimal UI chrome** — the venue is the content</li><li>Performance-first** — animations are GPU-accelerated, images are properly sized</li></ul>
-<p>This project was about restraint as much as ambition. The best visual experiences don't overwhelm — they guide attention. Every animation serves the story of the space.</p></div>
-      <p><a href="https://www.gasometer.se/" target="_blank" rel="noopener">Visit live site ↗</a></p>
-    </article>
-
-    </div>
-  </div>
-</section>
-
-
-  </main>
-  <footer>
-    <p>&copy; 2026 Felix Hellström · <a href="https://github.com/fellanH">GitHub</a> · <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> · <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a></p>
-  </footer>
-  <script>
-;(function () {
-  var btn = document.getElementById('theme-toggle');
-  if (!btn) return;
-
-  function icon() {
-    var d = document.documentElement.getAttribute('data-theme');
-    if (!d) d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
-    btn.textContent = d === 'dark' ? '\u2600' : '\u263E';
-  }
-
-  icon();
-
-  btn.addEventListener('click', function () {
-    var cur = document.documentElement.getAttribute('data-theme');
-    if (!cur) cur = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
-    var next = cur === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    icon();
-  });
-})();
-
-
-</script>
-</body>
+        btn.addEventListener("click", function () {
+          var cur = document.documentElement.getAttribute("data-theme");
+          if (!cur)
+            cur = matchMedia("(prefers-color-scheme:dark)").matches
+              ? "dark"
+              : "light";
+          var next = cur === "dark" ? "light" : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          localStorage.setItem("theme", next);
+          icon();
+        });
+      })();
+    </script>
+  </body>
 </html>
-

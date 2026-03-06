@@ -1,0 +1,34 @@
+{
+  "id": "learn-hub",
+  "path": "/learn/",
+  "title": "Learn — Felix Hellström",
+  "description": "Deep dives into AI agent workflows, MCP development, and building agent-native software.",
+  "activeNav": "Learn",
+
+  "shell": {
+    "template": "page-shell.html",
+    "props": {
+      "includePersonSchema": false
+    }
+  },
+
+  "sections": [
+    {
+      "id": "learn-hub",
+      "height": "large",
+      "width": "large",
+      "modules": [
+        {
+          "type": "pillarGrid",
+          "component": "pillarGrid",
+          "props": {
+            "title": "Learn",
+            "subtitle": "Deep dives into AI agent workflows, MCP development, and the agent-native stack. Written from production experience, not theory.",
+            "show_latest": true,
+            "latest_limit": 6
+          }
+        }
+      ]
+    }
+  ]
+}

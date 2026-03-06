@@ -1,82 +1,148 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Strategic Digital Consolidation — ROL Group — Felix Hellström</title>
-  <meta name="description" content="Led UX/UI design and Webflow development, transforming ROL Group&#x27;s digital presence into a seamless and engaging experience across global operations." />
-  <link rel="canonical" href="https://felixhellstrom.com/work/rol-group/" />
-  <meta property="og:title" content="Strategic Digital Consolidation — ROL Group — Felix Hellström" />
-  <meta property="og:description" content="Led UX/UI design and Webflow development, transforming ROL Group&#x27;s digital presence into a seamless and engaging experience across global operations." />
-  <meta property="og:image" content="https://felixhellstrom.com/images/og-image.png" />
-  <meta property="og:url" content="https://felixhellstrom.com/work/rol-group/" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="/images/favicon.png" />
-  <link rel="alternate" type="application/rss+xml" title="Felix Hellström" href="https://felixhellstrom.com/feed.xml" />
-  <script>
-;(function () {
-  var t = localStorage.getItem('theme');
-  if (t) document.documentElement.setAttribute('data-theme', t);
-})();
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Strategic Digital Consolidation — ROL Group — Felix Hellström</title>
+    <meta
+      name="description"
+      content="Led UX/UI design and Webflow development, transforming ROL Group&#x27;s digital presence into a seamless and engaging experience across global operations."
+    />
+    <link rel="canonical" href="https://felixhellstrom.com/work/rol-group/" />
+    <meta
+      property="og:title"
+      content="Strategic Digital Consolidation — ROL Group — Felix Hellström"
+    />
+    <meta
+      property="og:description"
+      content="Led UX/UI design and Webflow development, transforming ROL Group&#x27;s digital presence into a seamless and engaging experience across global operations."
+    />
+    <meta
+      property="og:image"
+      content="https://felixhellstrom.com/images/og-image.png"
+    />
+    <meta
+      property="og:url"
+      content="https://felixhellstrom.com/work/rol-group/"
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/images/favicon.png" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Felix Hellström"
+      href="https://felixhellstrom.com/feed.xml"
+    />
+    <script>
+      (function () {
+        var t = localStorage.getItem("theme");
+        if (t) document.documentElement.setAttribute("data-theme", t);
+      })();
+    </script>
+    <link rel="stylesheet" href="/normalize.css" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav>
+        <div class="nav-inner">
+          <a href="/" class="nav-wordmark">Felix Hellström</a>
+          <div class="nav-links">
+            <a href="/">Home</a><a href="/learn/">Learn</a
+            ><a href="/projects/">Projects</a
+            ><a href="/work/" aria-current="page">Work</a
+            ><a href="/about/">About</a>
+          </div>
+          <div class="nav-actions">
+            <button
+              class="theme-toggle"
+              id="theme-toggle"
+              aria-label="Toggle dark mode"
+              title="Toggle dark mode"
+            >
+              &#9790;</button
+            ><a href="/contact/" class="nav-cta">Contact</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="section_work-detail">
+        <div class="padding-global padding-section-large">
+          <div class="container-medium">
+            <a href="/work/" class="back">← All work</a>
+            <article>
+              <p class="meta">ROL Group · 2022</p>
+              <h1>Strategic Digital Consolidation</h1>
+              <div class="tags">
+                <span class="tag">Corporate</span><span class="tag">UX/UI</span
+                ><span class="tag">Webflow</span>
+              </div>
+              <video
+                src="https://cdn.vidzflow.com/v/qjQSxskb6T_1080p_1709900589.mp4"
+                autoplay
+                muted
+                loop
+                playsinline
+                class="media-full"
+              ></video>
+              <div class="prose">
+                <p>
+                  Led UX/UI design and Webflow development, transforming ROL
+                  Group&#x27;s digital presence into a seamless and engaging
+                  experience across global operations.
+                </p>
+              </div>
+              <p>
+                <a
+                  href="https://www.rolgroup.com/"
+                  target="_blank"
+                  rel="noopener"
+                  >Visit live site ↗</a
+                >
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>
+        &copy; 2026 Felix Hellström ·
+        <a href="https://github.com/fellanH">GitHub</a> ·
+        <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> ·
+        <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a>
+      </p>
+    </footer>
+    <script>
+      (function () {
+        var btn = document.getElementById("theme-toggle");
+        if (!btn) return;
 
+        function icon() {
+          var d = document.documentElement.getAttribute("data-theme");
+          if (!d)
+            d = matchMedia("(prefers-color-scheme:dark)").matches
+              ? "dark"
+              : "light";
+          btn.textContent = d === "dark" ? "\u2600" : "\u263E";
+        }
 
-</script>
-  <link rel="stylesheet" href="/normalize.css" />
-  <link rel="stylesheet" href="/style.css" />
-  
-</head>
-<body>
-  <header class="site-header"><nav><div class="nav-inner"><a href="/" class="nav-wordmark">Felix Hellström</a><div class="nav-links"><a href="/">Home</a><a href="/learn/">Learn</a><a href="/projects/">Projects</a><a href="/work/" aria-current="page">Work</a><a href="/about/">About</a></div><div class="nav-actions"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button><a href="/contact/" class="nav-cta">Contact</a></div></div></nav></header>
-  <main>
-<section class="section_work-detail">
-  <div class="padding-global padding-section-large">
-    <div class="container-medium">
+        icon();
 
-    <a href="/work/" class="back">← All work</a>
-    <article>
-      <p class="meta">ROL Group · 2022</p>
-      <h1>Strategic Digital Consolidation</h1>
-      <div class="tags"><span class="tag">Corporate</span><span class="tag">UX/UI</span><span class="tag">Webflow</span></div>
-      <video src="https://cdn.vidzflow.com/v/qjQSxskb6T_1080p_1709900589.mp4" autoplay muted loop playsinline class="media-full"></video>
-      <div class="prose"><p>Led UX/UI design and Webflow development, transforming ROL Group&#x27;s digital presence into a seamless and engaging experience across global operations.</p></div>
-      <p><a href="https://www.rolgroup.com/" target="_blank" rel="noopener">Visit live site ↗</a></p>
-    </article>
-
-    </div>
-  </div>
-</section>
-
-
-  </main>
-  <footer>
-    <p>&copy; 2026 Felix Hellström · <a href="https://github.com/fellanH">GitHub</a> · <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> · <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a></p>
-  </footer>
-  <script>
-;(function () {
-  var btn = document.getElementById('theme-toggle');
-  if (!btn) return;
-
-  function icon() {
-    var d = document.documentElement.getAttribute('data-theme');
-    if (!d) d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
-    btn.textContent = d === 'dark' ? '\u2600' : '\u263E';
-  }
-
-  icon();
-
-  btn.addEventListener('click', function () {
-    var cur = document.documentElement.getAttribute('data-theme');
-    if (!cur) cur = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
-    var next = cur === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    icon();
-  });
-})();
-
-
-</script>
-</body>
+        btn.addEventListener("click", function () {
+          var cur = document.documentElement.getAttribute("data-theme");
+          if (!cur)
+            cur = matchMedia("(prefers-color-scheme:dark)").matches
+              ? "dark"
+              : "light";
+          var next = cur === "dark" ? "light" : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          localStorage.setItem("theme", next);
+          icon();
+        });
+      })();
+    </script>
+  </body>
 </html>
-

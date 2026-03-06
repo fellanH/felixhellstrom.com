@@ -1,0 +1,32 @@
+{
+  "id": "work-index",
+  "path": "/work/",
+  "title": "Work — Felix Hellström",
+  "description": "Client projects: Webflow sites, HubSpot CMS builds, migration pipelines, and custom integrations.",
+  "activeNav": "Work",
+
+  "shell": {
+    "template": "page-shell.html",
+    "props": {
+      "includePersonSchema": false
+    }
+  },
+
+  "sections": [
+    {
+      "id": "work-index",
+      "height": "large",
+      "width": "large",
+      "modules": [
+        {
+          "type": "workGrid",
+          "component": "workGrid",
+          "props": {
+            "title": "Work",
+            "subtitle": "Client projects and case studies. Webflow, HubSpot CMS, custom integrations."
+          }
+        }
+      ]
+    }
+  ]
+}

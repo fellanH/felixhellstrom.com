@@ -1,0 +1,29 @@
+{
+  "id": "work-detail",
+  "path": "/work/{slug}/",
+  "title": "{title} — {client} — Felix Hellström",
+  "description": "{description}",
+  "activeNav": "Work",
+
+  "shell": {
+    "template": "page-shell.html",
+    "props": {
+      "includePersonSchema": false
+    }
+  },
+
+  "sections": [
+    {
+      "id": "work-detail",
+      "height": "large",
+      "width": "medium",
+      "modules": [
+        {
+          "type": "workDetail",
+          "component": "workDetail",
+          "props": {}
+        }
+      ]
+    }
+  ]
+}

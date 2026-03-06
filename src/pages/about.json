@@ -1,0 +1,46 @@
+{
+  "id": "about",
+  "path": "/about/",
+  "title": "About — Felix Hellström",
+  "description": "Full-stack developer and technical lead. 10+ years shipping Webflow, HubSpot, and AI tools.",
+  "activeNav": "About",
+
+  "shell": {
+    "template": "page-shell.html",
+    "props": {
+      "includePersonSchema": true
+    }
+  },
+
+  "sections": [
+    {
+      "id": "about-bio",
+      "height": "large",
+      "width": "large",
+      "modules": [
+        {
+          "type": "markdown",
+          "component": "markdown",
+          "props": {
+            "file": "about.md",
+            "class": "prose"
+          }
+        }
+      ]
+    },
+    {
+      "id": "about-testimonials",
+      "height": "large",
+      "width": "large",
+      "modules": [
+        {
+          "type": "testimonialList",
+          "component": "testimonialList",
+          "props": {
+            "title": "Recommendations"
+          }
+        }
+      ]
+    }
+  ]
+}

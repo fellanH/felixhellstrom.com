@@ -1,67 +1,73 @@
 {
+  "activeNav": "Home",
+  "description": "Building AI agent tools and writing about what works. MCP, multi-agent orchestration, and the agent-native stack.",
   "id": "home",
   "path": "/",
-  "title": "Felix Hellström — Building AI agent tools and writing about what works. MCP, multi-agent orchestration, and the agent-native stack.",
-  "description": "Building AI agent tools and writing about what works. MCP, multi-agent orchestration, and the agent-native stack.",
-  "activeNav": "Home",
-
-  "shell": {
-    "template": "page-shell.html",
-    "props": {
-      "includePersonSchema": true
-    }
-  },
-
   "sections": [
     {
-      "id": "home-hero",
+      "aside": [],
       "height": "small",
-      "width": "large",
+      "id": "home-hero",
+      "layout": "default",
+      "main": [],
       "modules": [
         {
-          "type": "hero",
-          "template": "hero.html",
           "component": "hero",
           "props": {
-            "title": "Felix Hellström",
-            "subtitle": "I build AI agent tools and write about what works. MCP servers, multi-agent orchestration, and the agent-native stack.",
             "primary_href": "/learn/",
             "primary_label": "Start learning",
             "secondary_href": "/projects/",
-            "secondary_label": "View projects"
-          }
+            "secondary_label": "View projects",
+            "subtitle": "I build AI agent tools and write about what works. MCP servers, multi-agent orchestration, and the agent-native stack.",
+            "title": "Felix Hellström"
+          },
+          "template": "hero.html",
+          "type": "hero"
         }
-      ]
+      ],
+      "width": "large"
     },
     {
+      "aside": [],
+      "height": "small",
       "id": "home-stats",
-      "height": "medium",
-      "width": "large",
+      "layout": "default",
+      "main": [],
       "modules": [
         {
-          "type": "stats",
           "component": "stats",
           "props": {
             "extra_items": [
               ["10+ yrs", "Professional experience"],
               ["2", "Languages (SV / EN)"]
             ]
-          }
+          },
+          "type": "stats"
         }
-      ]
+      ],
+      "width": "large"
     },
     {
-      "id": "home-feed",
+      "aside": [],
       "height": "large",
-      "width": "large",
+      "id": "home-feed",
+      "layout": "default",
+      "main": [],
       "modules": [
         {
-          "type": "homeFeed",
           "component": "homeFeed",
-          "props": {}
+          "props": {},
+          "type": "homeFeed"
         }
-      ]
+      ],
+      "width": "large"
     }
-  ]
+  ],
+  "shell": {
+    "props": {
+      "includePersonSchema": true
+    },
+    "template": "page-shell.html"
+  },
+  "title": "Felix Hellström — Building AI agent tools and writing about what works. MCP, multi-agent orchestration, and the agent-native stack."
 }
-

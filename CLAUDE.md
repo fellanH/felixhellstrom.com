@@ -1,5 +1,11 @@
 # felixhellstrom.com
 
+At session start, load context from the vault:
+- get_context(query: "active goals priorities")
+- get_context(tags: ["bucket:felixhellstrom.com"])
+
+All project decisions live in the vault.
+
 Static site: SQLite + markdown + Python stdlib. Zero dependencies.
 
 ## Repo layout
@@ -47,18 +53,18 @@ dist/                    Auto-generated — DO NOT EDIT
 
 ## Page → function map (src/generate.py)
 
-| Route                 | Function                | Key elements                                                            |
-| --------------------- | ----------------------- | ----------------------------------------------------------------------- |
-| `/`                   | `build_home()`          | Hero, stats row, latest posts, featured work, projects, testimonials    |
-| `/learn`              | `build_learn_hub()`     | Pillar cards grid, latest articles across pillars                       |
-| `/learn/{pillar}`     | `build_learn_pillar()`  | Pillar intro, MANIFESTO.md (agent-native), related articles             |
-| `/projects`           | `build_projects_index()`| Project cards grid from DB                                              |
-| `/about`              | `build_about()`         | Bio from `content/about.md`, recommendations, sidebar                   |
-| `/blog`               | `build_blog_index()`    | Post list from DB                                                       |
-| `/blog/{slug}`        | `build_blog_post()`     | Reads `content/posts/{slug}.md`, renders with `.prose` class            |
-| `/work`               | `build_work_index()`    | Case study grid from DB                                                 |
-| `/work/{slug}`        | `build_work_detail()`   | Hero media, reads `content/work/{slug}.md` or falls back to description |
-| `/contact`            | `build_contact()`       | Contact cards, availability, location                                   |
+| Route             | Function                 | Key elements                                                            |
+| ----------------- | ------------------------ | ----------------------------------------------------------------------- |
+| `/`               | `build_home()`           | Hero, stats row, latest posts, featured work, projects, testimonials    |
+| `/learn`          | `build_learn_hub()`      | Pillar cards grid, latest articles across pillars                       |
+| `/learn/{pillar}` | `build_learn_pillar()`   | Pillar intro, MANIFESTO.md (agent-native), related articles             |
+| `/projects`       | `build_projects_index()` | Project cards grid from DB                                              |
+| `/about`          | `build_about()`          | Bio from `content/about.md`, recommendations, sidebar                   |
+| `/blog`           | `build_blog_index()`     | Post list from DB                                                       |
+| `/blog/{slug}`    | `build_blog_post()`      | Reads `content/posts/{slug}.md`, renders with `.prose` class            |
+| `/work`           | `build_work_index()`     | Case study grid from DB                                                 |
+| `/work/{slug}`    | `build_work_detail()`    | Hero media, reads `content/work/{slug}.md` or falls back to description |
+| `/contact`        | `build_contact()`        | Contact cards, availability, location                                   |
 
 Shared: `shell()` wraps every page (head, nav, footer, theme scripts, schema markup). `nav_html()` renders navigation + theme toggle.
 

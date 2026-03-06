@@ -11,6 +11,7 @@ import re
 import shutil
 import sqlite3
 import json
+from copy import deepcopy
 from datetime import datetime
 from html import escape
 from pathlib import Path
@@ -361,6 +362,520 @@ def card_clickable(href: str, content: str, cls: str = "", external: bool = Fals
         "</div>"
     )
 
+
+# ── module registry & core generators ────────────────────────────────────
+
+MODULE_RENDERERS: dict[str, callable] = {}
+
+
+def register_module(name: str):
+    """Decorator to register a module renderer."""
+
+    def decorator(fn):
+        MODULE_RENDERERS[name] = fn
+        return fn
+
+    return decorator
+
+
+@register_module("hero")
+def module_hero(props: dict, ctx: dict) -> str:
+    return hero_component(
+        title=props["title"],
+        subtitle=props["subtitle"],
+        primary_href=props["primary_href"],
+        primary_label=props["primary_label"],
+        secondary_href=props["secondary_href"],
+        secondary_label=props["secondary_label"],
+    )
+
+
+@register_module("stats")
+def module_stats(props: dict, ctx: dict) -> str:
+    stats = ctx.get("stats", [])
+    extra_items = props.get("extra_items", [])
+    return stats_component(stats, extra_items=extra_items)
+
+
+@register_module("homeFeed")
+def module_home_feed(props: dict, ctx: dict) -> str:
+    items = ctx.get("items", [])
+    return build_home_feed(items)
+
+
+@register_module("postList")
+def module_post_list(props: dict, ctx: dict) -> str:
+    return post_list_module(props)
+
+
+@register_module("workGrid")
+def module_work_grid(props: dict, ctx: dict) -> str:
+    """Grid of client work/case studies."""
+    title = props.get("title", "Work")
+    subtitle = props.get(
+        "subtitle",
+        "Client projects and case studies. Webflow, HubSpot CMS, custom integrations.",
+    )
+    studies = q(
+        "SELECT id, slug, title, client, description, year, image, video, url, hide_image "
+        "FROM case_studies ORDER BY year DESC, title"
+    )
+
+    b = f'    {heading(title, tag="h1")}\n'
+    if subtitle:
+        b += f'    <p class="subtitle">{e(subtitle)}</p>\n'
+    b += '    <div class="grid grid-2">\n'
+    for w in studies:
+        tg = get_tags("case_study_tags", "case_study_id", w["id"])
+        b += f"    {work_card(w, tg)}\n"
+    b += "    </div>\n"
+    return b
+
+
+@register_module("projectGrid")
+def module_project_grid(props: dict, ctx: dict) -> str:
+    """Grid of projects/products."""
+    title = props.get("title", "Projects")
+    subtitle = props.get(
+        "subtitle",
+        "Open source tools, products, and experiments. Built with AI agents, for AI agents.",
+    )
+    projects = q(
+        "SELECT id, slug, title, description, status, url, github, npm, stats "
+        "FROM projects ORDER BY status, title"
+    )
+
+    b = f'    {heading(title, tag="h1")}\n'
+    if subtitle:
+        b += f'    <p class="subtitle">{e(subtitle)}</p>\n'
+    b += '    <div class="grid grid-2">\n'
+    for pr in projects:
+        tg = get_tags("project_tags", "project_id", pr["id"])
+        b += f"    {project_card(pr, tg)}\n"
+    b += "    </div>\n"
+    return b
+
+
+@register_module("pillarGrid")
+def module_pillar_grid(props: dict, ctx: dict) -> str:
+    """Learn hub: pillars grid + optional latest articles."""
+    title = props.get("title", "Learn")
+    subtitle = props.get(
+        "subtitle",
+        "Deep dives into AI agent workflows, MCP development, and the agent-native stack. "
+        "Written from production experience, not theory.",
+    )
+    show_latest = props.get("show_latest", True)
+    latest_limit = int(props.get("latest_limit", 6))
+
+    b = f'    {heading(title, tag="h1")}\n'
+    if subtitle:
+        b += f'    <p class="subtitle">{e(subtitle)}</p>\n'
+
+    b += '    <div class="pillar-grid">\n'
+    for p in PILLARS:
+        b += (
+            f'      <a href="/learn/{p["slug"]}/" class="pillar-card">\n'
+            f'        <p class="pillar-label">{e(p["label"])}</p>\n'
+            f'        <h3>{e(p["title"])}</h3>\n'
+            f'        <p>{e(p["description"])}</p>\n'
+            f'        <p class="pillar-topics">{e(p["topics"])}</p>\n'
+            f"      </a>\n"
+        )
+    b += "    </div>\n"
+
+    if show_latest:
+        all_pillar_tags: set[str] = set()
+        for p in PILLARS:
+            all_pillar_tags.update(p["post_tags"])
+
+        if all_pillar_tags:
+            placeholders = ",".join("?" for _ in all_pillar_tags)
+            recent = q(
+                "SELECT DISTINCT p.id, p.slug, p.title, p.date, p.description, p.category "
+                "FROM posts p JOIN post_tags pt ON p.id = pt.post_id "
+                f"WHERE pt.tag IN ({placeholders}) ORDER BY p.date DESC LIMIT ?",
+                (*all_pillar_tags, latest_limit),
+            )
+            if recent:
+                b += f"\n    {heading('Latest Articles')}\n"
+                for r in recent:
+                    tg = get_tags("post_tags", "post_id", r["id"])
+                    b += f"    {post_card(r, tg)}\n"
+
+    return b
+
+
+@register_module("markdown")
+def module_markdown(props: dict, ctx: dict) -> str:
+    """Render markdown from a file in content/ or from inline text."""
+    cls = props.get("class", "prose")
+
+    text: str | None = None
+    if "file" in props:
+        md_path = CONTENT / props["file"]
+        if md_path.exists():
+            text = md_path.read_text(encoding="utf-8")
+    elif "text" in props:
+        text = props["text"]
+
+    if not text:
+        return ""
+    return f'<div class="{cls}">\n{md(text)}\n</div>'
+
+
+@register_module("cardList")
+def module_card_list(props: dict, ctx: dict) -> str:
+    """Render a list or grid of generic cards from JSON props."""
+    layout = props.get("layout", "grid-2")  # maps to CSS grid-2 etc
+    items = props.get("items", [])
+
+    wrapper_cls = props.get("wrapper_class")
+    if wrapper_cls:
+        b = f'<div class="{wrapper_cls}">\n'
+    else:
+        b = ""
+
+    grid_open = f'    <div class="grid {layout}">\n' if layout else '    <div class="card-list">\n'
+    b += grid_open
+
+    for item in items:
+        label = item.get("label")
+        title = item.get("title")
+        body = item.get("body", "")
+        meta = item.get("meta", "")
+        href = item.get("href")
+        external = bool(item.get("external", False))
+
+        parts: list[str] = []
+        if label:
+            parts.append(f'<p class="label">{e(label)}</p>')
+        if title:
+            parts.append(f"<h3>{e(title)}</h3>")
+        if body:
+            parts.append(f'<p class="meta">{e(body)}</p>')
+        if meta:
+            parts.append(f'<p class="meta">{e(meta)}</p>')
+
+        inner = "".join(parts)
+        if href:
+            card_html = card_clickable(href, inner, external=external)
+        else:
+            card_html = card(inner)
+        b += f"      {card_html}\n"
+
+    b += "    </div>\n"
+    if wrapper_cls:
+        b += "</div>\n"
+    return b
+
+
+@register_module("testimonialList")
+def module_testimonial_list(props: dict, ctx: dict) -> str:
+    """Render a list of testimonials using testimonial_card."""
+    title = props.get("title")
+    limit = props.get("limit")
+
+    sql = "SELECT name, role, quote, image, linkedin FROM testimonials"
+    params: tuple = ()
+    if limit:
+        sql += " LIMIT ?"
+        params = (int(limit),)
+    testimonials = q(sql, params)
+
+    b = ""
+    if title:
+        b += f"    {heading(title)}\n"
+    for t in testimonials:
+        b += f"    {testimonial_card(t)}\n"
+    return b
+
+
+@register_module("blogPost")
+def module_blog_post(props: dict, ctx: dict) -> str:
+    """Module body for a single blog post, used by collection template."""
+    row: sqlite3.Row = ctx["row"]
+    slug = row["slug"]
+    md_file = POSTS_DIR / f"{slug}.md"
+
+    if md_file.exists():
+        body_html = md(md_file.read_text(encoding="utf-8"))
+    else:
+        body_html = f"<p>{e(row['description'])}</p>"
+
+    tags = get_tags("post_tags", "post_id", row["id"])
+
+    b = f"""
+    <a href="/blog/" class="back">← All posts</a>
+    <article>
+      <p class="meta">{e(row["date"])} · {e(row["category"])}</p>
+      {heading(e(row["title"]), tag="h1")}
+      {tags_html(tags)}
+      <div class="prose">
+{body_html}
+      </div>
+    </article>\n"""
+    return b
+
+
+@register_module("workDetail")
+def module_work_detail(props: dict, ctx: dict) -> str:
+    """Module body for a single work case study detail page."""
+    row: sqlite3.Row = ctx["row"]
+    tags = get_tags("case_study_tags", "case_study_id", row["id"])
+
+    b = f"""
+    <a href="/work/" class="back">← All work</a>
+    <article>
+      <p class="meta">{e(row["client"])} · {e(row["year"])}</p>
+      {heading(e(row["title"]), tag="h1")}
+      {tags_html(tags)}
+"""
+    # Hero media
+    if row["video"] and not row["hide_image"]:
+        b += f'      {video_el(row["video"])}\n'
+    elif row["image"] and not row["hide_image"]:
+        b += f'      {image(row["image"], alt=row["title"])}\n'
+
+    # Body: markdown file or DB description fallback
+    md_file = WORK_DIR / f'{row["slug"]}.md'
+    if md_file.exists():
+        body_html = md(md_file.read_text(encoding="utf-8"))
+    else:
+        body_html = f'<p>{e(row["description"])}</p>'
+
+    b += f'      <div class="prose">{body_html}</div>\n'
+
+    # Visit link
+    if row["url"]:
+        b += f'      <p><a href="{e(row["url"])}" target="_blank" rel="noopener">Visit live site ↗</a></p>\n'
+
+    b += "    </article>\n"
+    return b
+
+
+def build_home_context() -> dict:
+    """Context (data) used by home page modules."""
+    stats = q("SELECT value, label FROM feed_items WHERE type = 'stat' ORDER BY position")
+
+    # Query ALL content directly from source tables
+    all_posts = q("SELECT id, slug, title, date, description, category FROM posts ORDER BY date DESC")
+    all_case_studies = q(
+        "SELECT id, slug, title, client, description, year, image, video, url, hide_image, featured "
+        "FROM case_studies ORDER BY year DESC, title"
+    )
+    all_projects = q("SELECT id, slug, title, description, status, url, github, npm, stats FROM projects")
+    all_testimonials = q("SELECT id, name, role, quote, image, linkedin FROM testimonials")
+
+    # Build unified list with sort keys: (sort_key, type, rendered_html)
+    items: list[tuple[int, str, str]] = []
+
+    for p in all_posts:
+        tg = get_tags("post_tags", "post_id", p["id"])
+        year = int(p["date"][:4]) if p["date"] else 2020
+        items.append((year, "blog-post", post_card(p, tg)))
+
+    for cs in all_case_studies:
+        tg = get_tags("case_study_tags", "case_study_id", cs["id"])
+        year = int(cs["year"]) if cs["year"] else 2020
+        boost = 10000 if cs["featured"] else 0
+        items.append((year + boost, "case-study", work_card(cs, tg)))
+
+    for pr in all_projects:
+        tg = get_tags("project_tags", "project_id", pr["id"])
+        items.append((3000, "project", project_card(pr, tg)))
+
+    for t in all_testimonials:
+        items.append((2000, "recommendation", testimonial_card(t)))
+
+    items.sort(key=lambda x: x[0], reverse=True)
+
+    return {"stats": stats, "items": items}
+
+
+def build_home_feed(items: list[tuple[int, str, str]]) -> str:
+    """Build the home feed module (filter + bento grid + load-more + JS)."""
+    feed = ""
+
+    # Filter bar
+    feed += f'    {heading("From the workbench")}\n'
+    feed += '    <div class="filter-bar">\n'
+    feed += '      <button class="filter-btn active" data-filter="all">All</button>\n'
+    feed += '      <button class="filter-btn" data-filter="case-study">Work</button>\n'
+    feed += '      <button class="filter-btn" data-filter="blog-post">Blog</button>\n'
+    feed += '      <button class="filter-btn" data-filter="project">Projects</button>\n'
+    feed += '      <button class="filter-btn" data-filter="recommendation">Testimonials</button>\n'
+    feed += "    </div>\n"
+
+    # Bento grid — all items, hidden beyond first 9
+    feed += '    <div class="bento-grid">\n'
+    for i, (_, dtype, html) in enumerate(items):
+        hidden = " hidden" if i >= 9 else ""
+        feed += f'      <div class="bento-item{hidden}" data-type="{dtype}">{html}</div>\n'
+    feed += "    </div>\n"
+
+    # Load more button
+    feed += '    <div class="load-more-wrap">\n'
+    feed += '      <button class="btn btn-outline" id="load-more">Show more</button>\n'
+    feed += "    </div>\n"
+
+    # Inline JS for filter + load-more (loaded from template)
+    home_feed_js = read_template("home-feed.js")
+    feed += "    <script>\n" + home_feed_js + "\n    </script>\n"
+
+    return feed
+
+
+def build_page_context(page_id: str) -> dict:
+    """Build per-page context for modules."""
+    if page_id == "home":
+        return build_home_context()
+    # Other pages can populate context as needed
+    return {}
+
+
+def generate_module(page_id: str, module_cfg: dict, ctx: dict) -> str:
+    """Generate a single module from JSON config."""
+    component = module_cfg.get("component") or module_cfg.get("type")
+    props = module_cfg.get("props", {}) or {}
+
+    renderer = MODULE_RENDERERS.get(component)
+    if renderer:
+        return renderer(props, ctx)
+
+    tpl_name = module_cfg.get("template")
+    if tpl_name:
+        tpl = read_template(tpl_name)
+        return tpl.format(**props) if props else tpl
+
+    raise ValueError(f"Unknown module component '{component}' on page '{page_id}'")
+
+
+def generate_section(page_id: str, section_cfg: dict, ctx: dict) -> str:
+    """Generate a section from JSON config (single-column modules)."""
+    section_id = section_cfg["id"]
+    section_height = section_cfg.get("height", "large")
+    section_width = section_cfg.get("width", "large")
+    modules_cfg = section_cfg.get("modules", []) or []
+
+    modules_html = [generate_module(page_id, mod, ctx) for mod in modules_cfg]
+
+    return section_block(
+        section_id,
+        modules=modules_html,
+        padding=section_height,
+        container=section_width,
+    )
+
+
+def validate_page_cfg(page_id: str, cfg: dict) -> None:
+    """Basic validation for page JSON to fail fast on bad configs."""
+    sections = cfg.get("sections", [])
+    if not sections:
+        raise ValueError(f"Page '{page_id}' must define at least one section")
+    for section in sections:
+        if "id" not in section:
+            raise ValueError(f"Section missing 'id' in page '{page_id}'")
+        for mod in section.get("modules", []):
+            comp = mod.get("component") or mod.get("type")
+            tpl_name = mod.get("template")
+            if comp not in MODULE_RENDERERS and not tpl_name:
+                raise ValueError(
+                    f"Module in section '{section['id']}' of page '{page_id}' "
+                    f"must have a known component or a template"
+                )
+
+
+def generate_page(page_id: str) -> str:
+    """Generate a page from its JSON config in src/pages/."""
+    cfg_path = HERE / "pages" / f"{page_id}.json"
+    page_cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
+
+    validate_page_cfg(page_id, page_cfg)
+    ctx = build_page_context(page_id)
+
+    sections_html = [generate_section(page_id, section_cfg, ctx) for section_cfg in page_cfg.get("sections", [])]
+    body_html = "\n".join(sections_html)
+
+    return shell(
+        page_cfg["title"],
+        page_cfg.get("activeNav", ""),
+        body_html,
+        description=page_cfg.get("description", SITE_DESC),
+        path=page_cfg.get("path", "/"),
+    )
+
+
+def generate_collection_pages(
+    template_id: str,
+    rows: list[sqlite3.Row],
+    *,
+    ctx_key: str = "row",
+    lastmod_field: str | None = None,
+    schema_builder: "callable | None" = None,
+) -> list[tuple[str, str, str, str]]:
+    """
+    Generate collection pages from a JSON template.
+
+    Returns list of (dist_path, url_path, lastmod, html).
+    - dist_path: path relative to dist/ (e.g. "blog/slug/index.html")
+    - url_path: URL path used in sitemap (e.g. "/blog/slug/")
+    - lastmod: ISO date string for sitemap
+    """
+    cfg_path = HERE / "pages" / f"{template_id}.json"
+    base_cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
+
+    pages: list[tuple[str, str, str, str]] = []
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    for row in rows:
+        row_dict = dict(row)
+        cfg = deepcopy(base_cfg)
+
+        # Format simple string fields with row data (e.g. title/path templates).
+        for key in ("title", "description", "path"):
+            if key in cfg and isinstance(cfg[key], str):
+                try:
+                    cfg[key] = cfg[key].format(**row_dict)
+                except Exception:
+                    # Fail soft and keep original template if formatting breaks.
+                    pass
+
+        validate_page_cfg(template_id, cfg)
+
+        ctx = build_page_context(template_id)
+        ctx[ctx_key] = row
+
+        sections_html = [generate_section(template_id, section_cfg, ctx) for section_cfg in cfg.get("sections", [])]
+        body_html = "\n".join(sections_html)
+
+        extra_schema = schema_builder(row) if schema_builder else ""
+        html = shell(
+            cfg["title"],
+            cfg.get("activeNav", ""),
+            body_html,
+            description=cfg.get("description", SITE_DESC),
+            path=cfg.get("path", "/"),
+            extra_schema=extra_schema,
+        )
+
+        url_path = cfg.get("path", "/")
+        dist_path = url_path.strip("/").rstrip("/")
+        if dist_path:
+            dist_path = f"{dist_path}/index.html"
+        else:
+            dist_path = "index.html"
+
+        if lastmod_field and lastmod_field in row_dict and row_dict[lastmod_field]:
+            lastmod = str(row_dict[lastmod_field])
+        else:
+            lastmod = today
+
+        pages.append((dist_path, url_path, lastmod, html))
+
+    return pages
+
+
 # ── card renderers ───────────────────────────────────────────────────────
 
 def post_card(row, tags: list[str]) -> str:
@@ -522,123 +1037,8 @@ def feed_item_card(row: sqlite3.Row) -> str:
 # ── page: home ───────────────────────────────────────────────────────────
 
 def build_home() -> str:
-    # Load page config
-    cfg_path = HERE / "pages" / "home.json"
-    page_cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
-    sections_cfg = page_cfg.get("sections", [])
-
-    stats = q("SELECT value, label FROM feed_items WHERE type = 'stat' ORDER BY position")
-
-    # Query ALL content directly from source tables
-    all_posts = q("SELECT id, slug, title, date, description, category FROM posts ORDER BY date DESC")
-    all_case_studies = q(
-        "SELECT id, slug, title, client, description, year, image, video, url, hide_image, featured "
-        "FROM case_studies ORDER BY year DESC, title"
-    )
-    all_projects = q("SELECT id, slug, title, description, status, url, github, npm, stats FROM projects")
-    all_testimonials = q("SELECT id, name, role, quote, image, linkedin FROM testimonials")
-
-    # Build unified list with sort keys: (sort_key, type, rendered_html)
-    # Featured case studies get boosted (sort_key=0), rest sorted by year/date DESC
-    items: list[tuple[int, str, str]] = []
-
-    for p in all_posts:
-        tg = get_tags("post_tags", "post_id", p["id"])
-        # Use date as sort key (negative for DESC)
-        year = int(p["date"][:4]) if p["date"] else 2020
-        items.append((year, "blog-post", post_card(p, tg)))
-
-    for cs in all_case_studies:
-        tg = get_tags("case_study_tags", "case_study_id", cs["id"])
-        year = int(cs["year"]) if cs["year"] else 2020
-        boost = 10000 if cs["featured"] else 0
-        items.append((year + boost, "case-study", work_card(cs, tg)))
-
-    for pr in all_projects:
-        tg = get_tags("project_tags", "project_id", pr["id"])
-        items.append((3000, "project", project_card(pr, tg)))
-
-    for t in all_testimonials:
-        items.append((2000, "recommendation", testimonial_card(t)))
-
-    # Sort: highest sort_key first (featured work → projects → testimonials → chronological)
-    items.sort(key=lambda x: x[0], reverse=True)
-
-    # Build sections + modules according to JSON config
-    sections_html: list[str] = []
-    for section_cfg in sections_cfg:
-        section_id = section_cfg["id"]
-        section_height = section_cfg.get("height", "large")
-        section_width = section_cfg.get("width", "large")
-        modules_cfg = section_cfg.get("modules", [])
-
-        modules_html: list[str] = []
-        for mod in modules_cfg:
-            mtype = mod.get("type")
-            props = mod.get("props", {})
-
-            if mtype == "hero":
-                modules_html.append(
-                    hero_component(
-                        title=props["title"],
-                        subtitle=props["subtitle"],
-                        primary_href=props["primary_href"],
-                        primary_label=props["primary_label"],
-                        secondary_href=props["secondary_href"],
-                        secondary_label=props["secondary_label"],
-                    )
-                )
-            elif mtype == "stats":
-                extra_items = props.get("extra_items", [])
-                modules_html.append(stats_component(stats, extra_items=extra_items))
-            elif mtype == "homeFeed":
-                feed = ""
-                # Filter bar
-                feed += f'    {heading("From the workbench")}\n'
-                feed += '    <div class="filter-bar">\n'
-                feed += '      <button class="filter-btn active" data-filter="all">All</button>\n'
-                feed += '      <button class="filter-btn" data-filter="case-study">Work</button>\n'
-                feed += '      <button class="filter-btn" data-filter="blog-post">Blog</button>\n'
-                feed += '      <button class="filter-btn" data-filter="project">Projects</button>\n'
-                feed += '      <button class="filter-btn" data-filter="recommendation">Testimonials</button>\n'
-                feed += '    </div>\n'
-
-                # Bento grid — all items, hidden beyond first 9
-                feed += '    <div class="bento-grid">\n'
-                for i, (_, dtype, html) in enumerate(items):
-                    hidden = ' hidden' if i >= 9 else ''
-                    feed += f'      <div class="bento-item{hidden}" data-type="{dtype}">{html}</div>\n'
-                feed += "    </div>\n"
-
-                # Load more button
-                feed += '    <div class="load-more-wrap">\n'
-                feed += '      <button class="btn btn-outline" id="load-more">Show more</button>\n'
-                feed += '    </div>\n'
-
-                # Inline JS for filter + load-more (loaded from template)
-                home_feed_js = read_template("home-feed.js")
-                feed += "    <script>\n" + home_feed_js + "\n    </script>\n"
-
-                modules_html.append(feed)
-
-        sections_html.append(
-            section_block(
-                section_id,
-                modules=modules_html,
-                padding=section_height,
-                container=section_width,
-            )
-        )
-
-    body_html = "\n".join(sections_html)
-
-    return shell(
-        page_cfg["title"],
-        page_cfg.get("activeNav", "Home"),
-        body_html,
-        description=page_cfg.get("description", SITE_DESC),
-        path=page_cfg.get("path", "/"),
-    )
+    """Home page is generated from pages/home.json and module registry."""
+    return generate_page("home")
 
 
 def post_list_module(props: dict) -> str:
@@ -665,44 +1065,7 @@ def post_list_module(props: dict) -> str:
     return b
 
 
-def build_blog_index_from_config() -> str:
-    """Blog index page driven by pages/blog-index.json and post_list_module."""
-    cfg_path = HERE / "pages" / "blog-index.json"
-    page_cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
-    sections_cfg = page_cfg.get("sections", [])
-
-    sections_html: list[str] = []
-    for section_cfg in sections_cfg:
-        section_id = section_cfg["id"]
-        section_height = section_cfg.get("height", "large")
-        section_width = section_cfg.get("width", "medium")
-        modules_cfg = section_cfg.get("modules", [])
-
-        modules_html: list[str] = []
-        for mod in modules_cfg:
-            mtype = mod.get("type")
-            props = mod.get("props", {})
-            if mtype == "postList":
-                modules_html.append(post_list_module(props))
-
-        sections_html.append(
-            section_block(
-                section_id,
-                modules=modules_html,
-                padding=section_height,
-                container=section_width,
-            )
-        )
-
-    body_html = "\n".join(sections_html)
-
-    return shell(
-        page_cfg["title"],
-        page_cfg.get("activeNav", "Blog"),
-        body_html,
-        description=page_cfg.get("description", SITE_DESC),
-        path=page_cfg.get("path", "/"),
-    )
+# ── page: home ───────────────────────────────────────────────────────────
 
 
 # ── page: about ──────────────────────────────────────────────────────────
@@ -796,8 +1159,8 @@ def build_about() -> str:
 # ── page: blog index ─────────────────────────────────────────────────────
 
 def build_blog_index() -> str:
-    """Blog index now uses JSON + post_list_module via blog-index.json."""
-    return build_blog_index_from_config()
+    """Blog index now generated from pages/blog-index.json and module registry."""
+    return generate_page("blog-index")
 
 
 # ── page: blog post ──────────────────────────────────────────────────────
@@ -846,18 +1209,8 @@ def build_blog_post(row: sqlite3.Row) -> str:
 # ── page: work index ─────────────────────────────────────────────────────
 
 def build_work_index() -> str:
-    studies = q("SELECT id, slug, title, client, description, year, image, video, url, hide_image FROM case_studies ORDER BY year DESC, title")
-
-    b = f'    {heading("Work", tag="h1")}\n    <p class="subtitle">Client projects and case studies. Webflow, HubSpot CMS, custom integrations.</p>\n'
-    b += '    <div class="grid grid-2">\n'
-    for w in studies:
-        tg = get_tags("case_study_tags", "case_study_id", w["id"])
-        b += f'    {work_card(w, tg)}\n'
-    b += '    </div>\n'
-
-    return shell(f"Work — {SITE_NAME}", "work", section("work-index", b, padding="large", container="large"),
-                 description="Client projects: Webflow sites, HubSpot CMS builds, migration pipelines, and custom integrations.",
-                 path="/work/")
+    """Work index is generated from pages/work-index.json and module registry."""
+    return generate_page("work-index")
 
 
 # ── page: work detail ────────────────────────────────────────────────────
@@ -957,43 +1310,8 @@ def _pillar_posts(pillar: dict) -> list:
 # ── page: learn hub ─────────────────────────────────────────────────
 
 def build_learn_hub() -> str:
-    b = f'    {heading("Learn", tag="h1")}\n'
-    b += '    <p class="subtitle">Deep dives into AI agent workflows, MCP development, and the agent-native stack. Written from production experience, not theory.</p>\n'
-
-    b += '    <div class="pillar-grid">\n'
-    for p in PILLARS:
-        b += (
-            f'      <a href="/learn/{p["slug"]}/" class="pillar-card">\n'
-            f'        <p class="pillar-label">{e(p["label"])}</p>\n'
-            f'        <h3>{e(p["title"])}</h3>\n'
-            f'        <p>{e(p["description"])}</p>\n'
-            f'        <p class="pillar-topics">{e(p["topics"])}</p>\n'
-            f'      </a>\n'
-        )
-    b += '    </div>\n'
-
-    # Recent articles across all pillars
-    all_pillar_tags = set()
-    for p in PILLARS:
-        all_pillar_tags.update(p["post_tags"])
-
-    if all_pillar_tags:
-        placeholders = ",".join("?" for _ in all_pillar_tags)
-        recent = q(
-            f"SELECT DISTINCT p.id, p.slug, p.title, p.date, p.description, p.category "
-            f"FROM posts p JOIN post_tags pt ON p.id = pt.post_id "
-            f"WHERE pt.tag IN ({placeholders}) ORDER BY p.date DESC LIMIT 6",
-            tuple(all_pillar_tags),
-        )
-        if recent:
-            b += f'\n    {heading("Latest Articles")}\n'
-            for r in recent:
-                tg = get_tags("post_tags", "post_id", r["id"])
-                b += f'    {post_card(r, tg)}\n'
-
-    return shell(f"Learn — {SITE_NAME}", "learn", section("learn-hub", b, padding="large", container="large"),
-                 description="Deep dives into AI agent workflows, MCP development, and building agent-native software.",
-                 path="/learn/")
+    """Learn hub is generated from pages/learn-hub.json and module registry."""
+    return generate_page("learn-hub")
 
 
 # ── page: learn pillar ──────────────────────────────────────────────
@@ -1029,65 +1347,15 @@ def build_learn_pillar(pillar: dict) -> str:
 # ── page: projects index ────────────────────────────────────────────
 
 def build_projects_index() -> str:
-    projects = q("SELECT id, slug, title, description, status, url, github, npm, stats FROM projects ORDER BY status, title")
-
-    b = f'    {heading("Projects", tag="h1")}\n'
-    b += '    <p class="subtitle">Open source tools, products, and experiments. Built with AI agents, for AI agents.</p>\n'
-    b += '    <div class="grid grid-2">\n'
-    for pr in projects:
-        tg = get_tags("project_tags", "project_id", pr["id"])
-        b += f'    {project_card(pr, tg)}\n'
-    b += '    </div>\n'
-
-    return shell(f"Projects — {SITE_NAME}", "projects", section("projects", b, padding="large", container="large"),
-                 description="Open source tools and products: context-vault, omni-cli, trained-on, and more.",
-                 path="/projects/")
+    """Projects index is generated from pages/projects.json and module registry."""
+    return generate_page("projects")
 
 
 # ── page: contact ────────────────────────────────────────────────────────
 
 def build_contact() -> str:
-    b = f"""
-    {heading("Contact", tag="h1")}
-    <p class="subtitle">Open to interesting problems — AI tooling, web platforms, and product work. If you're building something and need someone who ships, reach out.</p>
-
-    <div class="grid grid-2">
-      {card('<p class="label">Email</p><h3><a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a></h3><p class="meta">For project discussions and opportunities.</p>')}
-      {card('<p class="label">LinkedIn</p><h3><a href="https://linkedin.com/in/felixhellstrom" target="_blank" rel="noopener">linkedin.com/in/felixhellstrom ↗</a></h3><p class="meta">Best for professional connections and project inquiries.</p>')}
-      {card('<p class="label">GitHub</p><h3><a href="https://github.com/fellanH" target="_blank" rel="noopener">github.com/fellanH ↗</a></h3><p class="meta">Open source projects and code. 99 repositories.</p>')}
-      {card('<p class="label">X / Twitter</p><h3><a href="https://x.com/felixhellstrom" target="_blank" rel="noopener">@felixhellstrom ↗</a></h3><p class="meta">Thoughts on AI, tools, and building.</p>')}
-    </div>
-
-    {heading("Availability")}
-    {card(
-      '<p>Currently Technical Lead at <a href="https://stormfors.com" target="_blank" rel="noopener">Stormfors</a> full-time. I take on select projects through my independent practice <strong>Klarhimmel</strong>. Best fit:</p>'
-      + '<ul class="body-list">'
-      + '<li>AI agent tooling and MCP integrations</li>'
-      + '<li>Complex Webflow or HubSpot CMS builds</li>'
-      + '<li>Content migration pipelines (Contentful, WordPress → HubSpot)</li>'
-      + '<li>Technical architecture consulting</li>'
-      + '</ul>'
-    )}
-
-    {heading("What happens next")}
-    {card(
-      '<p>If you reach out about a project, I''ll usually reply within 1–2 business days.</p>'
-      + '<ul class="body-list">'
-      + '<li>We''ll start with a short email exchange or 30–45 minute call to understand scope, timelines, and constraints.</li>'
-      + '<li>If it''s a mutual fit, I''ll propose a concrete plan (phases, deliverables, budget) before we commit.</li>'
-      + '<li>If it''s not a fit, I''ll do my best to point you in a useful direction.</li>'
-      + '</ul>'
-    )}
-
-    {heading("Location")}
-    {card(
-      '<p>Based in <strong>Stockholm, Sweden</strong>. Available for remote work globally.</p>'
-      + '<p class="meta">Languages: Swedish (native) · English (fluent)</p>'
-    )}\n"""
-
-    return shell(f"Contact — {SITE_NAME}", "contact", section("contact", b, padding="large", container="medium"),
-                 description="Get in touch for AI tooling, web platforms, Webflow, HubSpot, or consulting.",
-                 path="/contact/")
+    """Contact page is generated from pages/contact.json and module registry."""
+    return generate_page("contact")
 
 
 # ── sitemap.xml ──────────────────────────────────────────────────────────
@@ -1201,11 +1469,37 @@ def main() -> None:
     print("  ✓ blog/")
 
     posts = q("SELECT id, slug, title, date, description, category FROM posts ORDER BY date DESC")
-    for p in posts:
-        write_page(f'blog/{p["slug"]}/index.html', build_blog_post(p))
-        sitemap_pages.append((f'/blog/{p["slug"]}/', p["date"]))
+
+    def _blog_schema(row: sqlite3.Row) -> str:
+        tags = get_tags("post_tags", "post_id", row["id"])
+        slug = row["slug"]
+        return schema_json_ld(
+            {
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": row["title"],
+                "description": row["description"],
+                "datePublished": row["date"],
+                "author": {"@type": "Person", "name": SITE_NAME, "url": SITE_URL},
+                "publisher": {"@type": "Person", "name": SITE_NAME, "url": SITE_URL},
+                "url": f"{SITE_URL}/blog/{slug}/",
+                "image": f"{SITE_URL}/images/og-image.png",
+                "keywords": tags,
+            }
+        )
+
+    blog_pages = generate_collection_pages(
+        "blog-post",
+        posts,
+        ctx_key="row",
+        lastmod_field="date",
+        schema_builder=_blog_schema,
+    )
+    for dist_path, url_path, lastmod, html in blog_pages:
+        write_page(dist_path, html)
+        sitemap_pages.append((url_path, lastmod))
         page_count += 1
-        print(f'  ✓ blog/{p["slug"]}/')
+        print(f"  ✓ {dist_path}")
 
     # Work
     write_page("work/index.html", build_work_index())
@@ -1213,12 +1507,16 @@ def main() -> None:
     page_count += 1
     print("  ✓ work/")
 
-    studies = q("SELECT id, slug, title, client, description, year, image, video, url, hide_image FROM case_studies ORDER BY year DESC")
-    for w in studies:
-        write_page(f'work/{w["slug"]}/index.html', build_work_detail(w))
-        sitemap_pages.append((f'/work/{w["slug"]}/', today))
+    studies = q(
+        "SELECT id, slug, title, client, description, year, image, video, url, hide_image "
+        "FROM case_studies ORDER BY year DESC"
+    )
+    work_pages = generate_collection_pages("work-detail", studies, ctx_key="row")
+    for dist_path, url_path, lastmod, html in work_pages:
+        write_page(dist_path, html)
+        sitemap_pages.append((url_path, lastmod))
         page_count += 1
-        print(f'  ✓ work/{w["slug"]}/')
+        print(f"  ✓ {dist_path}")
 
     # Sitemap
     (DIST / "sitemap.xml").write_text(build_sitemap(sitemap_pages), encoding="utf-8")

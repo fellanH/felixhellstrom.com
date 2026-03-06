@@ -1,0 +1,29 @@
+{
+  "id": "blog-post",
+  "path": "/blog/{slug}/",
+  "title": "{title} — Felix Hellström",
+  "description": "{description}",
+  "activeNav": "Blog",
+
+  "shell": {
+    "template": "page-shell.html",
+    "props": {
+      "includePersonSchema": false
+    }
+  },
+
+  "sections": [
+    {
+      "id": "blog-post",
+      "height": "large",
+      "width": "medium",
+      "modules": [
+        {
+          "type": "blogPost",
+          "component": "blogPost",
+          "props": {}
+        }
+      ]
+    }
+  ]
+}

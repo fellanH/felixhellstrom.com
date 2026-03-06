@@ -1,0 +1,32 @@
+{
+  "id": "projects",
+  "path": "/projects/",
+  "title": "Projects — Felix Hellström",
+  "description": "Open source tools and products: context-vault, omni-cli, trained-on, and more.",
+  "activeNav": "Projects",
+
+  "shell": {
+    "template": "page-shell.html",
+    "props": {
+      "includePersonSchema": false
+    }
+  },
+
+  "sections": [
+    {
+      "id": "projects",
+      "height": "large",
+      "width": "large",
+      "modules": [
+        {
+          "type": "projectGrid",
+          "component": "projectGrid",
+          "props": {
+            "title": "Projects",
+            "subtitle": "Open source tools, products, and experiments. Built with AI agents, for AI agents."
+          }
+        }
+      ]
+    }
+  ]
+}
