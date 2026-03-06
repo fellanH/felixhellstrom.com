@@ -669,41 +669,60 @@ def module_work_detail(props: dict, ctx: dict) -> str:
 
 def build_home_context() -> dict:
     """Context (data) used by home page modules."""
-    stats = q("SELECT value, label FROM feed_items WHERE type = 'stat' ORDER BY position")
+    # All feed_items in curated order — stats inline with content
+    feed_rows = q("SELECT * FROM feed_items ORDER BY position")
 
-    # Query ALL content directly from source tables
-    all_posts = q("SELECT id, slug, title, date, description, category FROM posts ORDER BY date DESC")
-    all_case_studies = q(
-        "SELECT id, slug, title, client, description, year, image, video, url, hide_image, featured "
-        "FROM case_studies ORDER BY year DESC, title"
-    )
-    all_projects = q("SELECT id, slug, title, description, status, url, github, npm, stats FROM projects")
-    all_testimonials = q("SELECT id, name, role, quote, image, linkedin FROM testimonials")
+    # Track which content IDs are covered by feed_items
+    covered_posts: set[int] = set()
+    covered_cs: set[int] = set()
+    covered_projects: set[int] = set()
+    covered_testimonials: set[int] = set()
 
-    # Build unified list with sort keys: (sort_key, type, rendered_html)
     items: list[tuple[int, str, str]] = []
+    for i, row in enumerate(feed_rows):
+        t = row["type"]
+        if t == "blog-post" and row["post_id"]:
+            covered_posts.add(row["post_id"])
+        elif t == "case-study" and row["case_study_id"]:
+            covered_cs.add(row["case_study_id"])
+        elif t == "project" and row["project_id"]:
+            covered_projects.add(row["project_id"])
+        elif t == "recommendation" and row["testimonial_id"]:
+            covered_testimonials.add(row["testimonial_id"])
+        html = feed_item_card(row)
+        if html:
+            items.append((i, t, html))
 
-    for p in all_posts:
-        tg = get_tags("post_tags", "post_id", p["id"])
-        year = int(p["date"][:4]) if p["date"] else 2020
-        items.append((year, "blog-post", post_card(p, tg)))
+    # Append any content NOT referenced in feed_items
+    idx = len(items)
 
-    for cs in all_case_studies:
-        tg = get_tags("case_study_tags", "case_study_id", cs["id"])
-        year = int(cs["year"]) if cs["year"] else 2020
-        boost = 10000 if cs["featured"] else 0
-        items.append((year + boost, "case-study", work_card(cs, tg)))
+    for p in q("SELECT id, slug, title, date, description, category FROM posts ORDER BY date DESC"):
+        if p["id"] not in covered_posts:
+            tg = get_tags("post_tags", "post_id", p["id"])
+            items.append((idx, "blog-post", post_card(p, tg)))
+            idx += 1
 
-    for pr in all_projects:
-        tg = get_tags("project_tags", "project_id", pr["id"])
-        items.append((3000, "project", project_card(pr, tg)))
+    for cs in q(
+        "SELECT id, slug, title, client, description, year, image, video, url, hide_image "
+        "FROM case_studies ORDER BY year DESC, title"
+    ):
+        if cs["id"] not in covered_cs:
+            tg = get_tags("case_study_tags", "case_study_id", cs["id"])
+            items.append((idx, "case-study", work_card(cs, tg)))
+            idx += 1
 
-    for t in all_testimonials:
-        items.append((2000, "recommendation", testimonial_card(t)))
+    for pr in q("SELECT id, slug, title, description, status, url, github, npm, stats FROM projects"):
+        if pr["id"] not in covered_projects:
+            tg = get_tags("project_tags", "project_id", pr["id"])
+            items.append((idx, "project", project_card(pr, tg)))
+            idx += 1
 
-    items.sort(key=lambda x: x[0], reverse=True)
+    for t in q("SELECT id, name, role, quote, image, linkedin FROM testimonials"):
+        if t["id"] not in covered_testimonials:
+            items.append((idx, "recommendation", testimonial_card(t)))
+            idx += 1
 
-    return {"stats": stats, "items": items}
+    return {"items": items}
 
 
 def build_home_feed(items: list[tuple[int, str, str]]) -> str:
@@ -1034,7 +1053,16 @@ def feed_item_card(row: sqlite3.Row) -> str:
             return ""
         return testimonial_card(t_rows[0])
 
-    # Fallback for generic/statement items if present
+    # Stat items — big number + label + detail
+    if t == "stat" and row["value"]:
+        inner = f'<div class="stat-value">{e(row["value"])}</div>'
+        if row["label"]:
+            inner += f'<div class="stat-label">{e(row["label"])}</div>'
+        if row["detail"]:
+            inner += f'<p class="meta">{e(row["detail"])}</p>'
+        return card(inner)
+
+    # Fallback for generic/statement items
     parts: list[str] = []
     if row["label"]:
         parts.append(f'<p class="label">{e(row["label"])}</p>')

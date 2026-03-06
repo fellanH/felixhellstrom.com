@@ -625,6 +625,14 @@ footer {
 .bento-item {
   break-inside: avoid;
 }
+.bento-item[data-type="stat"] .card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 8rem;
+}
 .bento-item.hidden {
   display: none;
 }

@@ -29,26 +29,6 @@
     },
     {
       "aside": [],
-      "height": "small",
-      "id": "home-stats",
-      "layout": "default",
-      "main": [],
-      "modules": [
-        {
-          "component": "stats",
-          "props": {
-            "extra_items": [
-              ["10+ yrs", "Professional experience"],
-              ["2", "Languages (SV / EN)"]
-            ]
-          },
-          "type": "stats"
-        }
-      ],
-      "width": "medium"
-    },
-    {
-      "aside": [],
       "height": "large",
       "id": "home-feed",
       "layout": "default",

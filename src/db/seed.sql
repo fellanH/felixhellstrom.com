@@ -361,3 +361,9 @@ VALUES (16, 'case-study', (SELECT id FROM case_studies WHERE slug = 'hasselbacke
 
 INSERT INTO feed_items (position, type, testimonial_id)
 VALUES (17, 'recommendation', (SELECT id FROM testimonials WHERE name = 'Jed Mosely'));
+
+INSERT INTO feed_items (position, type, value, label)
+VALUES (18, 'stat', '10+ yrs', 'Professional experience');
+
+INSERT INTO feed_items (position, type, value, label)
+VALUES (19, 'stat', '2', 'Languages (SV / EN)');
