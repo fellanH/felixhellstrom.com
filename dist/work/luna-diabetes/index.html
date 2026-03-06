@@ -4,30 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Medical Device Website — Luna Diabetes — Felix Hellström</title>
-    <meta
-      name="description"
-      content="Ongoing partnership building and maintaining the website for Luna Diabetes, an automated insulin delivery company. Webflow CMS with compliance-ready content structure."
-    />
-    <link
-      rel="canonical"
-      href="https://felixhellstrom.com/work/luna-diabetes/"
-    />
-    <meta
-      property="og:title"
-      content="Medical Device Website — Luna Diabetes — Felix Hellström"
-    />
-    <meta
-      property="og:description"
-      content="Ongoing partnership building and maintaining the website for Luna Diabetes, an automated insulin delivery company. Webflow CMS with compliance-ready content structure."
-    />
-    <meta
-      property="og:image"
-      content="https://felixhellstrom.com/images/og-image.png"
-    />
-    <meta
-      property="og:url"
-      content="https://felixhellstrom.com/work/luna-diabetes/"
-    />
+    <meta name="description" content="Ongoing partnership building and maintaining the website for Luna Diabetes, an automated insulin delivery company. Webflow CMS with compliance-ready content structure." />
+    <link rel="canonical" href="https://felixhellstrom.com/work/luna-diabetes/" />
+    <meta property="og:title" content="Medical Device Website — Luna Diabetes — Felix Hellström" />
+    <meta property="og:description" content="Ongoing partnership building and maintaining the website for Luna Diabetes, an automated insulin delivery company. Webflow CMS with compliance-ready content structure." />
+    <meta property="og:image" content="https://felixhellstrom.com/images/og-image.png" />
+    <meta property="og:url" content="https://felixhellstrom.com/work/luna-diabetes/" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="/images/favicon.png" />
@@ -38,75 +20,34 @@
       href="https://felixhellstrom.com/feed.xml"
     />
     <script>
-      (function () {
-        var t = localStorage.getItem("theme");
-        if (t) document.documentElement.setAttribute("data-theme", t);
-      })();
-    </script>
+(function () {
+  var t = localStorage.getItem("theme");
+  if (t) document.documentElement.setAttribute("data-theme", t);
+})();
+
+</script>
     <link rel="stylesheet" href="/normalize.css" />
     <link rel="stylesheet" href="/style.css" />
+    
   </head>
   <body>
-    <header class="site-header">
-      <nav>
-        <div class="nav-inner">
-          <a href="/" class="nav-wordmark">Felix Hellström</a>
-          <div class="nav-links">
-            <a href="/">Home</a><a href="/learn/">Learn</a
-            ><a href="/projects/">Projects</a
-            ><a href="/work/" aria-current="page">Work</a
-            ><a href="/about/">About</a>
-          </div>
-          <div class="nav-actions">
-            <button
-              class="theme-toggle"
-              id="theme-toggle"
-              aria-label="Toggle dark mode"
-              title="Toggle dark mode"
-            >
-              &#9790;</button
-            ><a href="/contact/" class="nav-cta">Contact</a>
-          </div>
-        </div>
-      </nav>
-    </header>
-    <main>
-      <section class="section_work-detail">
-        <div class="padding-global padding-section-large">
-          <div class="container-medium">
-            <a href="/work/" class="back">← All work</a>
-            <article>
-              <p class="meta">Luna Diabetes · 2024</p>
-              <h1>Medical Device Website</h1>
-              <div class="tags">
-                <span class="tag">CMS</span><span class="tag">Healthcare</span
-                ><span class="tag">Webflow</span>
-              </div>
-              <img
-                src="/images/work/luna-diabetes.avif"
-                alt="Medical Device Website"
-                class="media-full"
-              />
-              <div class="prose">
-                <p>
-                  Ongoing partnership building and maintaining the website for
-                  Luna Diabetes, an automated insulin delivery company. Webflow
-                  CMS with compliance-ready content structure.
-                </p>
-              </div>
-              <p>
-                <a
-                  href="https://www.lunadiabetes.com/"
-                  target="_blank"
-                  rel="noopener"
-                  >Visit live site ↗</a
-                >
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-    </main>
+    <header class="site-header"><nav><div class="nav-inner"><a href="/" class="nav-wordmark">Felix Hellström</a><div class="nav-links"><a href="/">Home</a><a href="/learn/">Learn</a><a href="/projects/">Projects</a><a href="/work/" aria-current="page">Work</a><a href="/about/">About</a></div><div class="nav-actions"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button><a href="/contact/" class="nav-cta">Contact</a></div></div></nav></header>
+    <main><section class="section_work-detail">
+  <div class="padding-global padding-section-large">
+    <div class="container-medium">
+    <a href="/work/" class="back">← All work</a>
+    <article>
+      <p class="meta">Luna Diabetes · 2024</p>
+      <h1>Medical Device Website</h1>
+      <div class="tags"><span class="tag">CMS</span><span class="tag">Healthcare</span><span class="tag">Webflow</span></div>
+      <img src="/images/work/luna-diabetes.avif" alt="Medical Device Website" class="media-full" />
+      <div class="prose"><p>Ongoing partnership building and maintaining the website for Luna Diabetes, an automated insulin delivery company. Webflow CMS with compliance-ready content structure.</p></div>
+      <p><a href="https://www.lunadiabetes.com/" target="_blank" rel="noopener">Visit live site ↗</a></p>
+    </article>
+</div>
+  </div>
+</section>
+</main>
     <footer>
       <p>
         &copy; 2026 Felix Hellström ·
@@ -116,33 +57,32 @@
       </p>
     </footer>
     <script>
-      (function () {
-        var btn = document.getElementById("theme-toggle");
-        if (!btn) return;
+(function () {
+  var btn = document.getElementById("theme-toggle");
+  if (!btn) return;
 
-        function icon() {
-          var d = document.documentElement.getAttribute("data-theme");
-          if (!d)
-            d = matchMedia("(prefers-color-scheme:dark)").matches
-              ? "dark"
-              : "light";
-          btn.textContent = d === "dark" ? "\u2600" : "\u263E";
-        }
+  function icon() {
+    var d = document.documentElement.getAttribute("data-theme");
+    if (!d)
+      d = matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light";
+    btn.textContent = d === "dark" ? "\u2600" : "\u263E";
+  }
 
-        icon();
+  icon();
 
-        btn.addEventListener("click", function () {
-          var cur = document.documentElement.getAttribute("data-theme");
-          if (!cur)
-            cur = matchMedia("(prefers-color-scheme:dark)").matches
-              ? "dark"
-              : "light";
-          var next = cur === "dark" ? "light" : "dark";
-          document.documentElement.setAttribute("data-theme", next);
-          localStorage.setItem("theme", next);
-          icon();
-        });
-      })();
-    </script>
+  btn.addEventListener("click", function () {
+    var cur = document.documentElement.getAttribute("data-theme");
+    if (!cur)
+      cur = matchMedia("(prefers-color-scheme:dark)").matches
+        ? "dark"
+        : "light";
+    var next = cur === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    localStorage.setItem("theme", next);
+    icon();
+  });
+})();
+
+</script>
   </body>
 </html>

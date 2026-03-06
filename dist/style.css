@@ -17,13 +17,9 @@
   --code-bg: #f0f0f0;
   --pre-bg: #f5f5f5;
   --tag-bg: #f0f0f0;
-  --hero-gradient-from: #eef2ff;
-  --hero-gradient-to: #fafafa;
-  --hero-border: #e0e7ff;
-  --hero-orb-opacity: 0.12;
   --shadow-color: rgba(15, 23, 42, 0.08);
   --shadow-hover: rgba(15, 23, 42, 0.12);
-  --max-w: 52rem;
+  --max-w: 80rem;
 }
 
 /* Dark mode — applied by inline script or system preference */
@@ -43,10 +39,6 @@
   --code-bg: #27272a;
   --pre-bg: #1c1c1f;
   --tag-bg: #27272a;
-  --hero-gradient-from: #111827;
-  --hero-gradient-to: #0f0f11;
-  --hero-border: #1e293b;
-  --hero-orb-opacity: 0.35;
   --shadow-color: rgba(0, 0, 0, 0.3);
   --shadow-hover: rgba(0, 0, 0, 0.5);
 }
@@ -68,10 +60,6 @@
     --code-bg: #27272a;
     --pre-bg: #1c1c1f;
     --tag-bg: #27272a;
-    --hero-gradient-from: #111827;
-    --hero-gradient-to: #0f0f11;
-    --hero-border: #1e293b;
-    --hero-orb-opacity: 0.35;
     --shadow-color: rgba(0, 0, 0, 0.3);
     --shadow-hover: rgba(0, 0, 0, 0.5);
   }
@@ -164,12 +152,12 @@ pre code {
 /* ── structural utilities (Client First) ─────────────────────────── */
 
 .padding-global {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 .padding-section-small {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 .padding-section-medium {
   padding-top: 3rem;
@@ -256,20 +244,20 @@ video.media-full {
   border-bottom: 1px solid var(--border);
 }
 nav {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 2rem;
 }
 .nav-inner {
   display: flex;
   align-items: center;
-  height: 3rem;
-  gap: 1.5rem;
+  height: 3.25rem;
+  gap: 1.75rem;
 }
 .nav-wordmark {
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--fg);
   text-decoration: none;
   white-space: nowrap;
@@ -291,7 +279,7 @@ nav a[aria-current="page"] {
 }
 .nav-links {
   display: flex;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 .nav-actions {
   display: flex;
@@ -299,7 +287,7 @@ nav a[aria-current="page"] {
   gap: 0.5rem;
 }
 .nav-cta {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   padding: 0.3rem 0.75rem;
   border-radius: 999px;
   border: 1px solid var(--border);
@@ -314,7 +302,7 @@ nav a[aria-current="page"] {
 
 /* offset body for fixed header */
 body {
-  padding-top: 3.5rem;
+  padding-top: 3.75rem;
 }
 
 footer {
@@ -517,8 +505,6 @@ footer {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
 }
 .stat-value {
   font-size: 1.5rem;
@@ -590,70 +576,12 @@ footer {
 /* ── hero ────────────────────────────────────────────────────────── */
 
 .hero {
-  position: relative;
-  overflow: hidden;
-  border-radius: 0.75rem;
-  padding: 4rem 2rem;
   text-align: center;
-  background: linear-gradient(
-    135deg,
-    var(--hero-gradient-from),
-    var(--hero-gradient-to)
-  );
-  border: 1px solid var(--hero-border);
-  margin-bottom: 0.5rem;
-}
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-.hero-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(40px);
-  opacity: var(--hero-orb-opacity, 0.15);
-}
-.hero-orb-1 {
-  width: 5rem;
-  height: 5rem;
-  background: var(--accent);
-  top: -6rem;
-  right: -4rem;
-  animation: orb-drift-1 12s ease-in-out infinite alternate;
-}
-.hero-orb-2 {
-  width: 7rem;
-  height: 7rem;
-  background: var(--accent-hover);
-  bottom: -5rem;
-  left: -3rem;
-  animation: orb-drift-2 14s ease-in-out infinite alternate;
-}
-@keyframes orb-drift-1 {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-  100% {
-    transform: translate(-3rem, 2rem) scale(1.15);
-  }
-}
-@keyframes orb-drift-2 {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-  100% {
-    transform: translate(2rem, -2rem) scale(1.1);
-  }
-}
-.hero-content {
-  position: relative;
-  z-index: 1;
   max-width: 36rem;
   margin: 0 auto;
+  padding: 3rem 0 1rem;
 }
-.hero-content h1 {
+.hero h1 {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
@@ -662,6 +590,7 @@ footer {
   font-size: 1.125rem;
   color: var(--fg-muted);
   margin-bottom: 0;
+  line-height: 1.6;
 }
 .hero .btn-row {
   justify-content: center;
@@ -851,9 +780,9 @@ footer {
     display: none;
   }
   .hero {
-    padding: 3rem 1.25rem;
+    padding: 2rem 0 0.5rem;
   }
-  .hero-content h1 {
+  .hero h1 {
     font-size: 1.75rem;
   }
   .about_grid {
@@ -871,5 +800,9 @@ footer {
   }
   .bento-grid {
     column-count: 1;
+  }
+  .padding-global {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 }

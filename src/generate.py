@@ -1071,7 +1071,7 @@ def post_list_module(props: dict) -> str:
 # ── page: about ──────────────────────────────────────────────────────────
 
 def build_about() -> str:
-    testimonials = q("SELECT name, role, quote, image, linkedin FROM testimonials")
+    testimonials = q("SELECT name, role, quote, image, linkedin FROM testimonials LIMIT 3")
 
     # Bio from markdown
     about_md = CONTENT / "about.md"
@@ -1094,12 +1094,26 @@ def build_about() -> str:
       <div>
         {bio_html}
 
+        {card(
+          '<p class="label">Work with me</p>'
+          + "<p>If you need a technical partner who can own both strategy and implementation, I'm best suited for:</p>"
+          + '<ul class="sidebar_list">'
+          + '<li>AI-powered internal tools and MCP-based workflows.</li>'
+          + '<li>Complex Webflow or HubSpot CMS builds with custom integrations.</li>'
+          + '<li>Refactoring or rebuilding existing sites that are hard to maintain.</li>'
+          + '</ul>'
+          + '<p class="meta">I take on a limited number of projects alongside my role at Stormfors.</p>'
+          + '<div class="btn-row"><a href="/contact/" class="btn btn-primary">Start a conversation</a></div>'
+        )}
+
         {heading("Recommendations")}
+        <div class="grid grid-2">
 """
     for t in testimonials:
-        b += f'        {testimonial_card(t)}\n'
+        b += f'          {testimonial_card(t)}\n'
 
     b += f"""
+        </div>
       </div>
       <aside>
         {card(
@@ -1110,17 +1124,6 @@ def build_about() -> str:
           + '<div><div class="stat-value-small">3</div><div class="stat-label">Languages</div></div>'
           + '<div><div class="stat-value-small">2</div><div class="stat-label">Active products</div></div>'
           + '</div>'
-        )}
-        {card(
-          '<p class="label">Work with me</p>'
-          + '<p>If you need a technical partner who can own both strategy and implementation, I''m best suited for:</p>'
-          + '<ul class="sidebar_list">'
-          + '<li>AI-powered internal tools and MCP-based workflows.</li>'
-          + '<li>Complex Webflow or HubSpot CMS builds with custom integrations.</li>'
-          + '<li>Refactoring or rebuilding existing sites that are hard to maintain.</li>'
-          + '</ul>'
-          + '<p class="meta">I take on a limited number of projects alongside my role at Stormfors.</p>'
-          + '<div class="btn-row"><a href="/contact/" class="btn btn-primary">Start a project conversation</a></div>'
         )}
         {card(
           '<p class="label">Technical focus</p>'
@@ -1145,7 +1148,7 @@ def build_about() -> str:
           + '<div class="sidebar_timeline">'
           + '<p><strong>2021 – now</strong><br/>Technical Lead @ Stormfors</p>'
           + '<p><strong>Pre-2021</strong><br/>MicroAA Labs · Techlove · Breakfastboys</p>'
-          + '<p><strong>2017 – Self Employed</strong><br/>independent practice selling websites</p>'
+          + '<p><strong>2017 – Self Employed</strong><br/>Independent practice selling websites</p>'
           + '</div>'
         )}
       </aside>

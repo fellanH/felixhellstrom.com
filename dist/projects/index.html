@@ -4,20 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Projects — Felix Hellström</title>
-    <meta
-      name="description"
-      content="Open source tools and products: context-vault, omni-cli, trained-on, and more."
-    />
+    <meta name="description" content="Open source tools and products: context-vault, omni-cli, trained-on, and more." />
     <link rel="canonical" href="https://felixhellstrom.com/projects/" />
     <meta property="og:title" content="Projects — Felix Hellström" />
-    <meta
-      property="og:description"
-      content="Open source tools and products: context-vault, omni-cli, trained-on, and more."
-    />
-    <meta
-      property="og:image"
-      content="https://felixhellstrom.com/images/og-image.png"
-    />
+    <meta property="og:description" content="Open source tools and products: context-vault, omni-cli, trained-on, and more." />
+    <meta property="og:image" content="https://felixhellstrom.com/images/og-image.png" />
     <meta property="og:url" content="https://felixhellstrom.com/projects/" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -29,204 +20,33 @@
       href="https://felixhellstrom.com/feed.xml"
     />
     <script>
-      (function () {
-        var t = localStorage.getItem("theme");
-        if (t) document.documentElement.setAttribute("data-theme", t);
-      })();
-    </script>
+(function () {
+  var t = localStorage.getItem("theme");
+  if (t) document.documentElement.setAttribute("data-theme", t);
+})();
+
+</script>
     <link rel="stylesheet" href="/normalize.css" />
     <link rel="stylesheet" href="/style.css" />
+    
   </head>
   <body>
-    <header class="site-header">
-      <nav>
-        <div class="nav-inner">
-          <a href="/" class="nav-wordmark">Felix Hellström</a>
-          <div class="nav-links">
-            <a href="/">Home</a><a href="/learn/">Learn</a
-            ><a href="/projects/" aria-current="page">Projects</a
-            ><a href="/work/">Work</a><a href="/about/">About</a>
-          </div>
-          <div class="nav-actions">
-            <button
-              class="theme-toggle"
-              id="theme-toggle"
-              aria-label="Toggle dark mode"
-              title="Toggle dark mode"
-            >
-              &#9790;</button
-            ><a href="/contact/" class="nav-cta">Contact</a>
-          </div>
-        </div>
-      </nav>
-    </header>
-    <main>
-      <section class="section_projects">
-        <div class="padding-global padding-section-large">
-          <div class="container-large">
-            <h1>Projects</h1>
-            <p class="subtitle">
-              Open source tools, products, and experiments. Built with AI
-              agents, for AI agents.
-            </p>
-            <div class="grid grid-2">
-              <div class="card card-link">
-                <a
-                  href="https://weknowaeo.com"
-                  class="card-link-overlay"
-                  aria-hidden="true"
-                  tabindex="-1"
-                ></a>
-                <h3>
-                  We Know AEO <span class="status status-active">active</span>
-                </h3>
-                <p class="card-body">
-                  Research site exploring AI Engine Optimization. How to
-                  structure content so AI search engines (ChatGPT, Perplexity,
-                  Claude) surface your brand. Full Schema.org markup.
-                </p>
-                <p class="meta">
-                  <a href="https://weknowaeo.com" target="_blank" rel="noopener"
-                    >Website</a
-                  >
-                </p>
-                <div class="tags">
-                  <span class="tag">AEO</span><span class="tag">Next.js</span
-                  ><span class="tag">SEO</span
-                  ><span class="tag">Schema.org</span>
-                </div>
-              </div>
-              <div class="card card-link">
-                <a
-                  href="https://context-vault.com"
-                  class="card-link-overlay"
-                  aria-hidden="true"
-                  tabindex="-1"
-                ></a>
-                <h3>
-                  context-vault <span class="status status-active">active</span>
-                </h3>
-                <p class="card-body">
-                  Persistent memory for AI agents. Local-first MCP server that
-                  gives Claude Code and other AI tools a semantic memory layer
-                  that survives across sessions. Published on npm, 693+ tests,
-                  full SaaS ecosystem.
-                </p>
-                <p class="meta">
-                  693+ tests, npm published, SaaS + self-hosted
-                </p>
-                <p class="meta">
-                  <a
-                    href="https://context-vault.com"
-                    target="_blank"
-                    rel="noopener"
-                    >Website</a
-                  >
-                  ·
-                  <a
-                    href="https://github.com/fellanH/context-vault"
-                    target="_blank"
-                    rel="noopener"
-                    >GitHub</a
-                  >
-                  ·
-                  <a
-                    href="https://www.npmjs.com/package/context-vault"
-                    target="_blank"
-                    rel="noopener"
-                    >npm</a
-                  >
-                </p>
-                <div class="tags">
-                  <span class="tag">Claude Code</span
-                  ><span class="tag">Embeddings</span
-                  ><span class="tag">MCP</span><span class="tag">SQLite</span
-                  ><span class="tag">TypeScript</span>
-                </div>
-              </div>
-              <div class="card card-link">
-                <a
-                  href="/blog/omni-agent-orchestrator/"
-                  class="card-link-overlay"
-                  aria-hidden="true"
-                  tabindex="-1"
-                ></a>
-                <h3>
-                  omni-cli <span class="status status-active">active</span>
-                </h3>
-                <p class="card-body">
-                  Autonomous agent orchestrator. 3-layer system (master,
-                  workspace, project) that dispatches Claude Code agents to
-                  implement GitHub issues end-to-end. First overnight run: 686
-                  cycles, 11 PRs merged, 8 self-healed stalls.
-                </p>
-                <p class="meta">6,700+ lines, 11 PRs merged overnight</p>
-                <p class="meta">
-                  <a
-                    href="/blog/omni-agent-orchestrator/"
-                    target="_blank"
-                    rel="noopener"
-                    >Website</a
-                  >
-                </p>
-                <div class="tags">
-                  <span class="tag">Automation</span
-                  ><span class="tag">Claude Code</span
-                  ><span class="tag">GitHub API</span
-                  ><span class="tag">TypeScript</span>
-                </div>
-              </div>
-              <div class="card card-link">
-                <a
-                  href="https://github.com/fellanH/origin"
-                  class="card-link-overlay"
-                  aria-hidden="true"
-                  tabindex="-1"
-                ></a>
-                <h3>
-                  origin <span class="status status-building">building</span>
-                </h3>
-                <p class="card-body">
-                  Keyboard-driven split-panel desktop workspace. Tauri 2 app
-                  with hot-reload plugins, canvas layouts, and a motion system.
-                  Rust backend, React frontend.
-                </p>
-                <p class="meta">
-                  <a
-                    href="https://github.com/fellanH/origin"
-                    target="_blank"
-                    rel="noopener"
-                    >GitHub</a
-                  >
-                </p>
-                <div class="tags">
-                  <span class="tag">React</span><span class="tag">Rust</span
-                  ><span class="tag">Tauri</span
-                  ><span class="tag">TypeScript</span>
-                </div>
-              </div>
-              <div class="card">
-                <h3>
-                  trained-on.com
-                  <span class="status status-building">building</span>
-                </h3>
-                <p class="card-body">
-                  Self-serve platform for e-commerce store owners to generate
-                  professional product photography with custom-trained AI
-                  models. Stripe billing, Supabase auth, FAL.ai inference.
-                </p>
-                <div class="tags">
-                  <span class="tag">AI</span><span class="tag">FAL.ai</span
-                  ><span class="tag">Next.js</span
-                  ><span class="tag">Stripe</span
-                  ><span class="tag">Supabase</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+    <header class="site-header"><nav><div class="nav-inner"><a href="/" class="nav-wordmark">Felix Hellström</a><div class="nav-links"><a href="/">Home</a><a href="/learn/">Learn</a><a href="/projects/" aria-current="page">Projects</a><a href="/work/">Work</a><a href="/about/">About</a></div><div class="nav-actions"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button><a href="/contact/" class="nav-cta">Contact</a></div></div></nav></header>
+    <main><section class="section_projects">
+  <div class="padding-global padding-section-large">
+    <div class="container-large">    <h1>Projects</h1>
+    <p class="subtitle">Open source tools, products, and experiments. Built with AI agents, for AI agents.</p>
+    <div class="grid grid-2">
+    <div class="card card-link"><a href="https://weknowaeo.com" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><h3>We Know AEO <span class="status status-active">active</span></h3><p class="card-body">Research site exploring AI Engine Optimization. How to structure content so AI search engines (ChatGPT, Perplexity, Claude) surface your brand. Full Schema.org markup.</p><p class="meta"><a href="https://weknowaeo.com" target="_blank" rel="noopener">Website</a></p><div class="tags"><span class="tag">AEO</span><span class="tag">Next.js</span><span class="tag">SEO</span><span class="tag">Schema.org</span></div></div>
+    <div class="card card-link"><a href="https://context-vault.com" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><h3>context-vault <span class="status status-active">active</span></h3><p class="card-body">Persistent memory for AI agents. Local-first MCP server that gives Claude Code and other AI tools a semantic memory layer that survives across sessions. Published on npm, 693+ tests, full SaaS ecosystem.</p><p class="meta">693+ tests, npm published, SaaS + self-hosted</p><p class="meta"><a href="https://context-vault.com" target="_blank" rel="noopener">Website</a> · <a href="https://github.com/fellanH/context-vault" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.npmjs.com/package/context-vault" target="_blank" rel="noopener">npm</a></p><div class="tags"><span class="tag">Claude Code</span><span class="tag">Embeddings</span><span class="tag">MCP</span><span class="tag">SQLite</span><span class="tag">TypeScript</span></div></div>
+    <div class="card card-link"><a href="/blog/omni-agent-orchestrator/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><h3>omni-cli <span class="status status-active">active</span></h3><p class="card-body">Autonomous agent orchestrator. 3-layer system (master, workspace, project) that dispatches Claude Code agents to implement GitHub issues end-to-end. First overnight run: 686 cycles, 11 PRs merged, 8 self-healed stalls.</p><p class="meta">6,700+ lines, 11 PRs merged overnight</p><p class="meta"><a href="/blog/omni-agent-orchestrator/" target="_blank" rel="noopener">Website</a></p><div class="tags"><span class="tag">Automation</span><span class="tag">Claude Code</span><span class="tag">GitHub API</span><span class="tag">TypeScript</span></div></div>
+    <div class="card card-link"><a href="https://github.com/fellanH/origin" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><h3>origin <span class="status status-building">building</span></h3><p class="card-body">Keyboard-driven split-panel desktop workspace. Tauri 2 app with hot-reload plugins, canvas layouts, and a motion system. Rust backend, React frontend.</p><p class="meta"><a href="https://github.com/fellanH/origin" target="_blank" rel="noopener">GitHub</a></p><div class="tags"><span class="tag">React</span><span class="tag">Rust</span><span class="tag">Tauri</span><span class="tag">TypeScript</span></div></div>
+    <div class="card"><h3>trained-on.com <span class="status status-building">building</span></h3><p class="card-body">Self-serve platform for e-commerce store owners to generate professional product photography with custom-trained AI models. Stripe billing, Supabase auth, FAL.ai inference.</p><div class="tags"><span class="tag">AI</span><span class="tag">FAL.ai</span><span class="tag">Next.js</span><span class="tag">Stripe</span><span class="tag">Supabase</span></div></div>
+    </div>
+</div>
+  </div>
+</section>
+</main>
     <footer>
       <p>
         &copy; 2026 Felix Hellström ·
@@ -236,33 +56,32 @@
       </p>
     </footer>
     <script>
-      (function () {
-        var btn = document.getElementById("theme-toggle");
-        if (!btn) return;
+(function () {
+  var btn = document.getElementById("theme-toggle");
+  if (!btn) return;
 
-        function icon() {
-          var d = document.documentElement.getAttribute("data-theme");
-          if (!d)
-            d = matchMedia("(prefers-color-scheme:dark)").matches
-              ? "dark"
-              : "light";
-          btn.textContent = d === "dark" ? "\u2600" : "\u263E";
-        }
+  function icon() {
+    var d = document.documentElement.getAttribute("data-theme");
+    if (!d)
+      d = matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light";
+    btn.textContent = d === "dark" ? "\u2600" : "\u263E";
+  }
 
-        icon();
+  icon();
 
-        btn.addEventListener("click", function () {
-          var cur = document.documentElement.getAttribute("data-theme");
-          if (!cur)
-            cur = matchMedia("(prefers-color-scheme:dark)").matches
-              ? "dark"
-              : "light";
-          var next = cur === "dark" ? "light" : "dark";
-          document.documentElement.setAttribute("data-theme", next);
-          localStorage.setItem("theme", next);
-          icon();
-        });
-      })();
-    </script>
+  btn.addEventListener("click", function () {
+    var cur = document.documentElement.getAttribute("data-theme");
+    if (!cur)
+      cur = matchMedia("(prefers-color-scheme:dark)").matches
+        ? "dark"
+        : "light";
+    var next = cur === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    localStorage.setItem("theme", next);
+    icon();
+  });
+})();
+
+</script>
   </body>
 </html>

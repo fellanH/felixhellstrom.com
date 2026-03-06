@@ -4,20 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog — Felix Hellström</title>
-    <meta
-      name="description"
-      content="Posts about AI agents, Webflow and CMS migrations, and building tools like context-vault and omni in public."
-    />
+    <meta name="description" content="Posts about AI agents, Webflow and CMS migrations, and building tools like context-vault and omni in public." />
     <link rel="canonical" href="https://felixhellstrom.com/blog/" />
     <meta property="og:title" content="Blog — Felix Hellström" />
-    <meta
-      property="og:description"
-      content="Posts about AI agents, Webflow and CMS migrations, and building tools like context-vault and omni in public."
-    />
-    <meta
-      property="og:image"
-      content="https://felixhellstrom.com/images/og-image.png"
-    />
+    <meta property="og:description" content="Posts about AI agents, Webflow and CMS migrations, and building tools like context-vault and omni in public." />
+    <meta property="og:image" content="https://felixhellstrom.com/images/og-image.png" />
     <meta property="og:url" content="https://felixhellstrom.com/blog/" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -29,193 +20,32 @@
       href="https://felixhellstrom.com/feed.xml"
     />
     <script>
-      (function () {
-        var t = localStorage.getItem("theme");
-        if (t) document.documentElement.setAttribute("data-theme", t);
-      })();
-    </script>
+(function () {
+  var t = localStorage.getItem("theme");
+  if (t) document.documentElement.setAttribute("data-theme", t);
+})();
+
+</script>
     <link rel="stylesheet" href="/normalize.css" />
     <link rel="stylesheet" href="/style.css" />
+    
   </head>
   <body>
-    <header class="site-header">
-      <nav>
-        <div class="nav-inner">
-          <a href="/" class="nav-wordmark">Felix Hellström</a>
-          <div class="nav-links">
-            <a href="/">Home</a><a href="/learn/">Learn</a
-            ><a href="/projects/">Projects</a><a href="/work/">Work</a
-            ><a href="/about/">About</a>
-          </div>
-          <div class="nav-actions">
-            <button
-              class="theme-toggle"
-              id="theme-toggle"
-              aria-label="Toggle dark mode"
-              title="Toggle dark mode"
-            >
-              &#9790;</button
-            ><a href="/contact/" class="nav-cta">Contact</a>
-          </div>
-        </div>
-      </nav>
-    </header>
-    <main>
-      <section class="section_blog-index">
-        <div class="padding-global padding-section-large">
-          <div class="container-medium">
-            <h1>Blog</h1>
-            <p class="subtitle">
-              Writing about AI agent workflows, MCP development, and building
-              tools like context-vault and omni in public.
-            </p>
-            <div class="card card-link">
-              <a
-                href="/blog/omni-agent-orchestrator/"
-                class="card-link-overlay"
-                aria-hidden="true"
-                tabindex="-1"
-              ></a>
-              <p class="meta">2026-03-06 · AI Workflows</p>
-              <h3>
-                <a href="/blog/omni-agent-orchestrator/" class="link-block"
-                  >Inside omni, My Autonomous Agent Orchestrator</a
-                >
-              </h3>
-              <p class="card-body">
-                How I built omni, a 3-layer agent system that opens GitHub
-                issues, runs Claude Code agents, and merged 11 PRs while I
-                slept.
-              </p>
-              <div class="tags">
-                <span class="tag">ai-agents</span
-                ><span class="tag">automation</span><span class="tag">omni</span
-                ><span class="tag">workflow</span>
-              </div>
-            </div>
-            <div class="card card-link">
-              <a
-                href="/blog/eleven-prs-while-i-slept/"
-                class="card-link-overlay"
-                aria-hidden="true"
-                tabindex="-1"
-              ></a>
-              <p class="meta">2026-03-05 · AI Workflows</p>
-              <h3>
-                <a href="/blog/eleven-prs-while-i-slept/" class="link-block"
-                  >11 PRs While I Slept</a
-                >
-              </h3>
-              <p class="card-body">
-                I let an autonomous agent orchestrator run overnight for the
-                first time. 686 cycles, 11 merged PRs, and a lot of lessons
-                about what breaks when no one is watching.
-              </p>
-              <div class="tags">
-                <span class="tag">ai-agents</span
-                ><span class="tag">automation</span
-                ><span class="tag">claude-code</span
-                ><span class="tag">omni-cli</span>
-              </div>
-            </div>
-            <div class="card card-link">
-              <a
-                href="/blog/building-ai-memory-layer/"
-                class="card-link-overlay"
-                aria-hidden="true"
-                tabindex="-1"
-              ></a>
-              <p class="meta">2026-03-04 · Products</p>
-              <h3>
-                <a href="/blog/building-ai-memory-layer/" class="link-block"
-                  >Building an AI Memory Layer with Context Vault</a
-                >
-              </h3>
-              <p class="card-body">
-                How I built a persistent memory system for Claude Code that
-                survives across sessions, and why local-first matters.
-              </p>
-              <div class="tags">
-                <span class="tag">ai</span><span class="tag">claude-code</span
-                ><span class="tag">context-vault</span
-                ><span class="tag">mcp</span>
-              </div>
-            </div>
-            <div class="card card-link">
-              <a
-                href="/blog/building-self-improving-agent-os/"
-                class="card-link-overlay"
-                aria-hidden="true"
-                tabindex="-1"
-              ></a>
-              <p class="meta">2026-03-03 · Building in Public</p>
-              <h3>
-                <a
-                  href="/blog/building-self-improving-agent-os/"
-                  class="link-block"
-                  >Building a Self-Improving Agent OS</a
-                >
-              </h3>
-              <p class="card-body">
-                How I built a personal operating system where AI agents log
-                their own friction and write their own backlog. The system
-                improves itself as you use it.
-              </p>
-              <div class="tags">
-                <span class="tag">ai-agents</span
-                ><span class="tag">automation</span><span class="tag">mcp</span
-                ><span class="tag">omni</span>
-              </div>
-            </div>
-            <div class="card card-link">
-              <a
-                href="/blog/using-git-with-ai-agents/"
-                class="card-link-overlay"
-                aria-hidden="true"
-                tabindex="-1"
-              ></a>
-              <p class="meta">2025-09-25 · AI Workflows</p>
-              <h3>
-                <a href="/blog/using-git-with-ai-agents/" class="link-block"
-                  >Using Git with AI Agents in Cursor</a
-                >
-              </h3>
-              <p class="card-body">
-                A practical workflow for integrating Git into AI coding
-                sessions. Branches, atomic commits, and intent-driven messages.
-              </p>
-              <div class="tags">
-                <span class="tag">ai-agents</span><span class="tag">cursor</span
-                ><span class="tag">git</span><span class="tag">workflow</span>
-              </div>
-            </div>
-            <div class="card card-link">
-              <a
-                href="/blog/webflow-advice-for-beginners/"
-                class="card-link-overlay"
-                aria-hidden="true"
-                tabindex="-1"
-              ></a>
-              <p class="meta">2025-02-25 · Webflow</p>
-              <h3>
-                <a href="/blog/webflow-advice-for-beginners/" class="link-block"
-                  >After 8 Years of Webflow, Here&#x27;s My Advice for
-                  Beginners</a
-                >
-              </h3>
-              <p class="card-body">
-                Three crucial things I wish someone had told me when I first
-                started with Webflow: Relume, Client-First, and REM units.
-              </p>
-              <div class="tags">
-                <span class="tag">client-first</span><span class="tag">rem</span
-                ><span class="tag">tips</span><span class="tag">webflow</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+    <header class="site-header"><nav><div class="nav-inner"><a href="/" class="nav-wordmark">Felix Hellström</a><div class="nav-links"><a href="/">Home</a><a href="/learn/">Learn</a><a href="/projects/">Projects</a><a href="/work/">Work</a><a href="/about/">About</a></div><div class="nav-actions"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button><a href="/contact/" class="nav-cta">Contact</a></div></div></nav></header>
+    <main><section class="section_blog-index">
+  <div class="padding-global padding-section-large">
+    <div class="container-medium">    <h1>Blog</h1>
+    <p class="subtitle">Writing about AI agent workflows, MCP development, and building tools like context-vault and omni in public.</p>
+    <div class="card card-link"><a href="/blog/omni-agent-orchestrator/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><p class="meta">2026-03-06 · AI Workflows</p><h3><a href="/blog/omni-agent-orchestrator/" class="link-block">Inside omni, My Autonomous Agent Orchestrator</a></h3><p class="card-body">How I built omni, a 3-layer agent system that opens GitHub issues, runs Claude Code agents, and merged 11 PRs while I slept.</p><div class="tags"><span class="tag">ai-agents</span><span class="tag">automation</span><span class="tag">omni</span><span class="tag">workflow</span></div></div>
+    <div class="card card-link"><a href="/blog/eleven-prs-while-i-slept/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><p class="meta">2026-03-05 · AI Workflows</p><h3><a href="/blog/eleven-prs-while-i-slept/" class="link-block">11 PRs While I Slept</a></h3><p class="card-body">I let an autonomous agent orchestrator run overnight for the first time. 686 cycles, 11 merged PRs, and a lot of lessons about what breaks when no one is watching.</p><div class="tags"><span class="tag">ai-agents</span><span class="tag">automation</span><span class="tag">claude-code</span><span class="tag">omni-cli</span></div></div>
+    <div class="card card-link"><a href="/blog/building-ai-memory-layer/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><p class="meta">2026-03-04 · Products</p><h3><a href="/blog/building-ai-memory-layer/" class="link-block">Building an AI Memory Layer with Context Vault</a></h3><p class="card-body">How I built a persistent memory system for Claude Code that survives across sessions, and why local-first matters.</p><div class="tags"><span class="tag">ai</span><span class="tag">claude-code</span><span class="tag">context-vault</span><span class="tag">mcp</span></div></div>
+    <div class="card card-link"><a href="/blog/building-self-improving-agent-os/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><p class="meta">2026-03-03 · Building in Public</p><h3><a href="/blog/building-self-improving-agent-os/" class="link-block">Building a Self-Improving Agent OS</a></h3><p class="card-body">How I built a personal operating system where AI agents log their own friction and write their own backlog. The system improves itself as you use it.</p><div class="tags"><span class="tag">ai-agents</span><span class="tag">automation</span><span class="tag">mcp</span><span class="tag">omni</span></div></div>
+    <div class="card card-link"><a href="/blog/using-git-with-ai-agents/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><p class="meta">2025-09-25 · AI Workflows</p><h3><a href="/blog/using-git-with-ai-agents/" class="link-block">Using Git with AI Agents in Cursor</a></h3><p class="card-body">A practical workflow for integrating Git into AI coding sessions. Branches, atomic commits, and intent-driven messages.</p><div class="tags"><span class="tag">ai-agents</span><span class="tag">cursor</span><span class="tag">git</span><span class="tag">workflow</span></div></div>
+    <div class="card card-link"><a href="/blog/webflow-advice-for-beginners/" class="card-link-overlay" aria-hidden="true" tabindex="-1"></a><p class="meta">2025-02-25 · Webflow</p><h3><a href="/blog/webflow-advice-for-beginners/" class="link-block">After 8 Years of Webflow, Here&#x27;s My Advice for Beginners</a></h3><p class="card-body">Three crucial things I wish someone had told me when I first started with Webflow: Relume, Client-First, and REM units.</p><div class="tags"><span class="tag">client-first</span><span class="tag">rem</span><span class="tag">tips</span><span class="tag">webflow</span></div></div>
+</div>
+  </div>
+</section>
+</main>
     <footer>
       <p>
         &copy; 2026 Felix Hellström ·
@@ -225,33 +55,32 @@
       </p>
     </footer>
     <script>
-      (function () {
-        var btn = document.getElementById("theme-toggle");
-        if (!btn) return;
+(function () {
+  var btn = document.getElementById("theme-toggle");
+  if (!btn) return;
 
-        function icon() {
-          var d = document.documentElement.getAttribute("data-theme");
-          if (!d)
-            d = matchMedia("(prefers-color-scheme:dark)").matches
-              ? "dark"
-              : "light";
-          btn.textContent = d === "dark" ? "\u2600" : "\u263E";
-        }
+  function icon() {
+    var d = document.documentElement.getAttribute("data-theme");
+    if (!d)
+      d = matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light";
+    btn.textContent = d === "dark" ? "\u2600" : "\u263E";
+  }
 
-        icon();
+  icon();
 
-        btn.addEventListener("click", function () {
-          var cur = document.documentElement.getAttribute("data-theme");
-          if (!cur)
-            cur = matchMedia("(prefers-color-scheme:dark)").matches
-              ? "dark"
-              : "light";
-          var next = cur === "dark" ? "light" : "dark";
-          document.documentElement.setAttribute("data-theme", next);
-          localStorage.setItem("theme", next);
-          icon();
-        });
-      })();
-    </script>
+  btn.addEventListener("click", function () {
+    var cur = document.documentElement.getAttribute("data-theme");
+    if (!cur)
+      cur = matchMedia("(prefers-color-scheme:dark)").matches
+        ? "dark"
+        : "light";
+    var next = cur === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    localStorage.setItem("theme", next);
+    icon();
+  });
+})();
+
+</script>
   </body>
 </html>
