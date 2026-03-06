@@ -28,13 +28,24 @@
     <header class="site-header">{nav}</header>
     <main>{body}</main>
     <footer>
-      <p>
-        &copy; {year} {site_name} ·
-        <a href="https://github.com/fellanH">GitHub</a> ·
-        <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> ·
-        <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a>
-      </p>
+      <div class="footer-inner">
+        <nav class="footer-nav">
+          <a href="/">Home</a>
+          <a href="/learn/">Learn</a>
+          <a href="/projects/">Projects</a>
+          <a href="/work/">Work</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+          <a href="/blog/">Blog</a>
+        </nav>
+        <p class="footer-copy">
+          &copy; {year} {site_name} &middot;
+          <a href="https://github.com/fellanH">GitHub</a> &middot;
+          <a href="https://linkedin.com/in/felixhellstrom">LinkedIn</a> &middot;
+          <a href="mailto:fehellstrom@gmail.com">fehellstrom@gmail.com</a>
+        </p>
+      </div>
     </footer>
-    {theme_toggle}
+    {theme_toggle} {mobile_menu}
   </body>
 </html>

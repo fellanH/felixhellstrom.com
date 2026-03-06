@@ -102,11 +102,6 @@ INSERT INTO case_studies (slug, title, client, description, year, featured, imag
  'Porsche Club Sweden',
  'We transformed Porsche Club Sweden''s outdated website into a sleek, mobile-first experience that embodies passion, community, and modern architecture — delighting 6,000+ members.',
  '2025', 1, '/images/work/porsche-club.webp', 'https://r2.vidzflow.com/source/7ddb99e5-d475-4928-90b5-099b38b4a9ca.mp4', 'https://www.porsche.nu/', 0),
-('we-know-aeo',
- 'We Know AEO: AI Engine Optimization',
- 'Internal',
- 'Built a Next.js site exploring AI Engine Optimization, the practice of structuring web content for AI search engines like ChatGPT, Perplexity, and Claude. Full schema markup and semantic HTML.',
- '2025', 0, NULL, NULL, 'https://www.weknowaeo.com/', 0),
 ('miramis-enterprise-hub',
  'Enterprise Hub with Custom Integrations',
  'Miramis / Qarlbo AB',
@@ -168,11 +163,7 @@ SELECT id, tag FROM (
   SELECT (SELECT id FROM case_studies WHERE slug = 'salty-decoupled-mapbox') AS id, 'AWS Lambda' AS tag UNION ALL
   SELECT (SELECT id FROM case_studies WHERE slug = 'salty-decoupled-mapbox') AS id, 'Mapbox GL JS' AS tag UNION ALL
   SELECT (SELECT id FROM case_studies WHERE slug = 'salty-decoupled-mapbox') AS id, 'Vercel' AS tag UNION ALL
-  SELECT (SELECT id FROM case_studies WHERE slug = 'salty-decoupled-mapbox') AS id, 'Webflow' AS tag UNION ALL
-  SELECT (SELECT id FROM case_studies WHERE slug = 'we-know-aeo') AS id, 'AEO' AS tag UNION ALL
-  SELECT (SELECT id FROM case_studies WHERE slug = 'we-know-aeo') AS id, 'Next.js' AS tag UNION ALL
-  SELECT (SELECT id FROM case_studies WHERE slug = 'we-know-aeo') AS id, 'SEO' AS tag UNION ALL
-  SELECT (SELECT id FROM case_studies WHERE slug = 'we-know-aeo') AS id, 'Schema.org' AS tag
+  SELECT (SELECT id FROM case_studies WHERE slug = 'salty-decoupled-mapbox') AS id, 'Webflow' AS tag
 );
 
 -- Work details (work-details.ts) -----------------------------------------

@@ -14,10 +14,10 @@
         {
           "component": "hero",
           "props": {
-            "primary_href": "/learn/",
-            "primary_label": "Start learning",
-            "secondary_href": "/projects/",
-            "secondary_label": "View projects",
+            "primary_href": "/work/",
+            "primary_label": "Explore my work",
+            "secondary_href": "/blog/",
+            "secondary_label": "Read the blog",
             "subtitle": "I build AI agent tools and write about what works. MCP servers, multi-agent orchestration, and the agent-native stack.",
             "title": "Felix Hellström"
           },
@@ -69,5 +69,5 @@
     },
     "template": "page-shell.html"
   },
-  "title": "Felix Hellström — Building AI agent tools and writing about what works. MCP, multi-agent orchestration, and the agent-native stack."
+  "title": "Felix Hellström — AI Agent Tools & Writing"
 }

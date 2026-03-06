@@ -222,20 +222,28 @@ NAV_LINKS = [
 
 def nav_html(active: str) -> str:
     links = []
+    mobile_links = []
     for href, label in NAV_LINKS:
         if label == "Contact":
             continue  # rendered separately as CTA
         attr = ' aria-current="page"' if label.lower() == active.lower() else ""
         links.append(f'<a href="{href}"{attr}>{label}</a>')
+        mobile_links.append(f'<a href="{href}"{attr}>{label}</a>')
+    # Add Contact to mobile menu too
+    contact_attr = ' aria-current="page"' if active.lower() == "contact" else ""
+    mobile_links.append(f'<a href="/contact/"{contact_attr}>Contact</a>')
     links_html = '<div class="nav-links">' + "".join(links) + "</div>"
+    mobile_html = '<div class="mobile-menu" id="mobile-menu">' + "".join(mobile_links) + "</div>"
     toggle = '<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>'
+    burger = '<button class="nav-burger" id="nav-burger" aria-label="Open menu" title="Menu">&#9776;</button>'
     cta = '<a href="/contact/" class="nav-cta">Contact</a>'
     return (
         '<nav><div class="nav-inner">'
         f'<a href="/" class="nav-wordmark">{SITE_NAME}</a>'
         f'{links_html}'
-        f'<div class="nav-actions">{toggle}{cta}</div>'
+        f'<div class="nav-actions">{toggle}{cta}{burger}</div>'
         '</div></nav>'
+        f'{mobile_html}'
     )
 
 
@@ -245,6 +253,10 @@ THEME_INIT = f"""<script>
 
 THEME_TOGGLE = f"""<script>
 {read_template("theme-toggle.js")}
+</script>"""
+
+MOBILE_MENU = f"""<script>
+{read_template("mobile-menu.js")}
 </script>"""
 
 
@@ -289,6 +301,7 @@ def shell(title: str, active: str, body: str, description: str = "", path: str =
         year=datetime.now().year,
         theme_init=THEME_INIT,
         theme_toggle=THEME_TOGGLE,
+        mobile_menu=MOBILE_MENU,
         nav=nav_html(active),
         body=body,
         person_ld=person_ld,
@@ -1361,6 +1374,18 @@ def build_contact() -> str:
     return generate_page("contact")
 
 
+def build_404() -> str:
+    """Custom 404 page."""
+    body = """
+    <div class="not-found">
+      <h1>404</h1>
+      <p>This page doesn't exist. It may have been moved or removed.</p>
+      <a href="/" class="btn btn-primary">Back to home</a>
+    </div>
+    """
+    return shell("Page not found — Felix Hellström", "", body, path="/404.html")
+
+
 # ── sitemap.xml ──────────────────────────────────────────────────────────
 
 def build_sitemap(pages: list[tuple[str, str]]) -> str:
@@ -1520,6 +1545,10 @@ def main() -> None:
         sitemap_pages.append((url_path, lastmod))
         page_count += 1
         print(f"  ✓ {dist_path}")
+
+    # 404
+    write_page("404.html", build_404())
+    print("  ✓ 404.html")
 
     # Sitemap
     (DIST / "sitemap.xml").write_text(build_sitemap(sitemap_pages), encoding="utf-8")

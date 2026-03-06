@@ -1,6 +1,7 @@
 # felixhellstrom.com
 
 At session start, load context from the vault:
+
 - get_context(query: "active goals priorities")
 - get_context(tags: ["bucket:felixhellstrom.com"])
 
